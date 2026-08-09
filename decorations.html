@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ديكورات | Nebras Solutions</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700;900&family=Tajawal:wght@300;400;500;700;900&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --white: #ffffff;
+      --sky: #5BBFDE;
+      --sky-dark: #1f7fa0;
+      --sky-light: #d6f0f8;
+      --text-dark: #0d1b22;
+      --text-mid: #3a4f5c;
+      --section-bg: #f7fbfd;
+      --font-ar: 'Tajawal', sans-serif;
+      --font-en: 'Montserrat', sans-serif;
+    }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font-ar); background: var(--white); color: var(--text-dark); overflow-x: hidden; }
+
+    /* ─── PRELOADER ───────────────────────────────────── */
+    #preloader {
+      position: fixed; inset: 0; z-index: 9999;
+      background: var(--white);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 18px;
+      transition: opacity 0.7s ease, visibility 0.7s ease;
+    }
+    #preloader.hide { opacity: 0; visibility: hidden; }
+    .pre-logo {
+      width: 72px; height: 72px;
+      border: 2.5px solid var(--text-dark); border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      animation: logoIn 0.8s ease both;
+    }
+    .pre-logo span { font-family: var(--font-en); font-size: 2rem; font-weight: 700; }
+    @keyframes logoIn { from { opacity:0; transform:scale(0.8); } to { opacity:1; transform:scale(1); } }
+    .pre-text {
+      font-family: var(--font-en); font-size: 0.72rem; font-weight: 300;
+      letter-spacing: 5px; color: var(--sky);
+      animation: logoIn 0.8s 0.3s ease both;
+    }
+    .pre-bar { width: 160px; height: 2px; background: #e8f4f8; border-radius: 2px; overflow: hidden; animation: logoIn 0.6s 0.5s ease both; }
+    .pre-bar-fill { height: 100%; width: 0; background: linear-gradient(90deg, var(--sky-dark), var(--sky)); animation: loadBar 3.8s 0.6s ease forwards; }
+    @keyframes loadBar { 0%{width:0} 60%{width:75%} 100%{width:100%} }
+
+    /* ─── NAVBAR ──────────────────────────────────────── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 18px 6%;
+      transition: background 0.4s, box-shadow 0.4s, padding 0.3s;
+    }
+    nav.scrolled { background: rgba(255,255,255,0.97); box-shadow: 0 2px 20px rgba(0,0,0,0.08); padding: 12px 6%; }
+    .nav-logo { font-family: var(--font-en); font-size: 1.1rem; font-weight: 700; text-decoration: none; color: var(--white); letter-spacing: 1.5px; transition: color 0.3s; }
+    nav.scrolled .nav-logo { color: var(--text-dark); }
+    .nav-links { display: flex; gap: 28px; list-style: none; }
+    .nav-links a { font-family: var(--font-ar); font-size: 0.95rem; color: rgba(255,255,255,0.88); text-decoration: none; font-weight: 500; position: relative; transition: color 0.3s; }
+    nav.scrolled .nav-links a { color: var(--text-mid); }
+    .nav-links a::after { content: ''; position: absolute; bottom: -3px; right: 0; width: 0; height: 2px; background: var(--sky); transition: width 0.3s ease; }
+    .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
+    .nav-links a:hover, .nav-links a.active { color: var(--sky-dark); }
+    nav.scrolled .nav-links a:hover, nav.scrolled .nav-links a.active { color: var(--sky-dark); }
+    .nav-icon { width: 38px; height: 38px; border-radius: 50%; border: 1.5px solid rgba(255,255,255,0.5); display: flex; align-items: center; justify-content: center; font-family: var(--font-en); font-size: 0.95rem; font-weight: 700; color: var(--white); text-decoration: none; transition: all 0.3s; }
+    nav.scrolled .nav-icon { border-color: var(--text-dark); color: var(--text-dark); }
+    .nav-icon:hover { background: var(--sky); border-color: var(--sky); color: #fff; }
+
+    /* ─── HERO ────────────────────────────────────────── */
+    #hero {
+      position: relative; width: 100%; height: 100vh;
+      display: flex; align-items: center; justify-content: center; overflow: hidden;
+    }
+    .hero-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; }
+    .hero-overlay {
+      position: absolute; inset: 0; z-index: 1;
+      background: linear-gradient(to bottom, rgba(5,14,20,0.65) 0%, rgba(5,14,20,0.45) 55%, rgba(5,14,20,0.75) 100%);
+    }
+    .hero-content {
+      position: relative; z-index: 2; text-align: center; color: #fff;
+      padding: 0 5%; animation: fadeUp 0.9s 4.8s ease both;
+    }
+    @keyframes fadeUp { from { opacity:0; transform:translateY(30px); } to { opacity:1; transform:translateY(0); } }
+    .hero-eyebrow {
+      font-family: var(--font-en); font-size: 0.7rem; font-weight: 400;
+      letter-spacing: 7px; color: var(--sky); margin-bottom: 18px; display: block;
+    }
+    .hero-title {
+      font-size: clamp(2.2rem, 5.5vw, 5rem); font-weight: 900; line-height: 1.1;
+      margin-bottom: 14px;
+    }
+    .hero-title em { font-style: normal; color: var(--sky); }
+    .hero-sub {
+      font-family: var(--font-en); font-size: clamp(0.75rem, 1.8vw, 1rem);
+      font-weight: 300; letter-spacing: 5px; color: rgba(255,255,255,0.6);
+    }
+    .hero-divider { width: 50px; height: 2px; background: var(--sky); margin: 24px auto; opacity: 0.8; }
+    .scroll-hint {
+      position: absolute; bottom: 32px; left: 50%; transform: translateX(-50%);
+      z-index: 2; display: flex; flex-direction: column; align-items: center; gap: 8px;
+      animation: fadeUp 1s 5.2s ease both;
+    }
+    .scroll-hint span { font-family: var(--font-en); font-size: 0.6rem; letter-spacing: 3px; color: rgba(255,255,255,0.4); }
+    .scroll-arrow { width: 18px; height: 18px; border-right: 1.5px solid rgba(255,255,255,0.4); border-bottom: 1.5px solid rgba(255,255,255,0.4); transform: rotate(45deg); animation: bounce 1.6s infinite; }
+    @keyframes bounce { 0%,100%{transform:rotate(45deg) translateY(0)} 50%{transform:rotate(45deg) translateY(6px)} }
+
+    /* ─── DECORATIONS SECTION ─────────────────────────── */
+    #decorations {
+      background: var(--white);
+      padding: 90px 6% 80px;
+    }
+    .proj-header { text-align: center; margin-bottom: 60px; }
+    .proj-eyebrow {
+      font-family: var(--font-en); font-size: 0.68rem; font-weight: 700;
+      letter-spacing: 6px; color: var(--sky); display: block; margin-bottom: 12px;
+    }
+    .proj-title {
+      font-size: clamp(2rem, 4vw, 3rem); font-weight: 900; color: var(--text-dark);
+      line-height: 1.2; margin-bottom: 8px;
+    }
+    .proj-title em { font-style: normal; color: var(--sky-dark); }
+    .proj-tagline {
+      font-family: var(--font-en); font-size: clamp(0.7rem, 1.5vw, 0.85rem);
+      font-weight: 300; letter-spacing: 4px; color: var(--text-mid); margin-top: 10px;
+    }
+
+    /* ─── GALLERY HORIZONTAL ──────────────────────────── */
+    .gallery-track-wrap {
+      position: relative;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .gallery-track {
+      display: flex;
+      direction: ltr;
+      gap: 14px;
+      overflow-x: auto;
+      scroll-behavior: smooth;
+      scrollbar-width: none;
+      padding: 8px 2px 24px;
+    }
+    .gallery-track::-webkit-scrollbar { display: none; }
+    .gallery-item {
+      flex: 0 0 auto;
+      width: 300px;
+      height: 220px;
+      border-radius: 14px;
+      overflow: hidden;
+      cursor: pointer;
+      position: relative;
+      background: var(--section-bg);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+      transition: box-shadow 0.35s ease, transform 0.35s ease;
+    }
+    .gallery-item:hover { box-shadow: 0 12px 36px rgba(31,127,160,0.18); transform: translateY(-4px); }
+    .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.55s cubic-bezier(0.25,0.46,0.45,0.94); display: block; }
+    .gallery-item:hover img { transform: scale(1.07); }
+    .gallery-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(5,14,20,0.65) 0%, transparent 60%);
+      opacity: 0; transition: opacity 0.35s ease;
+      display: flex; align-items: flex-end; justify-content: flex-end; padding: 14px 16px;
+    }
+    .gallery-item:hover .gallery-overlay { opacity: 1; }
+    .gallery-overlay-icon {
+      width: 34px; height: 34px;
+      border: 1.5px solid rgba(255,255,255,0.7); border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .gallery-overlay-icon svg { width: 14px; height: 14px; stroke: #fff; stroke-width: 1.8; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+
+    /* ─── SCROLL ARROWS ───────────────────────────────── */
+    .scroll-arrow-btn {
+      position: absolute; top: 50%; transform: translateY(-50%);
+      width: 44px; height: 44px; border-radius: 50%;
+      background: rgba(255,255,255,0.95); border: 1.5px solid var(--sky-light);
+      cursor: pointer; z-index: 5;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+      transition: all 0.25s ease;
+    }
+    .scroll-arrow-btn:hover { background: var(--sky); border-color: var(--sky); }
+    .scroll-arrow-btn:hover svg { stroke: #fff; }
+    .scroll-arrow-btn svg { width: 18px; height: 18px; stroke: var(--sky-dark); stroke-width: 2; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+    #arrow-right { right: -22px; }
+    #arrow-left  { left: -22px; }
+
+    /* ─── SECTION DIVIDER ─────────────────────────────── */
+    .section-sep {
+      max-width: 900px; margin: 80px auto 0;
+      display: flex; align-items: center; gap: 20px;
+    }
+    .section-sep::before, .section-sep::after {
+      content: ''; flex: 1; height: 1px;
+      background: linear-gradient(to left, transparent, rgba(91,191,222,0.35));
+    }
+    .section-sep::after { background: linear-gradient(to right, transparent, rgba(91,191,222,0.35)); }
+    .section-sep span {
+      font-family: var(--font-en); font-size: 0.6rem; font-weight: 700;
+      letter-spacing: 6px; color: var(--sky); white-space: nowrap;
+    }
+
+    /* ─── LIGHTBOX ────────────────────────────────────── */
+    #lightbox {
+      display: none; position: fixed; inset: 0; z-index: 1000;
+      background: rgba(5,14,20,0.95);
+      align-items: center; justify-content: center;
+      flex-direction: column;
+    }
+    #lightbox.open { display: flex; }
+    #lightbox.closing { animation: lbFadeOut 0.4s ease forwards; }
+    @keyframes lbFadeOut { to { opacity: 0; } }
+    #lb-img { max-width: 90vw; max-height: 80vh; border-radius: 10px; object-fit: contain; }
+    .lb-close {
+      position: absolute; top: 22px; left: 24px;
+      font-size: 2rem; color: rgba(255,255,255,0.7); cursor: pointer;
+      font-family: var(--font-en); font-weight: 300; line-height: 1;
+      transition: color 0.2s;
+    }
+    .lb-close:hover { color: #fff; }
+    .lb-arrow {
+      position: absolute; top: 50%; transform: translateY(-50%);
+      width: 46px; height: 46px; background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.15); border-radius: 50%;
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      transition: background 0.2s;
+    }
+    .lb-arrow:hover { background: rgba(255,255,255,0.18); }
+    .lb-arrow svg { width: 20px; height: 20px; stroke: #fff; stroke-width: 2; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+    #lb-prev { right: 20px; }
+    #lb-next { left: 20px; }
+    #lb-counter {
+      position: absolute; bottom: 24px;
+      font-family: var(--font-en); font-size: 0.8rem;
+      color: rgba(255,255,255,0.45); letter-spacing: 2px;
+    }
+
+    /* ─── FOOTER ──────────────────────────────────────── */
+    footer {
+      background: var(--text-dark); color: rgba(255,255,255,0.5);
+      text-align: center; padding: 28px 6%;
+      font-size: 0.82rem; font-family: var(--font-en); letter-spacing: 1px;
+    }
+    footer span { color: var(--sky); }
+
+    /* ─── RESPONSIVE ──────────────────────────────────── */
+    @media (max-width: 900px) {
+      #arrow-right, #arrow-left { display: none; }
+    }
+    @media (max-width: 768px) {
+      #decorations { padding: 60px 5% 60px; }
+      .gallery-item { width: 240px; height: 180px; }
+      .lb-arrow { width: 38px; height: 38px; }
+    }
+
+    /* ─── MOBILE NAV BUTTONS ──────────────────────────── */
+    .mob-nav-row { display: none; }
+    @media (max-width: 768px) {
+      nav { display: none !important; }
+      .mob-nav-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        padding: 18px 14px;
+        background: var(--white);
+      }
+      .mob-nav-btn { display: block; text-decoration: none; }
+      .mob-nav-btn:last-child { grid-column: 1 / -1; margin-top: 20px; }
+      .mob-nav-rect {
+        width: 100%; height: 130px;
+        border-radius: 14px;
+        background-size: cover; background-position: center;
+        position: relative; overflow: hidden;
+        box-shadow: 0 4px 18px rgba(0,0,0,0.18);
+        transition: transform 0.22s ease;
+      }
+      .mob-nav-btn:last-child .mob-nav-rect { height: 110px; }
+      .mob-nav-btn:active .mob-nav-rect { transform: scale(0.93); }
+      .mob-nav-rect::after {
+        content: ''; position: absolute; inset: 0;
+        background: linear-gradient(to top, rgba(5,14,20,0.85) 0%, rgba(5,14,20,0.1) 65%);
+      }
+            .mob-nav-label { position: absolute; bottom: 10px; right: 0; left: 0; text-align: center; z-index: 1; display: flex; flex-direction: column; align-items: center; gap: 1px; }
+      .mob-nav-label .ar { font-family: var(--font-ar); font-size: 0.9rem; font-weight: 700; color: #fff; text-shadow: 0 1px 6px rgba(0,0,0,0.7); white-space: nowrap; }
+      .mob-nav-label .en { font-family: var(--font-en); font-size: 0.62rem; font-weight: 400; color: rgba(255,255,255,0.75); text-shadow: 0 1px 4px rgba(0,0,0,0.6); white-space: nowrap; letter-spacing: 1px; text-transform: uppercase; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- PRELOADER -->
+  <div id="preloader">
+    <div class="pre-logo"><span>N</span></div>
+    <p class="pre-text">DECORATIONS</p>
+    <div class="pre-bar"><div class="pre-bar-fill"></div></div>
+  </div>
+
+  <!-- NAVBAR -->
+  <nav id="navbar">
+    <a class="nav-icon" href="index.html">N</a>
+    <ul class="nav-links">
+      <li><a href="index.html">الرئيسية</a></li>
+      <li><a href="https://nebrassolutions.netlify.app/" target="_blank" rel="noopener">إلكتروميكانيك</a></li>
+      <li><a href="projects.html">مشاريع</a></li>
+      <li><a href="decorations.html" class="active">ديكورات</a></li>
+      <li><a href="contact.html">تواصل معنا</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <video class="hero-video" autoplay muted loop playsinline preload="auto">
+      <source src="nebras-bg.mp4" type="video/mp4" />
+    </video>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <span class="hero-eyebrow">NEBRAS SOLUTIONS</span>
+      <h1 class="hero-title">أعمال <em>ديكور</em></h1>
+      <div class="hero-divider"></div>
+      <p class="hero-sub">DECORATION WORKS</p>
+    </div>
+    <div class="scroll-hint">
+      <span>SCROLL</span>
+      <div class="scroll-arrow"></div>
+    </div>
+  </section>
+
+  <!-- MOBILE NAV BUTTONS -->
+  <div class="mob-nav-row">
+    <a class="mob-nav-btn" href="index.html">
+      <div class="mob-nav-rect" style="background-image:url('https://i.postimg.cc/90b7pjfL/alryysyt.png')">
+        <span class="mob-nav-label"><span class="ar">الرئيسية</span><span class="en">Home</span></span>
+      </div>
+    </a>
+    <a class="mob-nav-btn" href="https://nebrassolutions.netlify.app/" target="_blank" rel="noopener">
+      <div class="mob-nav-rect" style="background-image:url('https://i.postimg.cc/1XBqHZzL/alktrwmykank.jpg')">
+        <span class="mob-nav-label"><span class="ar">إلكتروميكانيك</span><span class="en">Electromechanical</span></span>
+      </div>
+    </a>
+    <a class="mob-nav-btn" href="projects.html">
+      <div class="mob-nav-rect" style="background-image:url('https://i.postimg.cc/FFw605Sv/Whats-App-Image-2026-05-08-at-21-48-41.jpg')">
+        <span class="mob-nav-label"><span class="ar">مشاريع</span><span class="en">Projects</span></span>
+      </div>
+    </a>
+    <a class="mob-nav-btn" href="decorations.html">
+      <div class="mob-nav-rect" style="background-image:url('https://i.postimg.cc/59D0h0hK/Whats-App-Image-2026-05-08-at-21-26-52.jpg')">
+        <span class="mob-nav-label"><span class="ar">ديكورات</span><span class="en">Decorations</span></span>
+      </div>
+    </a>
+    <a class="mob-nav-btn" href="contact.html">
+      <div class="mob-nav-rect" style="background-image:url('https://i.postimg.cc/gkPwwjgX/Whats-App-Image-2026-05-08-at-21-39-02.jpg')">
+        <span class="mob-nav-label"><span class="ar">تواصل معنا</span><span class="en">Contact Us</span></span>
+      </div>
+    </a>
+  </div>
+
+  <!-- DECORATIONS GALLERY -->
+  <section id="decorations">
+    <div class="proj-header">
+      <span class="proj-eyebrow">DECORATION WORKS</span>
+      <h2 class="proj-title"><em>ديكورات</em></h2>
+      <p class="proj-tagline">WE LIGHT YOUR FUTURE</p>
+    </div>
+
+    <div class="gallery-track-wrap">
+      <button class="scroll-arrow-btn" id="arrow-right" aria-label="السابق">
+        <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+      <button class="scroll-arrow-btn" id="arrow-left" aria-label="التالي">
+        <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
+
+      <div class="gallery-track" id="gallery">
+        <div class="gallery-item" data-index="0"><img src="https://i.postimg.cc/mhWLQypC/Whats-App-Image-2026-05-09-at-12-46-11.jpg" alt="ديكور 1" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
+        <div class="gallery-item" data-index="1"><img src="https://i.postimg.cc/t7GqhNv5/Whats-App-Image-2026-05-09-at-12-46-12.jpg" alt="ديكور 2" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
+        <div class="gallery-item" data-index="2"><img src="https://i.postimg.cc/XX6jwk1s/Whats-App-Image-2026-05-09-at-12-46-12-(1).jpg" alt="ديكور 3" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
+        <div class="gallery-item" data-index="3"><img src="https://i.postimg.cc/kDPJxvYw/Whats-App-Image-2026-05-09-at-12-46-12-(2).jpg" alt="ديكور 4" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
+        <div class="gallery-item" data-index="4"><img src="https://i.postimg.cc/6TxWdfbm/Whats-App-Image-2026-05-09-at-12-46-21.jpg" alt="ديكور 5" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
+        <div class="gallery-item" data-index="5"><img src="https://i.postimg.cc/wxyDQxbq/Whats-App-Image-2026-05-09-at-12-46-22.jpg" alt="ديكور 6" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
+        <div class="gallery-item" data-index="6"><img src="https://i.postimg.cc/dDcs8jNz/Whats-App-Image-2026-05-09-at-12-46-22-(1).jpg" alt="ديكور 7" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
+        <div class="gallery-item" data-index="7"><img src="https://i.postimg.cc/nVjqGVw4/Whats-App-Image-2026-05-09-at-12-46-23.jpg" alt="ديكور 8" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
+        <div class="gallery-item" data-index="8"><img src="https://i.postimg.cc/59Y8S9k1/Whats-App-Image-2026-05-09-at-12-46-23-(1).jpg" alt="ديكور 9" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
+        <div class="gallery-item" data-index="9"><img src="https://i.postimg.cc/c1gfB15J/Whats-App-Image-2026-05-09-at-12-46-23-(2).jpg" alt="ديكور 10" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
+        <div class="gallery-item" data-index="10"><img src="https://i.postimg.cc/xjJL3jFC/Whats-App-Image-2026-05-09-at-12-46-23-(3).jpg" alt="ديكور 11" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
+        <div class="gallery-item" data-index="11"><img src="https://i.postimg.cc/v8g5t8Sc/Whats-App-Image-2026-05-09-at-12-46-23-(4).jpg" alt="ديكور 12" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
+        <div class="gallery-item" data-index="12"><img src="https://i.postimg.cc/HWcb9WPb/Whats-App-Image-2026-05-09-at-12-46-23-(5).jpg" alt="ديكور 13" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
+        <div class="gallery-item" data-index="13"><img src="https://i.postimg.cc/pVwzGNgf/Whats-App-Image-2026-05-09-at-12-46-24.jpg" alt="ديكور 14" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
+        <div class="gallery-item" data-index="14"><img src="https://i.postimg.cc/pVhKJV1Q/Whats-App-Image-2026-05-09-at-12-46-24-(1).jpg" alt="ديكور 15" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
+        <div class="gallery-item" data-index="15"><img src="https://i.postimg.cc/RC6wLCbL/Whats-App-Image-2026-05-09-at-12-46-24-(2).jpg" alt="ديكور 16" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
+        <div class="gallery-item" data-index="16"><img src="https://i.postimg.cc/zDsKtm9g/Whats-App-Image-2026-05-09-at-12-46-24-(3).jpg" alt="ديكور 17" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
+        <div class="gallery-item" data-index="17"><img src="https://i.postimg.cc/9X6Z83v9/Whats-App-Image-2026-05-09-at-12-46-24-(4).jpg" alt="ديكور 18" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
+        <div class="gallery-item" data-index="18"><img src="https://i.postimg.cc/qBPybf9y/Whats-App-Image-2026-05-09-at-12-46-24-(5).jpg" alt="ديكور 19" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
+        <div class="gallery-item" data-index="19"><img src="https://i.postimg.cc/SQBCT0w3/Whats-App-Image-2026-05-09-at-12-46-25.jpg" alt="ديكور 20" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
+        <div class="gallery-item" data-index="20"><img src="https://i.postimg.cc/SQBCT0wr/Whats-App-Image-2026-05-09-at-12-46-25-(1).jpg" alt="ديكور 21" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
+        <div class="gallery-item" data-index="21"><img src="https://i.postimg.cc/L4cLCdrN/Whats-App-Image-2026-05-09-at-12-46-25-(2).jpg" alt="ديكور 22" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
+        <div class="gallery-item" data-index="22"><img src="https://i.postimg.cc/dQbrHMzN/Whats-App-Image-2026-05-09-at-12-46-25-(3).jpg" alt="ديكور 23" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
+        <div class="gallery-item" data-index="23"><img src="https://i.postimg.cc/tRKWS0Lc/Whats-App-Image-2026-05-09-at-12-46-25-(4).jpg" alt="ديكور 24" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
+        <div class="gallery-item" data-index="24"><img src="https://i.postimg.cc/X79FtHW4/Whats-App-Image-2026-05-09-at-12-46-26.jpg" alt="ديكور 25" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
+        <div class="gallery-item" data-index="25"><img src="https://i.postimg.cc/3rsmSMs5/Whats-App-Image-2026-05-09-at-12-46-26-(1).jpg" alt="ديكور 26" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
+        <div class="gallery-item" data-index="26"><img src="https://i.postimg.cc/RVwf2sBy/Whats-App-Image-2026-05-09-at-12-46-26-(2).jpg" alt="ديكور 27" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
+        <div class="gallery-item" data-index="27"><img src="https://i.postimg.cc/rF5W7nT6/Whats-App-Image-2026-05-09-at-12-46-26-(3).jpg" alt="ديكور 28" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
+        <div class="gallery-item" data-index="28"><img src="https://i.postimg.cc/ncq7NRxf/Whats-App-Image-2026-05-09-at-12-46-26-(4).jpg" alt="ديكور 29" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
+        <div class="gallery-item" data-index="29"><img src="https://i.postimg.cc/ZK63X7mZ/Whats-App-Image-2026-05-09-at-12-46-26-(5).jpg" alt="ديكور 30" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
+        <div class="gallery-item" data-index="30"><img src="https://i.postimg.cc/L8RfSt41/Whats-App-Image-2026-05-09-at-12-46-27.jpg" alt="ديكور 31" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
+        <div class="gallery-item" data-index="31"><img src="https://i.postimg.cc/CLbD9P0x/Whats-App-Image-2026-05-09-at-12-46-27-(1).jpg" alt="ديكور 32" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
+        <div class="gallery-item" data-index="32"><img src="https://i.postimg.cc/ncq7NRxQ/Whats-App-Image-2026-05-09-at-12-46-27-(2).jpg" alt="ديكور 33" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
+        <div class="gallery-item" data-index="33"><img src="https://i.postimg.cc/65CRFjKy/Whats-App-Image-2026-05-09-at-12-46-27-(3).jpg" alt="ديكور 34" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
+        <div class="gallery-item" data-index="34"><img src="https://i.postimg.cc/tCFP8SbZ/Whats-App-Image-2026-05-09-at-12-46-27-(4).jpg" alt="ديكور 35" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
+        <div class="gallery-item" data-index="35"><img src="https://i.postimg.cc/2SmvYQj3/Whats-App-Image-2026-05-09-at-12-46-27-(5).jpg" alt="ديكور 36" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
+        <div class="gallery-item" data-index="36"><img src="https://i.postimg.cc/qvLKvNgx/Whats-App-Image-2026-05-09-at-12-46-28.jpg" alt="ديكور 37" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
+        <div class="gallery-item" data-index="37"><img src="https://i.postimg.cc/cLZYWR1Y/Whats-App-Image-2026-05-09-at-12-46-28-(1).jpg" alt="ديكور 38" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
+        <div class="gallery-item" data-index="38"><img src="https://i.postimg.cc/nhZ7x4Vq/Whats-App-Image-2026-05-09-at-12-46-28-(2).jpg" alt="ديكور 39" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
+        <div class="gallery-item" data-index="39"><img src="https://i.postimg.cc/dVvdF2QW/Whats-App-Image-2026-05-09-at-12-46-28-(3).jpg" alt="ديكور 40" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
+        <div class="gallery-item" data-index="40"><img src="https://i.postimg.cc/NjYTt6Gb/Whats-App-Image-2026-05-09-at-12-46-28-(4).jpg" alt="ديكور 41" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
+        <div class="gallery-item" data-index="41"><img src="https://i.postimg.cc/mgw9gPhQ/Whats-App-Image-2026-05-09-at-12-46-28-(5).jpg" alt="ديكور 42" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
+        <div class="gallery-item" data-index="42"><img src="https://i.postimg.cc/t4564sY9/Whats-App-Image-2026-05-09-at-12-46-29.jpg" alt="ديكور 43" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
+        <div class="gallery-item" data-index="43"><img src="https://i.postimg.cc/9Qp9QDzx/Whats-App-Image-2026-05-09-at-12-46-29-(1).jpg" alt="ديكور 44" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
+        <div class="gallery-item" data-index="44"><img src="https://i.postimg.cc/g2Dh2xrT/Whats-App-Image-2026-05-09-at-12-46-29-(2).jpg" alt="ديكور 45" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
+        <div class="gallery-item" data-index="45"><img src="https://i.postimg.cc/Qdb7dFVY/Whats-App-Image-2026-05-09-at-12-46-29-(3).jpg" alt="ديكور 46" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
+        <div class="gallery-item" data-index="46"><img src="https://i.postimg.cc/x1Rm1XqW/Whats-App-Image-2026-05-09-at-12-46-29-(4).jpg" alt="ديكور 47" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
+        <div class="gallery-item" data-index="47"><img src="https://i.postimg.cc/x1Rm1XcQ/Whats-App-Image-2026-05-09-at-12-46-29-(5).jpg" alt="ديكور 48" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
+        <div class="gallery-item" data-index="48"><img src="https://i.postimg.cc/zfGgbqgJ/Whats-App-Image-2026-05-09-at-12-46-30.jpg" alt="ديكور 49" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
+        <div class="gallery-item" data-index="49"><img src="https://i.postimg.cc/cLm3Lvrs/Whats-App-Image-2026-05-09-at-12-46-30-(1).jpg" alt="ديكور 50" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
+        <div class="gallery-item" data-index="50"><img src="https://i.postimg.cc/1z3qnyNb/Whats-App-Image-2026-05-09-at-12-46-30-(2).jpg" alt="ديكور 51" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
+        <div class="gallery-item" data-index="51"><img src="https://i.postimg.cc/mrgHzTHf/Whats-App-Image-2026-05-09-at-12-46-30-(3).jpg" alt="ديكور 52" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
+        <div class="gallery-item" data-index="52"><img src="https://i.postimg.cc/yN8Zg7ZK/Whats-App-Image-2026-05-09-at-12-46-30-(4).jpg" alt="ديكور 53" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
+        <div class="gallery-item" data-index="53"><img src="https://i.postimg.cc/pdLFhPFx/Whats-App-Image-2026-05-09-at-12-46-30-(5).jpg" alt="ديكور 54" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
+        <div class="gallery-item" data-index="54"><img src="https://i.postimg.cc/mrgHzTH9/Whats-App-Image-2026-05-09-at-12-46-31.jpg" alt="ديكور 55" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
+        <div class="gallery-item" data-index="55"><img src="https://i.postimg.cc/bvwtDqtN/Whats-App-Image-2026-05-09-at-12-46-31-(1).jpg" alt="ديكور 56" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
+        <div class="gallery-item" data-index="56"><img src="https://i.postimg.cc/25SZbCZy/Whats-App-Image-2026-05-09-at-12-46-31-(2).jpg" alt="ديكور 57" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
+        <div class="gallery-item" data-index="57"><img src="https://i.postimg.cc/tg4xZ9xY/Whats-App-Image-2026-05-09-at-12-46-31-(3).jpg" alt="ديكور 58" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
+        <div class="gallery-item" data-index="58"><img src="https://i.postimg.cc/vmZVgGV1/Whats-App-Image-2026-05-09-at-12-46-31-(4).jpg" alt="ديكور 59" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
+        <div class="gallery-item" data-index="59"><img src="https://i.postimg.cc/9fgqysdt/Whats-App-Image-2026-05-09-at-12-46-32.jpg" alt="ديكور 60" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
+        <div class="gallery-item" data-index="60"><img src="https://i.postimg.cc/d0VykJy8/Whats-App-Image-2026-05-09-at-12-46-32-(1).jpg" alt="ديكور 61" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
+        <div class="gallery-item" data-index="61"><img src="https://i.postimg.cc/d0NTGg23/Whats-App-Image-2026-05-09-at-12-46-32-(2).jpg" alt="ديكور 62" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
+        <div class="gallery-item" data-index="62"><img src="https://i.postimg.cc/pdcnK3fn/Whats-App-Image-2026-05-09-at-12-46-32-(3).jpg" alt="ديكور 63" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
+        <div class="gallery-item" data-index="63"><img src="https://i.postimg.cc/R0pnw27c/Whats-App-Image-2026-05-09-at-12-46-32-(4).jpg" alt="ديكور 64" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
+        <div class="gallery-item" data-index="64"><img src="https://i.postimg.cc/TPNWnBVj/Whats-App-Image-2026-05-09-at-12-46-32-(5).jpg" alt="ديكور 65" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
+        <div class="gallery-item" data-index="65"><img src="https://i.postimg.cc/VNZbX2qp/Whats-App-Image-2026-05-09-at-12-46-33.jpg" alt="ديكور 66" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
+        <div class="gallery-item" data-index="66"><img src="https://i.postimg.cc/tgvVF83D/Whats-App-Image-2026-05-09-at-12-46-33-(1).jpg" alt="ديكور 67" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
+        <div class="gallery-item" data-index="67"><img src="https://i.postimg.cc/zf2RT4C0/Whats-App-Image-2026-05-09-at-12-46-33-(2).jpg" alt="ديكور 68" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
+        <div class="gallery-item" data-index="68"><img src="https://i.postimg.cc/LsQZjGt0/Whats-App-Image-2026-05-09-at-12-46-33-(3).jpg" alt="ديكور 69" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
+        <div class="gallery-item" data-index="69"><img src="https://i.postimg.cc/5tKF8DBR/Whats-App-Image-2026-05-09-at-12-46-33-(4).jpg" alt="ديكور 70" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LIGHTBOX -->
+  <div id="lightbox">
+    <span class="lb-close" onclick="closeLB()">&#215;</span>
+    <button class="lb-arrow" id="lb-prev" onclick="navigate(-1)">
+      <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+    </button>
+    <img id="lb-img" src="" alt="" />
+    <button class="lb-arrow" id="lb-next" onclick="navigate(1)">
+      <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+    </button>
+    <span id="lb-counter"></span>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    &copy; 2026 <span>Nebras Solutions</span> &mdash; All Rights Reserved
+  </footer>
+
+  <script>
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => navbar.classList.toggle('scrolled', window.scrollY > 40));
+
+    setTimeout(() => { const p = document.getElementById('preloader'); if(p) p.classList.add('hide'); }, 4600);
+
+    const track = document.getElementById('gallery');
+    document.getElementById('arrow-right').addEventListener('click', () => track.scrollBy({ left: 320, behavior: 'smooth' }));
+    document.getElementById('arrow-left').addEventListener('click', () => track.scrollBy({ left: -320, behavior: 'smooth' }));
+
+    const images = Array.from(document.querySelectorAll('.gallery-item img')).map(i => i.src);
+    const lb = document.getElementById('lightbox');
+    const lbImg = document.getElementById('lb-img');
+    const lbCounter = document.getElementById('lb-counter');
+    let current = 0;
+
+    function openLB(idx) {
+      current = idx;
+      lbImg.src = images[idx];
+      lbImg.style.animation = 'none';
+      lb.classList.remove('closing');
+      lb.classList.add('open');
+      document.body.style.overflow = 'hidden';
+      lbImg.style.animation = '';
+      updateCounter();
+    }
+    function closeLB() {
+      lb.classList.add('closing');
+      setTimeout(() => { lb.classList.remove('open', 'closing'); lbImg.src = ''; document.body.style.overflow = ''; }, 400);
+    }
+    function navigate(dir) {
+      current = (current + dir + images.length) % images.length;
+      lbImg.style.animation = 'none';
+      void lbImg.offsetWidth;
+      lbImg.src = images[current];
+      lbImg.style.animation = '';
+      lb.classList.remove('closing');
+      lb.classList.add('open');
+      updateCounter();
+    }
+    function updateCounter() { lbCounter.textContent = (current + 1) + ' / ' + images.length; }
+
+    document.querySelectorAll('.gallery-item').forEach((item, i) => {
+      item.addEventListener('click', () => openLB(i));
+    });
+    document.getElementById('lightbox').addEventListener('click', e => { if(e.target === lb) closeLB(); });
+    document.addEventListener('keydown', e => {
+      if (!lb.classList.contains('open')) return;
+      if (e.key === 'ArrowRight') navigate(-1);
+      if (e.key === 'ArrowLeft') navigate(1);
+      if (e.key === 'Escape') closeLB();
+    });
+  </script>
+</body>
+</html>

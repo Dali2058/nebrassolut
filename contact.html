@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>تواصل معنا | Nebras Solutions</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700;900&family=Tajawal:wght@300;400;500;700;900&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --white: #ffffff;
+      --sky: #5BBFDE;
+      --sky-dark: #1f7fa0;
+      --sky-light: #d6f0f8;
+      --text-dark: #0d1b22;
+      --text-mid: #3a4f5c;
+      --section-bg: #f7fbfd;
+      --green: #25d366;
+      --font-ar: 'Tajawal', sans-serif;
+      --font-en: 'Montserrat', sans-serif;
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font-ar); background: var(--white); color: var(--text-dark); overflow-x: hidden; }
+
+    /* ─── PRELOADER ───────────────────────────────────── */
+    #preloader {
+      position: fixed; inset: 0; z-index: 9999;
+      background: var(--white);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 18px;
+      transition: opacity 0.7s ease, visibility 0.7s ease;
+    }
+    #preloader.hide { opacity: 0; visibility: hidden; }
+    .pre-logo {
+      width: 72px; height: 72px;
+      border: 2.5px solid var(--text-dark);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      animation: logoFadeIn 0.8s ease both;
+    }
+    .pre-logo span { font-family: var(--font-en); font-size: 2rem; font-weight: 700; letter-spacing: 1px; }
+    @keyframes logoFadeIn { from { opacity: 0; transform: scale(0.8); } to { opacity: 1; transform: scale(1); } }
+    .pre-text {
+      font-family: var(--font-en); font-size: 0.72rem; font-weight: 300;
+      letter-spacing: 5px; color: var(--sky);
+      animation: logoFadeIn 0.8s 0.3s ease both;
+    }
+    .pre-bar {
+      width: 160px; height: 2px; background: #e8f4f8; border-radius: 2px; overflow: hidden;
+      animation: logoFadeIn 0.6s 0.5s ease both;
+    }
+    .pre-bar-fill {
+      height: 100%; width: 0;
+      background: linear-gradient(90deg, var(--sky-dark), var(--sky));
+      animation: loadBar 3.8s 0.6s ease forwards;
+    }
+    @keyframes loadBar { 0% { width: 0; } 60% { width: 75%; } 100% { width: 100%; } }
+
+    /* ─── NAVBAR ──────────────────────────────────────── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 18px 6%;
+      transition: background 0.4s, box-shadow 0.4s, padding 0.3s;
+    }
+    nav.scrolled {
+      background: rgba(255,255,255,0.97);
+      box-shadow: 0 2px 20px rgba(0,0,0,0.08);
+      padding: 12px 6%;
+    }
+    .nav-logo {
+      font-family: var(--font-en); font-size: 1.1rem; font-weight: 700;
+      text-decoration: none; color: var(--white);
+      letter-spacing: 1.5px; transition: color 0.3s;
+    }
+    nav.scrolled .nav-logo { color: var(--text-dark); }
+    .nav-links { display: flex; gap: 32px; list-style: none; }
+    .nav-links a {
+      font-family: var(--font-ar); font-size: 0.95rem; color: rgba(255,255,255,0.88);
+      text-decoration: none; font-weight: 500; position: relative; transition: color 0.3s;
+    }
+    nav.scrolled .nav-links a { color: var(--text-mid); }
+    .nav-links a::after {
+      content: ''; position: absolute; bottom: -3px; right: 0;
+      width: 0; height: 2px; background: var(--sky);
+      transition: width 0.3s ease;
+    }
+    .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
+    .nav-links a:hover, .nav-links a.active { color: var(--sky-dark); }
+    nav.scrolled .nav-links a:hover, nav.scrolled .nav-links a.active { color: var(--sky-dark); }
+    .nav-icon {
+      width: 38px; height: 38px; border-radius: 50%;
+      border: 1.5px solid rgba(255,255,255,0.5);
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-en); font-size: 0.95rem; font-weight: 700;
+      color: var(--white); text-decoration: none; transition: all 0.3s;
+    }
+    nav.scrolled .nav-icon { border-color: var(--text-dark); color: var(--text-dark); }
+    .nav-icon:hover { background: var(--sky); border-color: var(--sky); color: #fff; }
+
+    /* ─── HERO ────────────────────────────────────────── */
+    #hero {
+      position: relative; width: 100%; height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden;
+    }
+    .hero-video {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      object-fit: cover; z-index: 0;
+    }
+    .hero-overlay {
+      position: absolute; inset: 0; z-index: 1;
+      background: linear-gradient(to bottom,
+        rgba(5,14,20,0.62) 0%,
+        rgba(5,14,20,0.48) 60%,
+        rgba(5,14,20,0.72) 100%);
+    }
+    .hero-content {
+      position: relative; z-index: 2;
+      text-align: center; color: #fff;
+      padding: 0 5%;
+      animation: fadeUp 0.9s 4.8s ease both;
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .hero-label {
+      font-family: var(--font-en); font-size: 0.72rem; font-weight: 400;
+      letter-spacing: 6px; color: var(--sky); margin-bottom: 16px;
+    }
+    .hero-brand {
+      font-family: var(--font-en);
+      font-size: clamp(2.5rem, 6vw, 6rem);
+      font-weight: 900; letter-spacing: 4px; line-height: 1;
+    }
+    .hero-brand span {
+      display: block; font-weight: 300; color: var(--sky);
+      font-size: 0.55em; letter-spacing: 14px; margin-top: 12px;
+    }
+    .hero-divider { width: 60px; height: 2px; background: var(--sky); margin: 28px auto; opacity: 0.8; }
+    .hero-tagline {
+      font-size: 1.1rem; font-weight: 400;
+      color: rgba(255,255,255,0.85); letter-spacing: 0.5px; margin-bottom: 42px;
+    }
+    .hero-scroll-hint {
+      position: absolute; bottom: 32px; left: 50%; transform: translateX(-50%);
+      z-index: 2; display: flex; flex-direction: column; align-items: center; gap: 8px;
+      animation: fadeUp 1s 5.2s ease both;
+    }
+    .hero-scroll-hint span {
+      font-family: var(--font-en); font-size: 0.62rem; letter-spacing: 3px;
+      color: rgba(255,255,255,0.45);
+    }
+    .scroll-arrow {
+      width: 20px; height: 20px;
+      border-right: 1.5px solid rgba(255,255,255,0.4);
+      border-bottom: 1.5px solid rgba(255,255,255,0.4);
+      transform: rotate(45deg);
+      animation: arrowBounce 1.6s infinite;
+    }
+    @keyframes arrowBounce { 0%,100%{transform:rotate(45deg) translateY(0);} 50%{transform:rotate(45deg) translateY(5px);} }
+
+    /* ─── CONTACT SECTION ─────────────────────────────── */
+    #contact-section {
+      background: var(--white);
+      padding: 90px 8% 80px;
+    }
+    .section-label-wrap { text-align: center; margin-bottom: 56px; }
+    .section-label {
+      font-family: var(--font-en); font-size: 0.7rem; font-weight: 700;
+      letter-spacing: 5px; color: var(--sky); display: block; margin-bottom: 10px;
+    }
+    .section-title {
+      font-size: clamp(1.8rem, 3.5vw, 2.8rem); font-weight: 900;
+      color: var(--text-dark); line-height: 1.2;
+    }
+    .section-title em { font-style: normal; color: var(--sky-dark); }
+    .section-subtitle {
+      font-size: 1rem; color: var(--text-mid); margin-top: 12px;
+      max-width: 480px; margin-inline: auto; line-height: 1.75;
+    }
+
+    /* Grid layout */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.3fr;
+      gap: 56px;
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    /* ─── CONTACT CARDS ───────────────────────────────── */
+    .contact-cards { display: flex; flex-direction: column; gap: 14px; }
+
+    .num-card {
+      padding: 18px 20px 16px;
+      border: 1px solid rgba(91,191,222,0.18);
+      border-radius: 16px;
+      background: var(--section-bg);
+      transition: box-shadow 0.3s, border-color 0.3s;
+    }
+    .num-card:hover {
+      box-shadow: 0 8px 28px rgba(31,127,160,0.1);
+      border-color: rgba(91,191,222,0.38);
+    }
+    .num-card-top {
+      display: flex; align-items: center; gap: 14px;
+      margin-bottom: 14px;
+    }
+    .card-icon {
+      width: 42px; height: 42px; flex-shrink: 0;
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .card-icon.phone-ic { background: rgba(91,191,222,0.15); }
+    .card-icon svg { width: 20px; height: 20px; stroke: var(--sky-dark); fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+
+    .card-label {
+      font-family: var(--font-en); font-size: 0.6rem; font-weight: 700;
+      letter-spacing: 3px; color: var(--sky-dark); display: block; margin-bottom: 3px;
+    }
+    .card-num {
+      font-family: var(--font-en); font-size: 1rem; font-weight: 700;
+      color: var(--text-dark); letter-spacing: 0.5px;
+    }
+
+    .num-actions {
+      display: flex; gap: 8px;
+    }
+    .num-btn {
+      flex: 1; display: inline-flex; align-items: center; justify-content: center; gap: 7px;
+      padding: 9px 10px;
+      border-radius: 10px;
+      font-family: var(--font-ar); font-size: 0.82rem; font-weight: 700;
+      text-decoration: none;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .num-btn:hover { transform: translateY(-1px); }
+    .num-btn.call {
+      background: rgba(91,191,222,0.12);
+      color: var(--sky-dark);
+      border: 1px solid rgba(91,191,222,0.3);
+    }
+    .num-btn.call:hover { background: var(--sky-dark); color: #fff; box-shadow: 0 6px 18px rgba(31,127,160,0.25); }
+    .num-btn.whatsapp {
+      background: rgba(37,211,102,0.1);
+      color: #1a9e4a;
+      border: 1px solid rgba(37,211,102,0.28);
+    }
+    .num-btn.whatsapp:hover { background: var(--green); color: #fff; box-shadow: 0 6px 18px rgba(37,211,102,0.3); }
+    .num-btn svg { width: 15px; height: 15px; flex-shrink: 0; }
+    .num-btn.call svg { stroke: currentColor; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+    .num-btn.whatsapp svg { fill: currentColor; stroke: none; }
+
+    /* location card */
+    .contact-card {
+      display: flex; align-items: center; gap: 18px;
+      padding: 18px 20px;
+      border: 1px solid rgba(91,191,222,0.18);
+      border-radius: 16px;
+      background: var(--section-bg);
+      color: inherit;
+    }
+
+    /* ─── EMAIL FORM ──────────────────────────────────── */
+    .email-form-wrap {
+      background: var(--section-bg);
+      border: 1px solid rgba(91,191,222,0.18);
+      border-radius: 20px;
+      padding: 36px 32px;
+    }
+    .form-title {
+      font-size: 1.25rem; font-weight: 900;
+      color: var(--text-dark); margin-bottom: 6px;
+    }
+    .form-title em { font-style: normal; color: var(--sky-dark); }
+    .form-sub {
+      font-size: 0.88rem; color: var(--text-mid);
+      margin-bottom: 28px; line-height: 1.6;
+    }
+
+    .form-group { margin-bottom: 18px; }
+    .form-group label {
+      display: block; font-size: 0.82rem; font-weight: 700;
+      color: var(--text-dark); margin-bottom: 7px;
+      letter-spacing: 0.3px;
+    }
+    .form-group input,
+    .form-group textarea {
+      width: 100%; padding: 12px 16px;
+      border: 1.5px solid rgba(91,191,222,0.25);
+      border-radius: 10px;
+      background: var(--white);
+      font-family: var(--font-ar); font-size: 0.95rem;
+      color: var(--text-dark);
+      outline: none;
+      transition: border-color 0.3s, box-shadow 0.3s;
+      resize: vertical;
+    }
+    .form-group input::placeholder,
+    .form-group textarea::placeholder { color: rgba(58,79,92,0.4); }
+    .form-group input:focus,
+    .form-group textarea:focus {
+      border-color: var(--sky);
+      box-shadow: 0 0 0 3px rgba(91,191,222,0.15);
+    }
+    .form-group textarea { min-height: 110px; }
+
+    .form-submit {
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(135deg, var(--sky) 0%, var(--sky-dark) 100%);
+      color: #fff; border: none; border-radius: 10px;
+      font-family: var(--font-ar); font-size: 1rem; font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 8px 24px rgba(31,127,160,0.3);
+      transition: transform 0.25s, box-shadow 0.25s;
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+    }
+    .form-submit:hover { transform: translateY(-2px); box-shadow: 0 14px 32px rgba(31,127,160,0.4); }
+    .form-submit svg { width: 18px; height: 18px; stroke: #fff; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; transform: scaleX(-1); }
+
+    /* ─── FOOTER ──────────────────────────────────────── */
+    footer {
+      background: #090f13; padding: 28px 10%;
+      display: flex; align-items: center; justify-content: space-between;
+      border-top: 1px solid rgba(255,255,255,0.05);
+    }
+    footer p { font-size: 0.85rem; color: rgba(255,255,255,0.35); }
+    footer img { height: 32px; opacity: 0.6; }
+    .wa-btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 7px 18px;
+      border: 1px solid rgba(37,211,102,0.5);
+      border-radius: 999px;
+      text-decoration: none;
+      color: #25d366;
+      font-size: 0.82rem; font-weight: 600;
+      background: transparent;
+      transition: background 0.25s, color 0.25s;
+      margin-top: 6px;
+    }
+    .wa-btn:hover { background: #25d366; color: #fff; }
+    .wa-btn svg { width: 15px; height: 15px; fill: currentColor; }
+
+    /* ─── RESPONSIVE ─────────────────────────────────── */
+    @media (max-width: 760px) {
+      .contact-grid { grid-template-columns: 1fr; gap: 36px; }
+      #contact-section { padding: 64px 6% 60px; }
+      .email-form-wrap { padding: 26px 22px; }
+    }
+
+    /* ─── MOBILE NAV BUTTONS ──────────────────────────── */
+    .mob-nav-row { display: none; }
+    @media (max-width: 768px) {
+      nav { display: none !important; }
+      .mob-nav-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        padding: 18px 14px;
+        background: var(--white);
+      }
+      .mob-nav-btn { display: block; text-decoration: none; }
+      .mob-nav-btn:last-child { grid-column: 1 / -1; margin-top: 20px; }
+      .mob-nav-rect {
+        width: 100%; height: 130px;
+        border-radius: 14px;
+        background-size: cover; background-position: center;
+        position: relative; overflow: hidden;
+        box-shadow: 0 4px 18px rgba(0,0,0,0.18);
+        transition: transform 0.22s ease;
+      }
+      .mob-nav-btn:last-child .mob-nav-rect { height: 110px; }
+      .mob-nav-btn:active .mob-nav-rect { transform: scale(0.93); }
+      .mob-nav-rect::after {
+        content: ''; position: absolute; inset: 0;
+        background: linear-gradient(to top, rgba(5,14,20,0.85) 0%, rgba(5,14,20,0.1) 65%);
+      }
+            .mob-nav-label { position: absolute; bottom: 10px; right: 0; left: 0; text-align: center; z-index: 1; display: flex; flex-direction: column; align-items: center; gap: 1px; }
+      .mob-nav-label .ar { font-family: var(--font-ar); font-size: 0.9rem; font-weight: 700; color: #fff; text-shadow: 0 1px 6px rgba(0,0,0,0.7); white-space: nowrap; }
+      .mob-nav-label .en { font-family: var(--font-en); font-size: 0.62rem; font-weight: 400; color: rgba(255,255,255,0.75); text-shadow: 0 1px 4px rgba(0,0,0,0.6); white-space: nowrap; letter-spacing: 1px; text-transform: uppercase; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- PRELOADER -->
+  <div id="preloader">
+    <div class="pre-logo"><span>N</span></div>
+    <p class="pre-text">CONTACT US</p>
+    <div class="pre-bar"><div class="pre-bar-fill"></div></div>
+  </div>
+
+  <!-- NAVBAR -->
+  <nav id="navbar">
+    <a class="nav-icon" href="index.html">N</a>
+    <ul class="nav-links">
+      <li><a href="index.html">الرئيسية</a></li>
+      <li><a href="https://nebrassolutions.netlify.app/" target="_blank" rel="noopener">إلكتروميكانيك</a></li>
+      <li><a href="projects.html">مشاريع</a></li>
+      <li><a href="decorations.html">ديكورات</a></li>
+      <li><a href="contact.html" class="active">تواصل معنا</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <video class="hero-video" autoplay muted loop playsinline preload="auto">
+      <source src="nebras-bg.mp4" type="video/mp4" />
+    </video>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <p class="hero-label">CONTACT US</p>
+      <h1 class="hero-brand">تواصل<span>معنا</span></h1>
+      <div class="hero-divider"></div>
+      <p class="hero-tagline">نسعد بالتواصل معك في أي وقت</p>
+    </div>
+    <div class="hero-scroll-hint">
+      <span>SCROLL</span>
+      <div class="scroll-arrow"></div>
+    </div>
+  </section>
+
+  <!-- MOBILE NAV BUTTONS -->
+  <div class="mob-nav-row">
+    <a class="mob-nav-btn" href="index.html">
+      <div class="mob-nav-rect" style="background-image:url('https://i.postimg.cc/90b7pjfL/alryysyt.png')">
+        <span class="mob-nav-label"><span class="ar">الرئيسية</span><span class="en">Home</span></span>
+      </div>
+    </a>
+    <a class="mob-nav-btn" href="https://nebrassolutions.netlify.app/" target="_blank" rel="noopener">
+      <div class="mob-nav-rect" style="background-image:url('https://i.postimg.cc/1XBqHZzL/alktrwmykank.jpg')">
+        <span class="mob-nav-label"><span class="ar">إلكتروميكانيك</span><span class="en">Electromechanical</span></span>
+      </div>
+    </a>
+    <a class="mob-nav-btn" href="projects.html">
+      <div class="mob-nav-rect" style="background-image:url('https://i.postimg.cc/FFw605Sv/Whats-App-Image-2026-05-08-at-21-48-41.jpg')">
+        <span class="mob-nav-label"><span class="ar">مشاريع</span><span class="en">Projects</span></span>
+      </div>
+    </a>
+    <a class="mob-nav-btn" href="decorations.html">
+      <div class="mob-nav-rect" style="background-image:url('https://i.postimg.cc/59D0h0hK/Whats-App-Image-2026-05-08-at-21-26-52.jpg')">
+        <span class="mob-nav-label"><span class="ar">ديكورات</span><span class="en">Decorations</span></span>
+      </div>
+    </a>
+    <a class="mob-nav-btn" href="contact.html">
+      <div class="mob-nav-rect" style="background-image:url('https://i.postimg.cc/gkPwwjgX/Whats-App-Image-2026-05-08-at-21-39-02.jpg')">
+        <span class="mob-nav-label"><span class="ar">تواصل معنا</span><span class="en">Contact Us</span></span>
+      </div>
+    </a>
+  </div>
+
+  <!-- CONTACT SECTION -->
+  <section id="contact-section">
+    <div class="section-label-wrap">
+      <span class="section-label">GET IN TOUCH</span>
+      <h2 class="section-title">هل لديك <em>مشروع</em> في ذهنك؟</h2>
+      <p class="section-subtitle">فريقنا المتخصص جاهز للتواصل معك. اختر الطريقة التي تناسبك.</p>
+    </div>
+
+    <div class="contact-grid">
+
+      <!-- LEFT: Number Cards -->
+      <div class="contact-cards">
+
+        <!-- Number 1 -->
+        <div class="num-card">
+          <div class="num-card-top">
+            <div class="card-icon phone-ic">
+              <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.43 2 2 0 0 1 3.58 1H6.6a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 8.5a16 16 0 0 0 5.55 5.55l.95-.95a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            </div>
+            <div>
+              <span class="card-label">CONTACT — 01</span>
+              <span class="card-num" dir="ltr">+966 55 418 6401</span>
+            </div>
+          </div>
+          <div class="num-actions">
+            <a class="num-btn call" href="tel:+966554186401">
+              <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.43 2 2 0 0 1 3.58 1H6.6a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 8.5a16 16 0 0 0 5.55 5.55l.95-.95a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+              اتصل به
+            </a>
+            <a class="num-btn whatsapp" href="https://wa.me/966554186401" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+              واتساب
+            </a>
+          </div>
+        </div>
+
+        <!-- Number 2 -->
+        <div class="num-card">
+          <div class="num-card-top">
+            <div class="card-icon phone-ic">
+              <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.43 2 2 0 0 1 3.58 1H6.6a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 8.5a16 16 0 0 0 5.55 5.55l.95-.95a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            </div>
+            <div>
+              <span class="card-label">CONTACT — 02</span>
+              <span class="card-num" dir="ltr">+966 55 805 5504</span>
+            </div>
+          </div>
+          <div class="num-actions">
+            <a class="num-btn call" href="tel:+966558055504">
+              <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.43 2 2 0 0 1 3.58 1H6.6a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 8.5a16 16 0 0 0 5.55 5.55l.95-.95a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+              اتصل به
+            </a>
+            <a class="num-btn whatsapp" href="https://wa.me/966558055504" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+              واتساب
+            </a>
+          </div>
+        </div>
+
+        <!-- Number 3 -->
+        <div class="num-card">
+          <div class="num-card-top">
+            <div class="card-icon phone-ic">
+              <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.43 2 2 0 0 1 3.58 1H6.6a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 8.5a16 16 0 0 0 5.55 5.55l.95-.95a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            </div>
+            <div>
+              <span class="card-label">CONTACT — 03</span>
+              <span class="card-num" dir="ltr">+966 50 333 4798</span>
+            </div>
+          </div>
+          <div class="num-actions">
+            <a class="num-btn call" href="tel:+966503334798">
+              <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.43 2 2 0 0 1 3.58 1H6.6a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 8.5a16 16 0 0 0 5.55 5.55l.95-.95a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+              اتصل به
+            </a>
+            <a class="num-btn whatsapp" href="https://wa.me/966503334798" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+              واتساب
+            </a>
+          </div>
+        </div>
+
+        <!-- Number 4 -->
+        <div class="num-card">
+          <div class="num-card-top">
+            <div class="card-icon phone-ic">
+              <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.43 2 2 0 0 1 3.58 1H6.6a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 8.5a16 16 0 0 0 5.55 5.55l.95-.95a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            </div>
+            <div>
+              <span class="card-label">CONTACT — 04</span>
+              <span class="card-num" dir="ltr">+966 11 210 9222</span>
+            </div>
+          </div>
+          <div class="num-actions">
+            <a class="num-btn call" href="tel:+966112109222">
+              <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.43 2 2 0 0 1 3.58 1H6.6a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 8.5a16 16 0 0 0 5.55 5.55l.95-.95a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+              اتصل به
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- RIGHT: Email Form -->
+      <div class="email-form-wrap">
+        <h3 class="form-title">أرسل <em>رسالة</em></h3>
+        <p class="form-sub">اكتب رسالتك وسيتم فتح Gmail تلقائياً لإرسالها.</p>
+
+        <form id="contact-form" novalidate>
+          <div class="form-group">
+            <label for="msg-subject">الموضوع</label>
+            <input type="text" id="msg-subject" placeholder="موضوع رسالتك..." />
+          </div>
+          <div class="form-group">
+            <label for="msg-body">رسالتك</label>
+            <textarea id="msg-body" placeholder="اكتب رسالتك هنا..." required></textarea>
+          </div>
+          <button type="submit" class="form-submit">
+            <svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2L15 22l-4-9-9-4 20-7z"/></svg>
+            إرسال الرسالة
+          </button>
+        </form>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <img src="https://i.postimg.cc/8PShHcVc/nebras-logo.png" alt="Nebras Solutions" />
+    <div style="text-align:center;">
+      <p>جميع الحقوق محفوظة &copy; 2025 Nebras Solutions</p>
+      <p style="margin-top:6px; font-size:0.78rem; color:rgba(255,255,255,0.22);">تطوير: اياد محمد عبدالله</p>
+      <a class="wa-btn" href="https://wa.me/2001096724839" target="_blank" rel="noopener" style="margin-top:10px;">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        تحدث إلى المطور
+      </a>
+    </div>
+    <div style="width:80px;"></div>
+  </footer>
+
+  <script>
+    // Navbar shadow on scroll
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 40);
+    });
+
+    // Preloader
+    setTimeout(() => {
+      const pre = document.getElementById('preloader');
+      if (pre) pre.classList.add('hide');
+    }, 4600);
+
+    // Email form → opens Gmail compose
+    document.getElementById('contact-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const subj  = document.getElementById('msg-subject').value.trim();
+      const body  = document.getElementById('msg-body').value.trim();
+
+      if (!body) {
+        alert('يرجى كتابة رسالتك أولاً.');
+        return;
+      }
+
+      const to      = 'gerald.d@nebras.com.sa';
+      const subject = encodeURIComponent(subj || 'رسالة من موقع Nebras Solutions');
+      const bodyEnc = encodeURIComponent(body);
+
+      // Open Gmail compose — Google will ask the user to sign in if not already
+      window.open(
+        `https://mail.google.com/mail/?view=cm&fs=1&to=${to}&su=${subject}&body=${bodyEnc}`,
+        '_blank'
+      );
+    });
+  </script>
+
+</body>
+</html>
