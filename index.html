@@ -614,44 +614,57 @@
     
     .mm-body {
       flex: 1; display: flex; flex-direction: column;
-      align-items: center; /* تجميع الأزرار في المنتصف تماماً */
-      justify-content: flex-start;
-      padding-top: 50px; /* نزول القائمة للأسفل قليلاً */
+      align-items: center;
+      justify-content: center;
+      padding: 20px 0 60px;
       overflow-y: auto;
     }
     .mm-links {
-      display: flex; flex-direction: column; gap: 14px;
-      width: 90%; max-width: 320px;
+      display: flex; flex-direction: column;
+      width: 100%; max-width: 340px;
     }
     .mm-link {
-      display: flex; align-items: center; gap: 15px;
-      padding: 16px 20px;
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: var(--radius-md);
-      text-decoration: none; color: #fff;
-      transition: all 0.3s ease;
-    }
-    .mm-link-label { font-size: 1.05rem; font-weight: 700; color: rgba(255,255,255,0.9); }
-    .mm-link-icon {
-      width: 36px; height: 36px; border-radius: 10px;
-      background: rgba(59,157,255,0.2); border: 1px solid rgba(59,157,255,0.3);
+      position: relative;
       display: flex; align-items: center; justify-content: center;
-      flex-shrink: 0;
+      padding: 17px 10px;
+      text-decoration: none;
+      text-align: center;
+      opacity: 0;
+      transform: translateY(16px);
+      transition: color 0.3s ease, transform 0.25s ease;
     }
-    .mm-link-icon svg { width: 18px; height: 18px; stroke: var(--sky); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .mobile-menu-overlay.open .mm-link {
+      animation: mmLinkIn 0.55s var(--ease-out) forwards;
+    }
+    @keyframes mmLinkIn {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .mm-link-label {
+      font-size: 1.15rem; font-weight: 700;
+      color: rgba(255,255,255,0.62);
+      letter-spacing: 0.2px;
+      transition: color 0.3s ease, text-shadow 0.3s ease;
+    }
+    .mm-link::after {
+      content: '';
+      position: absolute; bottom: 7px; left: 50%;
+      width: 0; height: 2px; border-radius: 2px;
+      background: var(--sky);
+      transform: translateX(-50%);
+      transition: width 0.35s var(--ease-out);
+    }
+    .mm-link:hover .mm-link-label,
+    .mm-link:active .mm-link-label { color: #ffffff; }
+    .mm-link:hover::after { width: 28px; }
+    .mm-link:active { transform: scale(0.97); }
 
-    /* Active State (Blue background, white text and icon) */
-    .mm-link.active {
-      background: var(--sky) !important;
-      border-color: var(--sky) !important;
+    /* Active State — bold sky-blue text, white-ish glow, rest stay white/dim */
+    .mm-link.active .mm-link-label {
+      color: var(--sky) !important;
+      text-shadow: 0 0 18px rgba(var(--sky-rgb),0.55);
     }
-    .mm-link.active .mm-link-label { color: #fff !important; }
-    .mm-link.active .mm-link-icon {
-      background: rgba(255,255,255,0.25) !important;
-      border-color: rgba(255,255,255,0.5) !important;
-    }
-    .mm-link.active .mm-link-icon svg { stroke: #fff !important; }
+    .mm-link.active::after { width: 36px; }
 
     /* ─── AMBIENT BLOBS ───────────────────────────────── */
     .ambient-blob {
@@ -806,30 +819,12 @@
       </div>
       <div class="mm-body">
         <nav class="mm-links">
-          <a href="#" class="mm-link">
-            <span class="mm-link-icon"><svg viewBox="0 0 24 24"><path d="M3 12l9-9 9 9"/><path d="M5 10v10h14V10"/></svg></span>
-            <span class="mm-link-label">الرئيسية</span>
-          </a>
-          <a href="#stats" class="mm-link">
-            <span class="mm-link-icon"><svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.77z"/></svg></span>
-            <span class="mm-link-label">خدماتنا</span>
-          </a>
-          <a href="https://neb-elc.vercel.app/" target="_blank" rel="noopener" class="mm-link">
-            <span class="mm-link-icon"><svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></span>
-            <span class="mm-link-label">إلكتروميكانيك</span>
-          </a>
-          <a href="projects.html" class="mm-link">
-            <span class="mm-link-icon"><svg viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg></span>
-            <span class="mm-link-label">مشاريع</span>
-          </a>
-          <a href="decorations.html" class="mm-link">
-            <span class="mm-link-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></span>
-            <span class="mm-link-label">ديكورات</span>
-          </a>
-          <a href="contact.html" class="mm-link">
-            <span class="mm-link-icon"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.43 2 2 0 0 1 3.58 1H6.6a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 8.5a16 16 0 0 0 5.55 5.55l.95-.95a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span>
-            <span class="mm-link-label">تواصل معنا</span>
-          </a>
+          <a href="#" class="mm-link" style="animation-delay:0.05s"><span class="mm-link-label">الرئيسية</span></a>
+          <a href="#stats" class="mm-link" style="animation-delay:0.1s"><span class="mm-link-label">خدماتنا</span></a>
+          <a href="https://neb-elc.vercel.app/" target="_blank" rel="noopener" class="mm-link" style="animation-delay:0.15s"><span class="mm-link-label">إلكتروميكانيك</span></a>
+          <a href="projects.html" class="mm-link" style="animation-delay:0.2s"><span class="mm-link-label">مشاريع</span></a>
+          <a href="decorations.html" class="mm-link" style="animation-delay:0.25s"><span class="mm-link-label">ديكورات</span></a>
+          <a href="contact.html" class="mm-link" style="animation-delay:0.3s"><span class="mm-link-label">تواصل معنا</span></a>
         </nav>
       </div>
     </div>
@@ -1072,13 +1067,40 @@
       if (mobileTopbar) mobileTopbar.classList.toggle('scrolled', window.scrollY > 40);
     });
 
+    /* ─── Mark active page link (blue) vs rest (white) ── */
+    (function markActiveMobileLink() {
+      const links = document.querySelectorAll('.mm-link');
+      const currentPath = window.location.pathname.split('/').pop() || 'index.html';
+      links.forEach((link) => {
+        const href = link.getAttribute('href');
+        if (!href || href === '#' ) return;
+        const linkPage = href.split('/').pop();
+        if (linkPage === currentPath) {
+          link.classList.add('active');
+        }
+      });
+      // Fallback: if nothing matched (e.g. on index/home), mark "الرئيسية"
+      if (!document.querySelector('.mm-link.active')) {
+        const home = document.querySelector('.mm-link[href="#"]');
+        if (home) home.classList.add('active');
+      }
+    })();
+
     /* ─── Mobile Menu Drawer Handling ────────────────── */
     const mobileMenuBtn = document.getElementById('mobileMenuBtn');
     const mobileMenuClose = document.getElementById('mobileMenuClose');
     const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
 
     function openMobileMenu() {
-      if (mobileMenuOverlay) mobileMenuOverlay.classList.add('open');
+      if (mobileMenuOverlay) {
+        // restart the entrance animation each time the menu opens
+        mobileMenuOverlay.querySelectorAll('.mm-link').forEach((el) => {
+          el.style.animation = 'none';
+          void el.offsetWidth;
+          el.style.animation = '';
+        });
+        mobileMenuOverlay.classList.add('open');
+      }
       document.body.style.overflow = 'hidden';
       const avatarWrap = document.getElementById('user-avatar-wrap');
       if (avatarWrap) avatarWrap.style.visibility = 'hidden';
