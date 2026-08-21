@@ -574,7 +574,6 @@
       }
       .mobile-topbar.scrolled { box-shadow: 0 8px 30px rgba(15,23,42,0.12); background: rgba(255,255,255,0.9); }
       
-      /* زر الـ 3 شرط بلون أزرق مع خطوط بيضاء */
       .mobile-menu-btn {
         width: 44px; height: 44px; border-radius: 14px; border: none; cursor: pointer;
         display: flex; align-items: center; justify-content: center; flex-shrink: 0;
@@ -587,14 +586,15 @@
       .mobile-topbar-logo img { height: 32px; object-fit: contain; display: block; }
     }
 
-    /* ─── MOBILE MENU OVERLAY (Clean Black Background & Right-Aligned Vertical Links Style) ─── */
+    /* ─── MOBILE MENU OVERLAY (Fixed Display/Visibility Bug) ─── */
     .mobile-menu-overlay {
       position: fixed; inset: 0; z-index: 99999;
-      display: none; opacity: 0; visibility: hidden;
+      display: flex; /* إبقاء الظهور flex والتنقل بالاعتماد على visibility و opacity لتجنب اختفاء المحتوى */
+      opacity: 0; visibility: hidden; pointer-events: none;
       background: #000;
-      transition: opacity 0.35s ease, visibility 0.35s;
+      transition: opacity 0.35s ease, visibility 0.35s ease;
     }
-    .mobile-menu-overlay.open { display: flex; opacity: 1; visibility: visible; }
+    .mobile-menu-overlay.open { opacity: 1; visibility: visible; pointer-events: all; }
     
     .mm-sheet {
       width: 100%; height: 100%; display: flex; flex-direction: column;
@@ -619,7 +619,7 @@
     
     .mm-body {
       flex: 1; display: flex; flex-direction: column;
-      align-items: flex-end; /* جعل المحتوى محاذاة لليمين تماماً مثل الصورة المطلوبة */
+      align-items: flex-end;
       justify-content: flex-start;
       padding: 30px 24px;
       background: #000;
@@ -646,7 +646,6 @@
       width: 100%;
     }
     
-    /* روابط القائمة مرتبطة رأسياً تحت بعضها ومرتبة لليمين بدون مربعات أزرار مع أنيميشن سلس */
     .mm-link {
       display: flex; align-items: center; justify-content: flex-end; gap: 16px;
       padding: 14px 0;
@@ -654,11 +653,10 @@
       border: none;
       text-decoration: none; color: #fff;
       opacity: 0;
-      transform: translateY(12px);
-      transition: transform 0.35s var(--ease-out), opacity 0.35s ease;
+      transform: translateY(15px);
+      transition: transform 0.4s var(--ease-out), opacity 0.4s ease;
     }
 
-    /* ظهور الأزرار تدريجياً وبشكل متتابع عند فتح القائمة */
     .mobile-menu-overlay.open .mm-link {
       opacity: 1;
       transform: translateY(0);
@@ -681,7 +679,6 @@
     }
     .mm-link-icon svg { width: 17px; height: 17px; stroke: #fff; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 
-    /* الحالة النشطة (Active) */
     .mm-link.active .mm-link-label { color: var(--sky) !important; }
     .mm-link.active .mm-link-icon {
       background: rgba(59, 157, 255, 0.25) !important;
@@ -828,7 +825,7 @@
     </button>
   </div>
 
-  <!-- MOBILE MENU OVERLAY (Matched to screenshot layout) -->
+  <!-- MOBILE MENU OVERLAY -->
   <div class="mobile-menu-overlay" id="mobileMenuOverlay">
     <div class="mm-sheet">
       <div class="mm-header">
