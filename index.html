@@ -263,7 +263,7 @@
     @keyframes cueBounce { 0%,100% { transform: translateY(0); } 50% { transform: translateY(6px); } }
     @media (prefers-reduced-motion: reduce) { .hero-scroll-cue .cue-ring { animation: none; } }
 
-    /* ─── SHOWCASE BAND — growth chart + intro card ──── */
+    /* ─── SHOWCASE BAND ──────────────────────────────── */
     #showcase {
       padding: 84px 6%;
       background:
@@ -402,7 +402,7 @@
     @media (prefers-reduced-motion: reduce) { .trend-badge { animation: none; } }
     .stat-label { font-size: 0.92rem; color: var(--text-mid); font-weight: 500; }
 
-    /* ─── GALLERY (stacked list) ─────────────────────── */
+    /* ─── GALLERY ─────────────────────────────────────── */
     #gallery { padding: 20px 0 110px 0; background: var(--bg-soft); }
     .gallery-header { text-align: center; padding: 0 10% 56px; }
     .section-label {
@@ -569,14 +569,7 @@
     .ua-ditem.logout svg { opacity:1; }
     @media (max-width: 768px) { #user-avatar-wrap { top: 72px; left: 14px; } }
 
-    /* ─── MOBILE NAV BUTTONS — glass chips (superseded by top bar + drawer) ── */
-    .mob-nav-row { display: none; }
-    @media (max-width: 768px) {
-      nav { display: none !important; }
-      .mob-nav-row { display: none !important; }
-    }
-
-    /* ─── MOBILE TOP BAR — hamburger + logo, fixed topmost ───────────── */
+    /* ─── MOBILE TOP BAR ─────────────────────────────── */
     .mobile-topbar { display: none; }
     @media (max-width: 768px) {
       .mobile-topbar {
@@ -601,7 +594,7 @@
       .mobile-topbar-logo img { height: 32px; object-fit: contain; display: block; }
     }
 
-    /* ─── MOBILE MENU OVERLAY — dark glass, page-transition style ────── */
+    /* ─── MOBILE MENU OVERLAY ────────────────────────── */
     .mobile-menu-overlay {
       position: fixed; inset: 0; z-index: 1500;
       display: none;
@@ -641,39 +634,38 @@
     .mm-close svg { width: 16px; height: 16px; stroke: rgba(255,255,255,0.85); fill: none; stroke-width: 2.3; stroke-linecap: round; }
     .mm-header-logo img { height: 30px; object-fit: contain; filter: brightness(0) invert(1); display: block; }
     .mm-body { flex: 1; overflow-y: auto; padding: 10px 18px 28px; }
-    .mm-links { display: flex; flex-direction: column; }
+    .mm-links { display: flex; flex-direction: column; gap: 6px; }
     .mm-link {
       position: relative; display: flex; align-items: center; justify-content: space-between; gap: 14px;
-      padding: 17px 4px; text-decoration: none;
+      padding: 16px 14px; text-decoration: none; border-radius: var(--radius-sm);
       border-bottom: 1px solid rgba(255,255,255,0.06);
       overflow: hidden; -webkit-tap-highlight-color: transparent;
+      transition: background 0.3s ease;
     }
-    .mm-link-label { position: relative; z-index: 1; font-family: var(--font-ar); font-size: 1rem; font-weight: 700; color: rgba(255,255,255,0.9); transition: color 0.25s ease; }
+    .mm-link-label { position: relative; z-index: 1; font-family: var(--font-ar); font-size: 1rem; font-weight: 700; color: rgba(255,255,255,0.9); transition: color 0.3s ease; }
     .mm-link-icon {
       position: relative; z-index: 1;
       width: 34px; height: 34px; border-radius: 10px; flex-shrink: 0;
       background: rgba(var(--sky-rgb),0.14); border: 1px solid rgba(var(--sky-rgb),0.3);
       display: flex; align-items: center; justify-content: center;
-      transition: background 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
+      transition: background 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
     }
-    .mm-link-icon svg { width: 16px; height: 16px; stroke: var(--sky); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-    /* press feedback ripple — appears on tap, mirrors the page-load transition cue */
-    .mm-link::after {
-      content: ''; position: absolute; inset: 0; z-index: 0;
-      background: rgba(var(--sky-rgb),0.16);
-      transform: scaleX(0); transform-origin: right;
-      transition: transform 0.4s var(--ease-out);
+    .mm-link-icon svg { width: 16px; height: 16px; stroke: var(--sky); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; transition: stroke 0.3s ease; }
+
+    /* Active State (Blue background, white text and icon) */
+    .mm-link.active {
+      background: var(--sky) !important;
     }
-    .mm-link.pressed::after { transform: scaleX(1); }
-    .mm-link.pressed .mm-link-icon { background: rgba(var(--sky-rgb),0.3); border-color: rgba(var(--sky-rgb),0.6); transform: scale(1.08); }
-    .mm-link.pressed .mm-link-label { color: #fff; }
-    .mm-link-loader {
-      position: absolute; left: 0; right: 0; bottom: 0; height: 2px; z-index: 1;
-      background: linear-gradient(90deg, var(--sky-dark), var(--sky));
-      transform: scaleX(0); transform-origin: right;
+    .mm-link.active .mm-link-label {
+      color: #fff !important;
     }
-    .mm-link.pressed .mm-link-loader { animation: mmLoad 0.62s var(--ease-out) forwards; }
-    @keyframes mmLoad { to { transform: scaleX(1); } }
+    .mm-link.active .mm-link-icon {
+      background: rgba(255,255,255,0.2) !important;
+      border-color: rgba(255,255,255,0.4) !important;
+    }
+    .mm-link.active .mm-link-icon svg {
+      stroke: #fff !important;
+    }
 
     /* ─── AMBIENT DRIFTING GLOW BLOBS ─────────────────── */
     .ambient-blob {
@@ -704,20 +696,6 @@
     /* ─── SCROLL REVEAL ─────────────────────────────────── */
     .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.8s var(--ease-out), transform 0.8s var(--ease-out); }
     .reveal.in-view { opacity: 1; transform: none; }
-
-    /* ─── GLASS SHIMMER SWEEP (on hover) ────────────────── */
-    .gallery-item, .contact-item, .btn-glass, .stat-card { position: relative; }
-    .gallery-item::before, .contact-item::before, .btn-glass::before, .stat-card::before {
-      content: ''; position: absolute; inset: 0; z-index: 3; pointer-events: none;
-      background: linear-gradient(115deg, transparent 40%, rgba(255,255,255,0.4) 50%, transparent 60%);
-      background-size: 250% 250%; background-position: 120% 0;
-      opacity: 0; transition: opacity 0.2s ease;
-      border-radius: inherit;
-    }
-    .gallery-item:hover::before, .contact-item:hover::before, .btn-glass:hover::before, .stat-card:hover::before {
-      opacity: 1; animation: shimmerSweep 1.1s ease forwards;
-    }
-    @keyframes shimmerSweep { from { background-position: 120% 0; } to { background-position: -20% 0; } }
 
     /* ─── LIGHTBOX ───────────────────────────────────────── */
     #lightbox {
@@ -784,7 +762,7 @@
     </div>
   </div>
 
-  <!-- USER AVATAR (top-left, shown when logged in) -->
+  <!-- USER AVATAR -->
   <div id="user-avatar-wrap">
     <div class="ua-btn" id="ua-btn" onclick="uaToggle()">
       <img id="ua-img" src="" alt="user" />
@@ -848,37 +826,30 @@
           <a href="#" class="mm-link">
             <span class="mm-link-label">الرئيسية</span>
             <span class="mm-link-icon"><svg viewBox="0 0 24 24"><path d="M3 12l9-9 9 9"/><path d="M5 10v10h14V10"/></svg></span>
-            <span class="mm-link-loader"></span>
           </a>
           <a href="#stats" class="mm-link">
             <span class="mm-link-label">خدماتنا</span>
             <span class="mm-link-icon"><svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.77z"/></svg></span>
-            <span class="mm-link-loader"></span>
           </a>
           <a href="https://neb-elc.vercel.app/" target="_blank" rel="noopener" class="mm-link">
             <span class="mm-link-label">إلكتروميكانيك</span>
             <span class="mm-link-icon"><svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></span>
-            <span class="mm-link-loader"></span>
           </a>
           <a href="projects.html" class="mm-link">
             <span class="mm-link-label">مشاريع</span>
             <span class="mm-link-icon"><svg viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg></span>
-            <span class="mm-link-loader"></span>
           </a>
           <a href="decorations.html" class="mm-link">
             <span class="mm-link-label">ديكورات</span>
             <span class="mm-link-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></span>
-            <span class="mm-link-loader"></span>
           </a>
           <a href="contact.html" class="mm-link">
             <span class="mm-link-label">تواصل معنا</span>
             <span class="mm-link-icon"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.43 2 2 0 0 1 3.58 1H6.6a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 8.5a16 16 0 0 0 5.55 5.55l.95-.95a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span>
-            <span class="mm-link-loader"></span>
           </a>
           <a href="login.html" class="mm-link">
             <span class="mm-link-label">تسجيل الدخول</span>
             <span class="mm-link-icon"><svg viewBox="0 0 24 24"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg></span>
-            <span class="mm-link-loader"></span>
           </a>
         </nav>
       </div>
@@ -925,7 +896,7 @@
     </button>
   </section>
 
-  <!-- SHOWCASE BAND — growth chart + intro card -->
+  <!-- SHOWCASE BAND -->
   <section id="showcase">
     <div class="showcase-grid">
       <div class="growth-card reveal" aria-hidden="true">
@@ -978,35 +949,6 @@
       </div>
     </div>
   </section>
-
-  <!-- MOBILE NAV BUTTONS -->
-  <div class="mob-nav-row">
-    <a class="mob-nav-btn" href="#">
-      <div class="mob-nav-rect" style="background-image:url('https://i.postimg.cc/90b7pjfL/alryysyt.png')">
-        <span class="mob-nav-label"><span class="ar">الرئيسية</span><span class="en">Home</span></span>
-      </div>
-    </a>
-    <a class="mob-nav-btn" href="https://neb-elc.vercel.app/" target="_blank" rel="noopener">
-      <div class="mob-nav-rect" style="background-image:url('https://i.postimg.cc/1XBqHZzL/alktrwmykank.jpg')">
-        <span class="mob-nav-label"><span class="ar">إلكتروميكانيك</span><span class="en">Electromechanical</span></span>
-      </div>
-    </a>
-    <a class="mob-nav-btn" href="projects.html">
-      <div class="mob-nav-rect" style="background-image:url('https://i.postimg.cc/FFw605Sv/Whats-App-Image-2026-05-08-at-21-48-41.jpg')">
-        <span class="mob-nav-label"><span class="ar">مشاريع</span><span class="en">Projects</span></span>
-      </div>
-    </a>
-    <a class="mob-nav-btn" href="decorations.html">
-      <div class="mob-nav-rect" style="background-image:url('https://i.postimg.cc/59D0h0hK/Whats-App-Image-2026-05-08-at-21-26-52.jpg')">
-        <span class="mob-nav-label"><span class="ar">ديكورات</span><span class="en">Decorations</span></span>
-      </div>
-    </a>
-    <a class="mob-nav-btn" href="contact.html">
-      <div class="mob-nav-rect" style="background-image:url('https://i.postimg.cc/gkPwwjgX/Whats-App-Image-2026-05-08-at-21-39-02.jpg')">
-        <span class="mob-nav-label"><span class="ar">تواصل معنا</span><span class="en">Contact Us</span></span>
-      </div>
-    </a>
-  </div>
 
   <!-- STATS -->
   <section id="stats">
@@ -1169,24 +1111,31 @@
     }
     if (mobileMenuBtn) mobileMenuBtn.addEventListener('click', openMobileMenu);
     if (mobileMenuClose) mobileMenuClose.addEventListener('click', closeMobileMenu);
+    
     if (mobileMenuOverlay) {
       mobileMenuOverlay.querySelectorAll('.mm-link').forEach((link) => {
         link.addEventListener('click', (e) => {
+          // Add active state styling (blue background, white text & icon)
+          mobileMenuOverlay.querySelectorAll('.mm-link').forEach(l => l.classList.remove('active'));
+          link.classList.add('active');
+
           const href = link.getAttribute('href');
-          link.classList.add('pressed');
           if (href && href.startsWith('#')) {
             e.preventDefault();
             setTimeout(() => {
               closeMobileMenu();
               const target = document.querySelector(href);
               if (target) target.scrollIntoView({ behavior: 'smooth' });
-              link.classList.remove('pressed');
-            }, 420);
+            }, 350);
           } else {
-            // internal page links: let the site-wide cinematic page-transition
-            // (added at the bottom of this file) handle the fade + navigation.
-            // Keep the drawer visible under it briefly for a smooth handoff.
-            setTimeout(closeMobileMenu, 500);
+            const pageTransition = document.getElementById('page-transition');
+            setTimeout(() => {
+              if (pageTransition) pageTransition.classList.add('active');
+            }, 100);
+            setTimeout(() => {
+              closeMobileMenu();
+              window.location.href = href;
+            }, 550);
           }
         });
       });
@@ -1232,7 +1181,7 @@
       }
     });
 
-    // Build gallery grid (stacked list) with a glass "view" tag on hover
+    // Build gallery grid
     const galleryImages = [
       { src: "https://i.postimg.cc/63vMb0hC/1.jpg", alt: "مشروع 1" },
       { src: "https://i.postimg.cc/s28nJ85X/2.jpg", alt: "مشروع 2" },
@@ -1340,7 +1289,7 @@
       spotlightTimeout = setTimeout(() => spotlight.classList.remove('active'), 1400);
     }, { passive: true });
 
-    /* ─── Scroll cue → smooth scroll to gallery ─────── */
+    /* ─── Scroll cue ────────────────────────────────── */
     const scrollCue = document.getElementById('scrollCue');
     if (scrollCue) {
       scrollCue.addEventListener('click', () => {
@@ -1348,7 +1297,7 @@
       });
     }
 
-    /* ─── Reveal-on-scroll for .reveal elements ─────── */
+    /* ─── Reveal-on-scroll ───────────────────────────── */
     const revealObserver = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
@@ -1385,7 +1334,7 @@
     }, { threshold: 0.5 });
     document.querySelectorAll('.stat-number').forEach((el) => statObserver.observe(el));
 
-    /* ─── Cinematic page transitions on internal navigation ─── */
+    /* ─── Cinematic page transitions ─────────────────── */
     const pageTransition = document.getElementById('page-transition');
     function isInternalNav(link) {
       const href = link.getAttribute('href');
