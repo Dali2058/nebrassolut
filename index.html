@@ -392,11 +392,12 @@
     @media (prefers-reduced-motion: reduce) { .trend-badge { animation: none; } }
     .stat-label { font-size: 0.92rem; color: var(--text-mid); font-weight: 500; }
 
-    /* ─── TRANSPARENT BLUE INFINITE PARTNERS TICKER (UPDATED) ─── */
+    /* ─── SEAMLESS INFINITE PARTNERS TICKER (GAP-LESS) ─── */
     .partners-ticker-section {
-      padding: 15px 0 60px 0;
+      padding: 10px 0 50px 0;
       background: transparent;
       overflow: hidden;
+      width: 100%;
     }
     .ticker-wrap {
       position: relative;
@@ -409,16 +410,17 @@
     }
     .ticker-track {
       display: flex;
-      gap: 100px; /* مسافة متناسقة لعدم وجود فراغات */
+      gap: 80px;
       align-items: center;
       width: max-content;
-      animation: tickerScroll 26s linear infinite;
+      will-change: transform;
+      animation: tickerScroll 25s linear infinite;
     }
     .ticker-wrap:hover .ticker-track {
       animation-play-state: paused;
     }
     .partner-logo-item {
-      height: 75px; /* تم تكبير اللوجوهات */
+      height: 75px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -426,7 +428,7 @@
       transition: transform 0.3s ease;
     }
     .partner-logo-item:hover {
-      transform: scale(1.12);
+      transform: scale(1.1);
     }
     .partner-logo-item img {
       height: 100%;
@@ -434,13 +436,13 @@
       width: auto;
       object-fit: contain;
       display: block;
-      /* فلتر لتحويل اللون إلى اللون الأزرق (#3b9dff) بشكل جذاب */
+      /* توحيد اللون الأزرق بالكامل */
       filter: brightness(0) saturate(100%) invert(53%) sepia(88%) saturate(1987%) hue-rotate(190deg) brightness(102%) contrast(101%);
       transition: filter 0.3s ease;
     }
     @keyframes tickerScroll {
       0% { transform: translateX(0); }
-      100% { transform: translateX(-50%); }
+      100% { transform: translateX(calc(-100% / 3)); }
     }
     @media (prefers-reduced-motion: reduce) {
       .ticker-track { animation: none; }
@@ -1054,27 +1056,36 @@
     </div>
   </section>
 
-  <!-- BLUE & LARGE SEAMLESS PARTNERS TICKER (PLACED DIRECTLY UNDER STATS) -->
+  <!-- GAP-LESS SEAMLESS BLUE PARTNERS TICKER -->
   <section class="partners-ticker-section">
     <div class="ticker-wrap">
       <div class="ticker-track">
-        <!-- Original 7 Logos -->
-        <div class="partner-logo-item"><img src="https://i.postimg.cc/SxVB6y80/Em1.png" alt="Partner Logo"></div>
-        <div class="partner-logo-item"><img src="https://i.postimg.cc/KYzdQdrT/Group-1.png" alt="Partner Logo"></div>
-        <div class="partner-logo-item"><img src="https://i.postimg.cc/zGpsCJhd/image.png" alt="Partner Logo"></div>
-        <div class="partner-logo-item"><img src="https://i.postimg.cc/JzKfN1JL/thailand-logo-removebg-preview.png" alt="Partner Logo"></div>
-        <div class="partner-logo-item"><img src="https://i.postimg.cc/mgVvYbMf/ticket-(3).png" alt="Partner Logo"></div>
-        <div class="partner-logo-item"><img src="https://i.postimg.cc/L4BNYxj6/Asset-114x.png" alt="Partner Logo"></div>
-        <div class="partner-logo-item"><img src="https://i.postimg.cc/qRHxgKRR/Asset-4-16x.png" alt="Partner Logo"></div>
+        <!-- Set 1 (7 Logos) -->
+        <div class="partner-logo-item"><img src="https://i.postimg.cc/SxVB6y80/Em1.png" alt="Partner"></div>
+        <div class="partner-logo-item"><img src="https://i.postimg.cc/KYzdQdrT/Group-1.png" alt="Partner"></div>
+        <div class="partner-logo-item"><img src="https://i.postimg.cc/zGpsCJhd/image.png" alt="Partner"></div>
+        <div class="partner-logo-item"><img src="https://i.postimg.cc/JzKfN1JL/thailand-logo-removebg-preview.png" alt="Partner"></div>
+        <div class="partner-logo-item"><img src="https://i.postimg.cc/mgVvYbMf/ticket-(3).png" alt="Partner"></div>
+        <div class="partner-logo-item"><img src="https://i.postimg.cc/L4BNYxj6/Asset-114x.png" alt="Partner"></div>
+        <div class="partner-logo-item"><img src="https://i.postimg.cc/qRHxgKRR/Asset-4-16x.png" alt="Partner"></div>
         
-        <!-- Duplicated 7 Logos for Seamless Infinite Loop -->
-        <div class="partner-logo-item"><img src="https://i.postimg.cc/SxVB6y80/Em1.png" alt="Partner Logo"></div>
-        <div class="partner-logo-item"><img src="https://i.postimg.cc/KYzdQdrT/Group-1.png" alt="Partner Logo"></div>
-        <div class="partner-logo-item"><img src="https://i.postimg.cc/zGpsCJhd/image.png" alt="Partner Logo"></div>
-        <div class="partner-logo-item"><img src="https://i.postimg.cc/JzKfN1JL/thailand-logo-removebg-preview.png" alt="Partner Logo"></div>
-        <div class="partner-logo-item"><img src="https://i.postimg.cc/mgVvYbMf/ticket-(3).png" alt="Partner Logo"></div>
-        <div class="partner-logo-item"><img src="https://i.postimg.cc/L4BNYxj6/Asset-114x.png" alt="Partner Logo"></div>
-        <div class="partner-logo-item"><img src="https://i.postimg.cc/qRHxgKRR/Asset-4-16x.png" alt="Partner Logo"></div>
+        <!-- Set 2 (Duplicated for Seamless Loop) -->
+        <div class="partner-logo-item"><img src="https://i.postimg.cc/SxVB6y80/Em1.png" alt="Partner"></div>
+        <div class="partner-logo-item"><img src="https://i.postimg.cc/KYzdQdrT/Group-1.png" alt="Partner"></div>
+        <div class="partner-logo-item"><img src="https://i.postimg.cc/zGpsCJhd/image.png" alt="Partner"></div>
+        <div class="partner-logo-item"><img src="https://i.postimg.cc/JzKfN1JL/thailand-logo-removebg-preview.png" alt="Partner"></div>
+        <div class="partner-logo-item"><img src="https://i.postimg.cc/mgVvYbMf/ticket-(3).png" alt="Partner"></div>
+        <div class="partner-logo-item"><img src="https://i.postimg.cc/L4BNYxj6/Asset-114x.png" alt="Partner"></div>
+        <div class="partner-logo-item"><img src="https://i.postimg.cc/qRHxgKRR/Asset-4-16x.png" alt="Partner"></div>
+
+        <!-- Set 3 (Extra Buffer to Completely Eliminate Any Gap) -->
+        <div class="partner-logo-item"><img src="https://i.postimg.cc/SxVB6y80/Em1.png" alt="Partner"></div>
+        <div class="partner-logo-item"><img src="https://i.postimg.cc/KYzdQdrT/Group-1.png" alt="Partner"></div>
+        <div class="partner-logo-item"><img src="https://i.postimg.cc/zGpsCJhd/image.png" alt="Partner"></div>
+        <div class="partner-logo-item"><img src="https://i.postimg.cc/JzKfN1JL/thailand-logo-removebg-preview.png" alt="Partner"></div>
+        <div class="partner-logo-item"><img src="https://i.postimg.cc/mgVvYbMf/ticket-(3).png" alt="Partner"></div>
+        <div class="partner-logo-item"><img src="https://i.postimg.cc/L4BNYxj6/Asset-114x.png" alt="Partner"></div>
+        <div class="partner-logo-item"><img src="https://i.postimg.cc/qRHxgKRR/Asset-4-16x.png" alt="Partner"></div>
       </div>
     </div>
   </section>
