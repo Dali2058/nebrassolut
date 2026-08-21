@@ -392,6 +392,62 @@
     @media (prefers-reduced-motion: reduce) { .trend-badge { animation: none; } }
     .stat-label { font-size: 0.92rem; color: var(--text-mid); font-weight: 500; }
 
+    /* ─── INFINITE PARTNERS TICKER (NEW) ──────────────── */
+    .partners-ticker-section {
+      padding: 20px 0 50px 0;
+      background: transparent;
+      overflow: hidden;
+    }
+    .ticker-wrap {
+      position: relative;
+      width: 100%;
+      overflow: hidden;
+      background: var(--glass-bg);
+      border-top: 1px solid var(--glass-border);
+      border-bottom: 1px solid var(--glass-border);
+      padding: 30px 0;
+      -webkit-backdrop-filter: blur(var(--blur-sm));
+      backdrop-filter: blur(var(--blur-sm));
+      box-shadow: var(--shadow-glass-sm);
+    }
+    .ticker-track {
+      display: flex;
+      gap: 70px;
+      align-items: center;
+      width: max-content;
+      animation: tickerScroll 25s linear infinite;
+    }
+    .ticker-wrap:hover .ticker-track {
+      animation-play-state: paused;
+    }
+    .partner-logo-item {
+      height: 65px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      filter: grayscale(100%) opacity(0.7);
+      transition: filter 0.3s ease, transform 0.3s ease;
+    }
+    .partner-logo-item:hover {
+      filter: grayscale(0%) opacity(1);
+      transform: scale(1.12);
+    }
+    .partner-logo-item img {
+      height: 100%;
+      max-height: 65px;
+      width: auto;
+      object-fit: contain;
+      display: block;
+    }
+    @keyframes tickerScroll {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .ticker-track { animation: none; }
+    }
+
     /* ─── GALLERY ─────────────────────────────────────── */
     #gallery { padding: 20px 0 110px 0; background: var(--bg-soft); }
     .gallery-header { text-align: center; padding: 0 10% 56px; }
@@ -531,6 +587,8 @@
       .hero-heading { font-size: 2.1rem; }
       .gallery-list { padding: 0 5%; gap: 18px; }
       .gallery-item { aspect-ratio: 4 / 3; }
+      .partner-logo-item { height: 50px; }
+      .partner-logo-item img { max-height: 50px; }
       footer { flex-direction: column; gap: 14px; text-align: center; }
       .stats-grid { grid-template-columns: repeat(2, 1fr); }
     }
@@ -586,10 +644,10 @@
       .mobile-topbar-logo img { height: 32px; object-fit: contain; display: block; }
     }
 
-    /* ─── MOBILE MENU OVERLAY (Fixed Display/Visibility Bug) ─── */
+    /* ─── MOBILE MENU OVERLAY ─── */
     .mobile-menu-overlay {
       position: fixed; inset: 0; z-index: 99999;
-      display: flex; /* إبقاء الظهور flex والتنقل بالاعتماد على visibility و opacity لتجنب اختفاء المحتوى */
+      display: flex;
       opacity: 0; visibility: hidden; pointer-events: none;
       background: #000;
       transition: opacity 0.35s ease, visibility 0.35s ease;
@@ -998,6 +1056,29 @@
     </div>
   </section>
 
+  <!-- INFINITE PARTNERS TICKER (PLACED DIRECTLY BELOW STATS) -->
+  <section class="partners-ticker-section">
+    <div class="ticker-wrap">
+      <div class="ticker-track">
+        <!-- Original 6 Logos -->
+        <div class="partner-logo-item"><img src="https://i.postimg.cc/SxVB6y80/Em1.png" alt="Partner Logo"></div>
+        <div class="partner-logo-item"><img src="https://i.postimg.cc/KYzdQdrT/Group-1.png" alt="Partner Logo"></div>
+        <div class="partner-logo-item"><img src="https://i.postimg.cc/zGpsCJhd/image.png" alt="Partner Logo"></div>
+        <div class="partner-logo-item"><img src="https://i.postimg.cc/JzKfN1JL/thailand-logo-removebg-preview.png" alt="Partner Logo"></div>
+        <div class="partner-logo-item"><img src="https://i.postimg.cc/mgVvYbMf/ticket-(3).png" alt="Partner Logo"></div>
+        <div class="partner-logo-item"><img src="https://i.postimg.cc/L4BNYxj6/Asset-114x.png" alt="Partner Logo"></div>
+        
+        <!-- Duplicated 6 Logos for Seamless Infinite Loop -->
+        <div class="partner-logo-item"><img src="https://i.postimg.cc/SxVB6y80/Em1.png" alt="Partner Logo"></div>
+        <div class="partner-logo-item"><img src="https://i.postimg.cc/KYzdQdrT/Group-1.png" alt="Partner Logo"></div>
+        <div class="partner-logo-item"><img src="https://i.postimg.cc/zGpsCJhd/image.png" alt="Partner Logo"></div>
+        <div class="partner-logo-item"><img src="https://i.postimg.cc/JzKfN1JL/thailand-logo-removebg-preview.png" alt="Partner Logo"></div>
+        <div class="partner-logo-item"><img src="https://i.postimg.cc/mgVvYbMf/ticket-(3).png" alt="Partner Logo"></div>
+        <div class="partner-logo-item"><img src="https://i.postimg.cc/L4BNYxj6/Asset-114x.png" alt="Partner Logo"></div>
+      </div>
+    </div>
+  </section>
+
   <!-- GALLERY -->
   <section id="gallery">
     <div class="gallery-header reveal">
@@ -1304,7 +1385,7 @@
       spotlightTimeout = setTimeout(() => spotlight.classList.remove('active'), 1400);
     }, { passive: true });
 
-    /* ─── Scroll Cue ────────────────────────────────── */
+    /* ─── Scroll Cue ────────────────────────────────-- */
     const scrollCue = document.getElementById('scrollCue');
     if (scrollCue) {
       scrollCue.addEventListener('click', () => {
@@ -1361,7 +1442,7 @@
     }
     document.querySelectorAll('a[href]').forEach((link) => {
       if (!isInternalNav(link)) return;
-      link.addEventListener('click', (e) => {
+      link.href && link.addEventListener('click', (e) => {
         e.preventDefault();
         const dest = link.getAttribute('href');
         pageTransition.classList.add('active');
