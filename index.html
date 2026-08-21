@@ -574,7 +574,7 @@
       }
       .mobile-topbar.scrolled { box-shadow: 0 8px 30px rgba(15,23,42,0.12); background: rgba(255,255,255,0.9); }
       
-      /* زر الـ 3 شرط بلون أزرق مع خطوط بيضاء ممتازة */
+      /* زر الـ 3 شرط بلون أزرق مع خطوط بيضاء */
       .mobile-menu-btn {
         width: 44px; height: 44px; border-radius: 14px; border: none; cursor: pointer;
         display: flex; align-items: center; justify-content: center; flex-shrink: 0;
@@ -587,14 +587,14 @@
       .mobile-topbar-logo img { height: 32px; object-fit: contain; display: block; }
     }
 
-    /* ─── MOBILE MENU OVERLAY (Blue Theme, White Lines, Stacked Vertical Links with Animation) ─── */
+    /* ─── MOBILE MENU OVERLAY (Blue Theme, Reliable Animation) ─── */
     .mobile-menu-overlay {
       position: fixed; inset: 0; z-index: 99999;
       display: none; opacity: 0; visibility: hidden;
-      background: rgba(6, 12, 22, 0.92);
+      background: rgba(6, 12, 22, 0.94);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
-      transition: opacity 0.4s var(--ease-out), visibility 0.4s;
+      transition: opacity 0.35s ease, visibility 0.35s;
     }
     .mobile-menu-overlay.open { display: flex; opacity: 1; visibility: visible; }
     
@@ -622,7 +622,7 @@
       flex: 1; display: flex; flex-direction: column;
       align-items: center;
       justify-content: flex-start;
-      padding: 40px 20px;
+      padding: 35px 20px;
       overflow-y: auto;
     }
     .mm-links {
@@ -630,36 +630,34 @@
       width: 100%; max-width: 360px;
     }
     
-    /* روابط القائمة مرتبطة رأسياً تحت بعضها تماماً وبشكل جذاب ومنسق */
+    /* روابط القائمة مرتبطة رأسياً ومضمونة الظهور مع أنيميشن سلس */
     .mm-link {
       display: flex; align-items: center; gap: 16px;
       padding: 16px 22px;
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.15);
       border-radius: var(--radius-md);
       text-decoration: none; color: #fff;
       box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-      transition: all 0.35s var(--ease-out);
-      opacity: 0; transform: translateY(20px);
+      opacity: 0;
+      transform: translateY(20px);
+      transition: transform 0.4s var(--ease-out), opacity 0.4s ease, background 0.3s ease, border-color 0.3s ease;
     }
-    
-    /* أنيميشن دخول متتابع لعناصر القائمة */
-    .mobile-menu-overlay.open .mm-link {
-      animation: mmLinkSlideIn 0.5s var(--ease-out) forwards;
-    }
-    .mobile-menu-overlay.open .mm-link:nth-child(1) { animation-delay: 0.08s; }
-    .mobile-menu-overlay.open .mm-link:nth-child(2) { animation-delay: 0.14s; }
-    .mobile-menu-overlay.open .mm-link:nth-child(3) { animation-delay: 0.20s; }
-    .mobile-menu-overlay.open .mm-link:nth-child(4) { animation-delay: 0.26s; }
-    .mobile-menu-overlay.open .mm-link:nth-child(5) { animation-delay: 0.32s; }
-    .mobile-menu-overlay.open .mm-link:nth-child(6) { animation-delay: 0.38s; }
 
-    @keyframes mmLinkSlideIn {
-      to { opacity: 1; transform: translateY(0); }
+    /* ظهور الأزرار تدريجياً وبشكل متتابع عند فتح القائمة */
+    .mobile-menu-overlay.open .mm-link {
+      opacity: 1;
+      transform: translateY(0);
     }
+    .mobile-menu-overlay.open .mm-link:nth-child(1) { transition-delay: 0.05s; }
+    .mobile-menu-overlay.open .mm-link:nth-child(2) { transition-delay: 0.1s; }
+    .mobile-menu-overlay.open .mm-link:nth-child(3) { transition-delay: 0.15s; }
+    .mobile-menu-overlay.open .mm-link:nth-child(4) { transition-delay: 0.2s; }
+    .mobile-menu-overlay.open .mm-link:nth-child(5) { transition-delay: 0.25s; }
+    .mobile-menu-overlay.open .mm-link:nth-child(6) { transition-delay: 0.3s; }
 
     .mm-link:hover {
-      background: rgba(59, 157, 255, 0.18);
+      background: rgba(59, 157, 255, 0.22);
       border-color: var(--sky);
       transform: translateX(-4px);
     }
@@ -673,7 +671,7 @@
     }
     .mm-link-icon svg { width: 18px; height: 18px; stroke: #fff; fill: none; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
 
-    /* الحالة النشطة (Active) باللون الأزرق المشرق مع خطوط وحدود بيضاء نقية */
+    /* الحالة النشطة (Active) باللون الأزرق المشرق مع خطوط وحدود بيضاء */
     .mm-link.active {
       background: var(--sky) !important;
       border-color: #fff !important;
@@ -826,7 +824,7 @@
     </button>
   </div>
 
-  <!-- MOBILE MENU OVERLAY (Blue Theme, White lines, Vertical column list) -->
+  <!-- MOBILE MENU OVERLAY -->
   <div class="mobile-menu-overlay" id="mobileMenuOverlay">
     <div class="mm-sheet">
       <div class="mm-header">
