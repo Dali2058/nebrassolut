@@ -567,32 +567,101 @@
     .ua-ditem.logout { color: #ff8585; }
     .ua-ditem svg { flex-shrink:0; opacity:0.75; }
     .ua-ditem.logout svg { opacity:1; }
-    @media (max-width: 768px) { #user-avatar-wrap { top: 12px; left: 14px; } }
+    @media (max-width: 768px) { #user-avatar-wrap { top: 72px; left: 14px; } }
 
-    /* ─── MOBILE NAV BUTTONS — glass chips ────────────── */
+    /* ─── MOBILE NAV BUTTONS — glass chips (superseded by top bar + drawer) ── */
     .mob-nav-row { display: none; }
     @media (max-width: 768px) {
       nav { display: none !important; }
-      .mob-nav-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 20px 14px; background: var(--bg-page); }
-      .mob-nav-btn { display: block; text-decoration: none; }
-      .mob-nav-btn:last-child { grid-column: 1 / -1; margin-top: 6px; }
-      .mob-nav-rect { width: 100%; height: 130px; border-radius: var(--radius-md); background-size: cover; background-position: center; position: relative; overflow: hidden; box-shadow: var(--shadow-glass-sm); transition: transform 0.22s ease; }
-      .mob-nav-btn:last-child .mob-nav-rect { height: 110px; }
-      .mob-nav-btn:active .mob-nav-rect { transform: scale(0.94); }
-      .mob-nav-rect::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to top, rgba(5,14,20,0.7) 0%, rgba(5,14,20,0.05) 65%); }
-      .mob-nav-label {
-        position: absolute; bottom: 8px; right: 8px; left: 8px; z-index: 1;
-        display: flex; flex-direction: column; align-items: center; gap: 1px;
-        padding: 8px 6px;
-        background: rgba(255,255,255,0.14);
-        -webkit-backdrop-filter: blur(var(--blur-sm));
-        backdrop-filter: blur(var(--blur-sm));
-        border: 1px solid rgba(255,255,255,0.3);
-        border-radius: var(--radius-sm);
-      }
-      .mob-nav-label .ar { font-family: var(--font-ar); font-size: 0.88rem; font-weight: 700; color: #fff; }
-      .mob-nav-label .en { font-family: var(--font-en); font-size: 0.58rem; font-weight: 400; color: rgba(255,255,255,0.8); letter-spacing: 1px; text-transform: uppercase; }
+      .mob-nav-row { display: none !important; }
     }
+
+    /* ─── MOBILE TOP BAR — hamburger + logo, fixed topmost ───────────── */
+    .mobile-topbar { display: none; }
+    @media (max-width: 768px) {
+      .mobile-topbar {
+        display: flex; align-items: center; justify-content: space-between;
+        position: fixed; top: 0; left: 0; right: 0; z-index: 1400;
+        height: 62px; padding: 0 16px;
+        background: rgba(255,255,255,0.72);
+        -webkit-backdrop-filter: blur(var(--blur-lg)) saturate(180%);
+        backdrop-filter: blur(var(--blur-lg)) saturate(180%);
+        border-bottom: 1px solid rgba(255,255,255,0.5);
+        box-shadow: var(--shadow-glass-sm);
+        transition: box-shadow 0.35s ease, background 0.35s ease;
+      }
+      .mobile-topbar.scrolled { box-shadow: 0 8px 30px rgba(15,23,42,0.12); background: rgba(255,255,255,0.9); }
+      .mobile-menu-btn {
+        width: 42px; height: 42px; border-radius: 13px; border: none; cursor: pointer;
+        display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+        background: linear-gradient(135deg, var(--sky-dark), var(--violet));
+        box-shadow: 0 6px 16px rgba(var(--sky-rgb),0.35);
+      }
+      .mobile-menu-btn svg { width: 19px; height: 19px; stroke: #fff; fill: none; stroke-width: 2.3; stroke-linecap: round; }
+      .mobile-topbar-logo img { height: 32px; object-fit: contain; display: block; }
+    }
+
+    /* ─── MOBILE MENU OVERLAY — page-transition style drawer ─────────── */
+    .mobile-menu-overlay {
+      position: fixed; inset: 0; z-index: 1500;
+      display: none;
+      opacity: 0; visibility: hidden;
+      background: rgba(6,10,16,0.55);
+      -webkit-backdrop-filter: blur(20px) saturate(160%);
+      backdrop-filter: blur(20px) saturate(160%);
+      transition: opacity 0.45s var(--ease-out), visibility 0.45s;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    .mobile-menu-overlay.open { opacity: 1; visibility: visible; }
+    @media (max-width: 768px) { .mobile-menu-overlay { display: flex; } }
+    .mm-sheet {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column;
+      transform: scale(0.92) translateY(18px); opacity: 0;
+      transition: transform 0.5s var(--ease-out), opacity 0.5s var(--ease-out);
+    }
+    .mobile-menu-overlay.open .mm-sheet { transform: scale(1) translateY(0); opacity: 1; }
+    .mm-header {
+      position: relative; flex-shrink: 0; padding: 20px 20px 34px;
+      background: linear-gradient(120deg, var(--sky-dark) 0%, var(--sky) 55%, var(--violet) 120%);
+      display: flex; align-items: flex-start; justify-content: space-between;
+      border-radius: 0 0 28px 28px;
+      box-shadow: 0 14px 34px rgba(var(--sky-rgb),0.28);
+    }
+    .mm-close {
+      width: 38px; height: 38px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.4);
+      background: rgba(255,255,255,0.14); cursor: pointer;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .mm-close svg { width: 17px; height: 17px; stroke: #fff; fill: none; stroke-width: 2.3; stroke-linecap: round; }
+    .mm-header-logo img { height: 34px; object-fit: contain; filter: brightness(0) invert(1); display: block; }
+    .mm-header-tag { position: absolute; bottom: 12px; right: 20px; left: 20px; font-family: var(--font-en); font-size: 0.66rem; letter-spacing: 3px; color: rgba(255,255,255,0.75); text-transform: uppercase; }
+    .mm-body { flex: 1; overflow-y: auto; padding: 22px 18px 24px; background: var(--bg-elevated); }
+    .mm-links { display: flex; flex-direction: column; gap: 2px; }
+    .mm-link {
+      display: flex; align-items: center; justify-content: space-between; gap: 14px;
+      padding: 16px 6px; text-decoration: none;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+      transition: padding-right 0.25s ease, color 0.25s ease;
+    }
+    .mm-link:active { padding-right: 12px; }
+    .mm-link-label { font-family: var(--font-ar); font-size: 1rem; font-weight: 700; color: rgba(255,255,255,0.92); }
+    .mm-link-icon {
+      width: 34px; height: 34px; border-radius: 10px; flex-shrink: 0;
+      background: rgba(var(--sky-rgb),0.16); border: 1px solid rgba(var(--sky-rgb),0.32);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .mm-link-icon svg { width: 16px; height: 16px; stroke: var(--sky); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .mm-login {
+      margin-top: 18px; display: flex; align-items: center; justify-content: center; gap: 10px;
+      padding: 15px; border-radius: var(--radius-pill); text-decoration: none;
+      background: linear-gradient(120deg, var(--sky-dark), var(--sky));
+      box-shadow: 0 10px 26px rgba(var(--sky-rgb),0.3);
+    }
+    .mm-login svg { width: 17px; height: 17px; stroke: #fff; fill: none; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+    .mm-login span { font-family: var(--font-ar); font-size: 0.96rem; font-weight: 700; color: #fff; }
+
     /* ─── AMBIENT DRIFTING GLOW BLOBS ─────────────────── */
     .ambient-blob {
       position: fixed; z-index: 0; pointer-events: none;
@@ -738,6 +807,63 @@
     </div>
     <div class="preloader-tagline">We Light Your Future</div>
     <div class="preloader-pct" id="preloader-pct"><span id="preloader-pct-num">0</span><span class="preloader-pct-sign">%</span></div>
+  </div>
+
+  <!-- MOBILE TOP BAR -->
+  <div class="mobile-topbar" id="mobileTopbar">
+    <div class="mobile-topbar-logo">
+      <img src="https://i.postimg.cc/8PShHcVc/nebras-logo.png" alt="Nebras Solutions" />
+    </div>
+    <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="فتح القائمة">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+  </div>
+
+  <!-- MOBILE MENU OVERLAY -->
+  <div class="mobile-menu-overlay" id="mobileMenuOverlay">
+    <div class="mm-sheet">
+      <div class="mm-header">
+        <div class="mm-header-logo">
+          <img src="https://i.postimg.cc/8PShHcVc/nebras-logo.png" alt="Nebras Solutions" />
+        </div>
+        <button class="mm-close" id="mobileMenuClose" aria-label="إغلاق القائمة">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+        <div class="mm-header-tag">NEBRAS SOLUTIONS</div>
+      </div>
+      <div class="mm-body">
+        <nav class="mm-links">
+          <a href="#" class="mm-link">
+            <span class="mm-link-label">الرئيسية</span>
+            <span class="mm-link-icon"><svg viewBox="0 0 24 24"><path d="M3 12l9-9 9 9"/><path d="M5 10v10h14V10"/></svg></span>
+          </a>
+          <a href="#stats" class="mm-link">
+            <span class="mm-link-label">خدماتنا</span>
+            <span class="mm-link-icon"><svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.77z"/></svg></span>
+          </a>
+          <a href="https://neb-elc.vercel.app/" target="_blank" rel="noopener" class="mm-link">
+            <span class="mm-link-label">إلكتروميكانيك</span>
+            <span class="mm-link-icon"><svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></span>
+          </a>
+          <a href="projects.html" class="mm-link">
+            <span class="mm-link-label">مشاريع</span>
+            <span class="mm-link-icon"><svg viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg></span>
+          </a>
+          <a href="decorations.html" class="mm-link">
+            <span class="mm-link-label">ديكورات</span>
+            <span class="mm-link-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></span>
+          </a>
+          <a href="contact.html" class="mm-link">
+            <span class="mm-link-label">تواصل معنا</span>
+            <span class="mm-link-icon"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.43 2 2 0 0 1 3.58 1H6.6a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 8.5a16 16 0 0 0 5.55 5.55l.95-.95a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span>
+          </a>
+        </nav>
+        <a href="login.html" class="mm-login">
+          <svg viewBox="0 0 24 24"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+          <span>تسجيل الدخول</span>
+        </a>
+      </div>
+    </div>
   </div>
 
   <!-- NAVBAR -->
@@ -1000,9 +1126,47 @@
 
   <script>
     const navbar = document.getElementById('navbar');
+    const mobileTopbar = document.getElementById('mobileTopbar');
     window.addEventListener('scroll', () => {
       navbar.classList.toggle('scrolled', window.scrollY > 40);
+      if (mobileTopbar) mobileTopbar.classList.toggle('scrolled', window.scrollY > 40);
     });
+
+    /* ─── Mobile menu drawer ─────────────────────────── */
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mobileMenuClose = document.getElementById('mobileMenuClose');
+    const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
+    function openMobileMenu() {
+      mobileMenuOverlay.classList.add('open');
+      document.body.style.overflow = 'hidden';
+      const avatarWrap = document.getElementById('user-avatar-wrap');
+      if (avatarWrap) avatarWrap.style.visibility = 'hidden';
+    }
+    function closeMobileMenu() {
+      mobileMenuOverlay.classList.remove('open');
+      document.body.style.overflow = '';
+      const avatarWrap = document.getElementById('user-avatar-wrap');
+      if (avatarWrap) avatarWrap.style.visibility = '';
+    }
+    if (mobileMenuBtn) mobileMenuBtn.addEventListener('click', openMobileMenu);
+    if (mobileMenuClose) mobileMenuClose.addEventListener('click', closeMobileMenu);
+    if (mobileMenuOverlay) {
+      mobileMenuOverlay.querySelectorAll('.mm-link, .mm-login').forEach((link) => {
+        link.addEventListener('click', (e) => {
+          const href = link.getAttribute('href');
+          if (href && href.startsWith('#')) {
+            e.preventDefault();
+            closeMobileMenu();
+            setTimeout(() => {
+              const target = document.querySelector(href);
+              if (target) target.scrollIntoView({ behavior: 'smooth' });
+            }, 300);
+          } else {
+            closeMobileMenu();
+          }
+        });
+      });
+    }
 
     const pctNumEl = document.getElementById('preloader-pct-num');
     const ringFill = document.getElementById('preloader-ring-fill');
