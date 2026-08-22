@@ -644,28 +644,50 @@
       .mobile-topbar-logo img { height: 32px; object-fit: contain; display: block; }
     }
 
-    /* ─── MOBILE MENU OVERLAY ─── */
+    /* ─── MOBILE MENU OVERLAY (DROPDOWN COMPACT) ─── */
     .mobile-menu-overlay {
       position: fixed; inset: 0; z-index: 99999;
-      display: flex;
+      display: flex; align-items: flex-start; justify-content: center;
+      padding: 78px 16px 16px;
+      background: rgba(5,8,14,0);
+      -webkit-backdrop-filter: blur(0px);
+      backdrop-filter: blur(0px);
       opacity: 0; visibility: hidden; pointer-events: none;
-      background: #000;
-      transition: opacity 0.35s ease, visibility 0.35s ease;
+      transition: opacity 0.3s ease, background 0.3s ease, backdrop-filter 0.3s ease, visibility 0.3s;
     }
-    .mobile-menu-overlay.open { opacity: 1; visibility: visible; pointer-events: all; }
-    
+    .mobile-menu-overlay.open {
+      opacity: 1; visibility: visible; pointer-events: all;
+      background: rgba(5,8,14,0.55);
+      -webkit-backdrop-filter: blur(12px) saturate(150%);
+      backdrop-filter: blur(12px) saturate(150%);
+    }
+
     .mm-sheet {
-      width: 100%; height: 100%; display: flex; flex-direction: column;
-      position: relative; background: #000;
+      width: 100%; max-width: 320px;
+      max-height: calc(100vh - 110px);
+      display: flex; flex-direction: column;
+      position: static;
+      background: #0a0a0c;
+      border-radius: 22px;
+      overflow: hidden;
+      box-shadow: 0 25px 60px rgba(0,0,0,0.5);
+      transform: scale(0.92) translateY(-14px);
+      opacity: 0;
+      transition: transform 0.35s var(--ease-out), opacity 0.3s ease;
     }
+    .mobile-menu-overlay.open .mm-sheet {
+      transform: scale(1) translateY(0);
+      opacity: 1;
+    }
+
     .mm-header {
       display: flex; align-items: center; justify-content: space-between;
-      padding: 18px 22px;
+      padding: 16px 18px;
       background: linear-gradient(135deg, var(--sky-dark), var(--violet));
       flex-shrink: 0;
     }
     .mm-close {
-      width: 40px; height: 40px; border-radius: 12px;
+      width: 36px; height: 36px; border-radius: 12px;
       border: none;
       background: rgba(255, 255, 255, 0.25); color: #fff;
       display: flex; align-items: center; justify-content: center;
@@ -673,26 +695,25 @@
       transition: transform 0.25s ease, background 0.2s;
     }
     .mm-close:hover { transform: scale(1.08); background: rgba(255, 255, 255, 0.35); }
-    .mm-close svg { width: 18px; height: 18px; stroke: #fff; fill: none; stroke-width: 2.6; stroke-linecap: round; }
-    
+    .mm-close svg { width: 16px; height: 16px; stroke: #fff; fill: none; stroke-width: 2.6; stroke-linecap: round; }
+
     .mm-body {
-      flex: 1; display: flex; flex-direction: column;
+      display: flex; flex-direction: column;
       align-items: flex-end;
-      justify-content: flex-start;
-      padding: 30px 24px;
-      background: #000;
+      padding: 18px 18px 20px;
+      background: #0a0a0c;
       overflow-y: auto;
     }
-    
+
     .mm-lang-option {
       width: 100%;
       text-align: right;
-      margin-bottom: 24px;
+      margin-bottom: 14px;
     }
     .mm-lang-option a {
-      color: rgba(255,255,255,0.75);
+      color: rgba(255,255,255,0.6);
       text-decoration: none;
-      font-size: 1.05rem;
+      font-size: 0.92rem;
       font-weight: 500;
       font-family: var(--font-en);
       transition: color 0.2s;
@@ -700,47 +721,36 @@
     .mm-lang-option a:hover { color: var(--sky); }
 
     .mm-links {
-      display: flex; flex-direction: column; gap: 8px;
+      display: flex; flex-direction: column;
       width: 100%;
     }
-    
+
     .mm-link {
-      display: flex; align-items: center; justify-content: flex-end; gap: 16px;
-      padding: 14px 0;
+      display: flex; align-items: center; justify-content: flex-end; gap: 14px;
+      padding: 13px 4px;
       background: transparent;
       border: none;
+      border-top: 1px solid rgba(255,255,255,0.07);
       text-decoration: none; color: #fff;
-      opacity: 0;
-      transform: translateY(15px);
-      transition: transform 0.4s var(--ease-out), opacity 0.4s ease;
-    }
-
-    .mobile-menu-overlay.open .mm-link {
       opacity: 1;
-      transform: translateY(0);
+      transform: none;
     }
-    .mobile-menu-overlay.open .mm-link:nth-child(1) { transition-delay: 0.05s; }
-    .mobile-menu-overlay.open .mm-link:nth-child(2) { transition-delay: 0.1s; }
-    .mobile-menu-overlay.open .mm-link:nth-child(3) { transition-delay: 0.15s; }
-    .mobile-menu-overlay.open .mm-link:nth-child(4) { transition-delay: 0.2s; }
-    .mobile-menu-overlay.open .mm-link:nth-child(5) { transition-delay: 0.25s; }
-    .mobile-menu-overlay.open .mm-link:nth-child(6) { transition-delay: 0.3s; }
+    .mm-links a.mm-link:first-child { border-top: none; }
 
     .mm-link:hover .mm-link-label { color: var(--sky); }
-    .mm-link-label { font-size: 1.15rem; font-weight: 600; color: #fff; letter-spacing: 0.2px; }
+    .mm-link-label { font-size: 1rem; font-weight: 600; color: #fff; letter-spacing: 0.2px; }
     .mm-link-icon {
-      width: 34px; height: 34px; border-radius: 10px;
+      width: 32px; height: 32px; border-radius: 10px;
       background: rgba(255, 255, 255, 0.08);
       display: flex; align-items: center; justify-content: center;
       flex-shrink: 0;
       transition: background 0.3s ease;
     }
-    .mm-link-icon svg { width: 17px; height: 17px; stroke: #fff; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .mm-link-icon svg { width: 16px; height: 16px; stroke: #fff; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 
+    .mm-link.active { background: rgba(59, 157, 255, 0.14); border-radius: 12px; }
     .mm-link.active .mm-link-label { color: var(--sky) !important; }
-    .mm-link.active .mm-link-icon {
-      background: rgba(59, 157, 255, 0.25) !important;
-    }
+    .mm-link.active .mm-link-icon { background: rgba(59, 157, 255, 0.25) !important; }
     .mm-link.active .mm-link-icon svg { stroke: var(--sky) !important; }
 
     /* ─── AMBIENT BLOBS ───────────────────────────────── */
@@ -888,10 +898,10 @@
     <div class="mm-sheet">
       <div class="mm-header">
         <button class="mm-close" id="mobileMenuClose" aria-label="إغلاق القائمة">
-          <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
         </button>
         <div class="mm-header-logo">
-          <img src="https://i.postimg.cc/8PShHcVc/nebras-logo.png" style="height:32px; filter: brightness(0) invert(1);" alt="Nebras Solutions" />
+          <img src="https://i.postimg.cc/8PShHcVc/nebras-logo.png" style="height:28px; filter: brightness(0) invert(1);" alt="Nebras Solutions" />
         </div>
       </div>
       <div class="mm-body">
@@ -899,7 +909,7 @@
           <a href="#">English</a>
         </div>
         <nav class="mm-links">
-          <a href="#" class="mm-link">
+          <a href="#" class="mm-link active">
             <span class="mm-link-label">الرئيسية</span>
             <span class="mm-link-icon"><svg viewBox="0 0 24 24"><path d="M3 12l9-9 9 9"/><path d="M5 10v10h14V10"/></svg></span>
           </a>
@@ -1240,6 +1250,10 @@
     if (mobileMenuClose) mobileMenuClose.addEventListener('click', closeMobileMenu);
 
     if (mobileMenuOverlay) {
+      mobileMenuOverlay.addEventListener('click', (e) => {
+        if (e.target === mobileMenuOverlay) closeMobileMenu();
+      });
+
       mobileMenuOverlay.querySelectorAll('.mm-link').forEach((link) => {
         link.addEventListener('click', (e) => {
           mobileMenuOverlay.querySelectorAll('.mm-link').forEach(l => l.classList.remove('active'));
