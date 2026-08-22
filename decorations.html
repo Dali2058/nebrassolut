@@ -50,7 +50,7 @@
     @keyframes loadBar { 0%{width:0} 60%{width:75%} 100%{width:100%} }
 
     /* ─── NAVBAR ──────────────────────────────────────── */
-    nav {
+    #navbar {
       position: fixed; top: 0; left: 0; right: 0; z-index: 100;
       display: flex; align-items: center; justify-content: space-between;
       padding: 18px 6%;
@@ -58,16 +58,16 @@
     }
     nav.scrolled { background: rgba(255,255,255,0.97); box-shadow: 0 2px 20px rgba(0,0,0,0.08); padding: 12px 6%; }
     .nav-logo { font-family: var(--font-en); font-size: 1.1rem; font-weight: 700; text-decoration: none; color: var(--white); letter-spacing: 1.5px; transition: color 0.3s; }
-    nav.scrolled .nav-logo { color: var(--text-dark); }
+    #navbar.scrolled .nav-logo { color: var(--text-dark); }
     .nav-links { display: flex; gap: 28px; list-style: none; }
     .nav-links a { font-family: var(--font-ar); font-size: 0.95rem; color: rgba(255,255,255,0.88); text-decoration: none; font-weight: 500; position: relative; transition: color 0.3s; }
-    nav.scrolled .nav-links a { color: var(--text-mid); }
+    #navbar.scrolled .nav-links a { color: var(--text-mid); }
     .nav-links a::after { content: ''; position: absolute; bottom: -3px; right: 0; width: 0; height: 2px; background: var(--sky); transition: width 0.3s ease; }
     .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
     .nav-links a:hover, .nav-links a.active { color: var(--sky-dark); }
-    nav.scrolled .nav-links a:hover, nav.scrolled .nav-links a.active { color: var(--sky-dark); }
+    #navbar.scrolled .nav-links a:hover, nav.scrolled .nav-links a.active { color: var(--sky-dark); }
     .nav-icon { width: 38px; height: 38px; border-radius: 50%; border: 1.5px solid rgba(255,255,255,0.5); display: flex; align-items: center; justify-content: center; font-family: var(--font-en); font-size: 0.95rem; font-weight: 700; color: var(--white); text-decoration: none; transition: all 0.3s; }
-    nav.scrolled .nav-icon { border-color: var(--text-dark); color: var(--text-dark); }
+    #navbar.scrolled .nav-icon { border-color: var(--text-dark); color: var(--text-dark); }
     .nav-icon:hover { background: var(--sky); border-color: var(--sky); color: #fff; }
 
     /* ─── HERO ────────────────────────────────────────── */
@@ -256,38 +256,385 @@
       .gallery-item { width: 240px; height: 180px; }
       .lb-arrow { width: 38px; height: 38px; }
     }
-
-    /* ─── MOBILE NAV BUTTONS ──────────────────────────── */
-    .mob-nav-row { display: none; }
+    /* ─── MOBILE TOP BAR ─────────────────────────────── */
+    .mobile-topbar { display: none; }
     @media (max-width: 768px) {
-      nav { display: none !important; }
-      .mob-nav-row {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 10px;
-        padding: 18px 14px;
-        background: var(--white);
+      .mobile-topbar {
+        display: flex; align-items: center; justify-content: space-between;
+        position: fixed; top: 0; left: 0; right: 0; z-index: 1400;
+        height: 62px; padding: 0 16px;
+        background: rgba(255,255,255,0.72);
+        -webkit-backdrop-filter: blur(var(--blur-lg)) saturate(180%);
+        backdrop-filter: blur(var(--blur-lg)) saturate(180%);
+        border-bottom: 1px solid rgba(255,255,255,0.5);
+        box-shadow: var(--shadow-glass-sm);
       }
-      .mob-nav-btn { display: block; text-decoration: none; }
-      .mob-nav-btn:last-child { grid-column: 1 / -1; margin-top: 20px; }
-      .mob-nav-rect {
-        width: 100%; height: 130px;
-        border-radius: 14px;
-        background-size: cover; background-position: center;
-        position: relative; overflow: hidden;
-        box-shadow: 0 4px 18px rgba(0,0,0,0.18);
-        transition: transform 0.22s ease;
+      .mobile-topbar.scrolled { box-shadow: 0 8px 30px rgba(15,23,42,0.12); background: rgba(255,255,255,0.9); }
+      
+      .mobile-menu-btn {
+        width: 44px; height: 44px; border-radius: 14px; border: none; cursor: pointer;
+        display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+        background: var(--sky);
+        box-shadow: 0 6px 18px rgba(var(--sky-rgb), 0.4);
+        transition: transform 0.3s ease, background 0.3s ease;
       }
-      .mob-nav-btn:last-child .mob-nav-rect { height: 110px; }
-      .mob-nav-btn:active .mob-nav-rect { transform: scale(0.93); }
-      .mob-nav-rect::after {
-        content: ''; position: absolute; inset: 0;
-        background: linear-gradient(to top, rgba(5,14,20,0.85) 0%, rgba(5,14,20,0.1) 65%);
+      .mobile-menu-btn:hover { transform: scale(1.05); }
+      .mobile-menu-btn svg { width: 20px; height: 20px; stroke: #fff; fill: none; stroke-width: 2.6; stroke-linecap: round; }
+      .mobile-topbar-logo img {
+        height: 32px;
+        max-width: 170px;
+        object-fit: contain;
+        display: block;
       }
-            .mob-nav-label { position: absolute; bottom: 10px; right: 0; left: 0; text-align: center; z-index: 1; display: flex; flex-direction: column; align-items: center; gap: 1px; }
-      .mob-nav-label .ar { font-family: var(--font-ar); font-size: 0.9rem; font-weight: 700; color: #fff; text-shadow: 0 1px 6px rgba(0,0,0,0.7); white-space: nowrap; }
-      .mob-nav-label .en { font-family: var(--font-en); font-size: 0.62rem; font-weight: 400; color: rgba(255,255,255,0.75); text-shadow: 0 1px 4px rgba(0,0,0,0.6); white-space: nowrap; letter-spacing: 1px; text-transform: uppercase; }
+
+      .mm-link {
+        min-height: 58px;
+        padding: 12px 14px;
+      }
+
+      .mm-link-label {
+        font-size: 0.96rem;
+      }
     }
+
+    /* ─── MOBILE MENU OVERLAY (DROPDOWN COMPACT) ─── */
+    .mobile-menu-overlay {
+      position: fixed; inset: 0; z-index: 99999;
+      display: flex; align-items: flex-start; justify-content: center;
+      padding:
+        calc(74px + env(safe-area-inset-top))
+        12px
+        calc(14px + env(safe-area-inset-bottom));
+      background: rgba(5,8,14,0);
+      -webkit-backdrop-filter: blur(0px);
+      backdrop-filter: blur(0px);
+      opacity: 0; visibility: hidden; pointer-events: none;
+      overflow: hidden;
+      transition: opacity 0.3s ease, background 0.3s ease, backdrop-filter 0.3s ease, visibility 0.3s;
+    }
+    .mobile-menu-overlay.open {
+      opacity: 1; visibility: visible; pointer-events: all;
+      background: rgba(5,8,14,0.55);
+      -webkit-backdrop-filter: blur(12px) saturate(150%);
+      backdrop-filter: blur(12px) saturate(150%);
+    }
+
+    .mm-sheet {
+      width: min(100%, 360px);
+      max-height: min(560px, calc(100dvh - 96px));
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      margin: 0 auto;
+      background: #0a0a0c;
+      border: 1px solid rgba(255,255,255,0.10);
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow:
+        0 25px 60px rgba(0,0,0,0.55),
+        0 0 0 1px rgba(59,157,255,0.06);
+      transform: scale(0.94) translateY(-12px);
+      transform-origin: top center;
+      opacity: 0;
+      transition: transform 0.35s var(--ease-out), opacity 0.3s ease;
+    }
+    .mobile-menu-overlay.open .mm-sheet {
+      transform: scale(1) translateY(0);
+      opacity: 1;
+    }
+
+    .mm-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 16px 18px;
+      background: linear-gradient(135deg, var(--sky-dark), var(--violet));
+      flex-shrink: 0;
+    }
+    .mm-close {
+      width: 38px; height: 38px; border-radius: 12px;
+      border: none;
+      background: rgba(255, 255, 255, 0.25); color: #fff;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      transition: transform 0.25s ease, background 0.2s;
+    }
+    .mm-close:hover { transform: scale(1.08); background: rgba(255, 255, 255, 0.35); }
+    .mm-close svg { width: 17px; height: 17px; stroke: #fff; fill: none; stroke-width: 2.8; stroke-linecap: round; }
+
+    .mm-body {
+      display: flex; flex-direction: column;
+      align-items: stretch;
+      padding: 20px 18px 26px;
+      background: #0a0a0c;
+      overflow-y: auto;
+      flex: 1;
+    }
+
+    .mm-links {
+      /* Important: this element is a <nav>, but it must NOT inherit the
+         desktop navbar layout. Keep it a normal in-sheet flex container. */
+      position: static;
+      inset: auto;
+      z-index: auto;
+      width: 100%;
+      height: auto;
+      min-height: 0;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      list-style: none;
+      background: transparent;
+      border: 0;
+      box-shadow: none;
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+    }
+
+    .mm-link {
+      display: flex; align-items: center; justify-content: flex-end; gap: 14px;
+      padding: 16px 16px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.09);
+      border-radius: 14px;
+      text-decoration: none; color: #fff;
+      opacity: 1;
+      transform: none;
+      transition: background 0.2s ease, border-color 0.2s ease;
+    }
+    .mm-link:hover { background: rgba(255,255,255,0.09); }
+
+    .mm-link:hover .mm-link-label { color: var(--sky); }
+    .mm-link-label { font-size: 1rem; font-weight: 600; color: #fff; letter-spacing: 0.2px; }
+    .mm-link-icon {
+      width: 34px; height: 34px; border-radius: 10px;
+      background: rgba(255, 255, 255, 0.08);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      transition: background 0.3s ease;
+    }
+    .mm-link-icon svg { width: 16px; height: 16px; stroke: #fff; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+    .mm-link.active { background: rgba(59, 157, 255, 0.16); border-color: rgba(59, 157, 255, 0.4); }
+    .mm-link.active .mm-link-label { color: var(--sky) !important; }
+    .mm-link.active .mm-link-icon { background: rgba(59, 157, 255, 0.28) !important; }
+    .mm-link.active .mm-link-icon svg { stroke: var(--sky) !important; }
+
+    @media (max-width: 380px) {
+      .mobile-menu-overlay {
+        padding-left: 10px;
+        padding-right: 10px;
+      }
+
+      .mm-sheet {
+        width: 100%;
+        max-width: 340px;
+        border-radius: 20px;
+      }
+
+      .mm-header {
+        padding: 14px 15px;
+      }
+
+      .mm-body {
+        padding: 16px 14px 20px;
+      }
+
+      .mm-link {
+        min-height: 54px;
+        padding: 10px 12px;
+        gap: 10px;
+      }
+
+      .mm-link-icon {
+        width: 32px;
+        height: 32px;
+      }
+    }
+
+
+
+    /* ─── INDEX STYLE / RESPONSIVE OVERRIDES ───────────────── */
+    #navbar {
+      height: 72px;
+      padding: 0 6%;
+      background: rgba(255,255,255,0.72);
+      -webkit-backdrop-filter: blur(30px) saturate(180%);
+      backdrop-filter: blur(30px) saturate(180%);
+      border-bottom: 1px solid rgba(255,255,255,0.55);
+      box-shadow: 0 10px 30px rgba(15,23,42,0.10);
+    }
+    #navbar.scrolled {
+      padding: 0 6%;
+      background: rgba(255,255,255,0.90);
+      box-shadow: 0 8px 30px rgba(15,23,42,0.12);
+    }
+    .nav-links { gap: 6px; }
+    .nav-links a {
+      color: var(--text-mid);
+      padding: 9px 16px;
+      border-radius: 999px;
+    }
+    .nav-links a::after { display:none; }
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: var(--sky-dark);
+      background: rgba(91,191,222,0.14);
+    }
+    .nav-icon {
+      border-color: rgba(31,127,160,0.22);
+      color: var(--sky-dark);
+      background: rgba(91,191,222,0.10);
+    }
+    #navbar.scrolled .nav-icon {
+      border-color: rgba(31,127,160,0.25);
+      color: var(--sky-dark);
+    }
+
+    #hero { height: 100vh; min-height: 640px; }
+    @supports (height: 100dvh) {
+      #hero { height: 100dvh; min-height: 560px; }
+    }
+
+    /* Gallery remains horizontal on desktop, but is touch-friendly on mobile. */
+    .gallery-track {
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior-x: contain;
+      touch-action: pan-x;
+    }
+
+    @media (max-width: 900px) {
+      #navbar { display:none !important; }
+
+      #hero {
+        min-height: 560px;
+        padding-top: env(safe-area-inset-top);
+      }
+
+      .hero-content {
+        width: min(100%, 680px);
+        padding: 0 24px;
+      }
+
+      .hero-title {
+        font-size: clamp(2.25rem, 11vw, 4.4rem);
+      }
+
+      .hero-eyebrow {
+        font-size: 0.62rem;
+        letter-spacing: 4px;
+      }
+
+      .hero-sub {
+        font-size: 0.72rem;
+        letter-spacing: 3px;
+      }
+
+      #decorations {
+        padding: 58px 18px calc(58px + env(safe-area-inset-bottom));
+      }
+
+      .proj-header {
+        margin-bottom: 32px;
+      }
+
+      .proj-title {
+        font-size: clamp(2rem, 10vw, 3rem);
+      }
+
+      .proj-tagline {
+        letter-spacing: 2.5px;
+      }
+
+      .gallery-track-wrap {
+        width: 100%;
+      }
+
+      .gallery-track {
+        gap: 12px;
+        padding: 6px 2px 18px;
+      }
+
+      .gallery-item {
+        width: min(78vw, 300px);
+        height: min(58vw, 220px);
+        border-radius: 16px;
+      }
+
+      .gallery-item:hover {
+        transform: none;
+      }
+
+      .gallery-overlay {
+        opacity: 1;
+      }
+
+      #arrow-right, #arrow-left {
+        display: none !important;
+      }
+
+      .section-sep {
+        margin-top: 48px;
+      }
+
+      footer {
+        padding: 28px 18px calc(28px + env(safe-area-inset-bottom));
+      }
+    }
+
+    @media (max-width: 560px) {
+      #hero {
+        min-height: 100svh;
+        height: 100dvh;
+      }
+
+      .hero-content {
+        padding: 0 18px;
+      }
+
+      .hero-divider {
+        margin: 18px auto;
+      }
+
+      .hero-scroll-hint,
+      .scroll-hint {
+        bottom: calc(20px + env(safe-area-inset-bottom));
+      }
+
+      #decorations {
+        padding-left: 14px;
+        padding-right: 14px;
+      }
+
+      .gallery-item {
+        width: 82vw;
+        height: 61vw;
+        max-height: 230px;
+      }
+
+      #lightbox {
+        padding: env(safe-area-inset-top) 12px env(safe-area-inset-bottom);
+      }
+
+      #lb-img {
+        max-width: 94vw;
+        max-height: 78vh;
+        border-radius: 10px;
+      }
+
+      .lb-close {
+        top: calc(18px + env(safe-area-inset-top));
+        left: 18px;
+      }
+
+      #lb-prev { right: 10px; }
+      #lb-next { left: 10px; }
+
+      footer {
+        font-size: 0.72rem;
+      }
+    }
+
   </style>
 </head>
 <body>
@@ -328,37 +675,68 @@
       <div class="scroll-arrow"></div>
     </div>
   </section>
-
-  <!-- MOBILE NAV BUTTONS -->
-  <div class="mob-nav-row">
-    <a class="mob-nav-btn" href="index.html">
-      <div class="mob-nav-rect" style="background-image:url('https://i.postimg.cc/90b7pjfL/alryysyt.png')">
-        <span class="mob-nav-label"><span class="ar">الرئيسية</span><span class="en">Home</span></span>
-      </div>
-    </a>
-    <a class="mob-nav-btn" href="https://neb-elc.vercel.app/" target="_blank" rel="noopener">
-      <div class="mob-nav-rect" style="background-image:url('https://i.postimg.cc/1XBqHZzL/alktrwmykank.jpg')">
-        <span class="mob-nav-label"><span class="ar">إلكتروميكانيك</span><span class="en">Electromechanical</span></span>
-      </div>
-    </a>
-    <a class="mob-nav-btn" href="projects.html">
-      <div class="mob-nav-rect" style="background-image:url('https://i.postimg.cc/FFw605Sv/Whats-App-Image-2026-05-08-at-21-48-41.jpg')">
-        <span class="mob-nav-label"><span class="ar">مشاريع</span><span class="en">Projects</span></span>
-      </div>
-    </a>
-    <a class="mob-nav-btn" href="decorations.html">
-      <div class="mob-nav-rect" style="background-image:url('https://i.postimg.cc/59D0h0hK/Whats-App-Image-2026-05-08-at-21-26-52.jpg')">
-        <span class="mob-nav-label"><span class="ar">ديكورات</span><span class="en">Decorations</span></span>
-      </div>
-    </a>
-    <a class="mob-nav-btn" href="contact.html">
-      <div class="mob-nav-rect" style="background-image:url('https://i.postimg.cc/gkPwwjgX/Whats-App-Image-2026-05-08-at-21-39-02.jpg')">
-        <span class="mob-nav-label"><span class="ar">تواصل معنا</span><span class="en">Contact Us</span></span>
-      </div>
-    </a>
+  <!-- MOBILE TOP BAR -->
+  <div class="mobile-topbar" id="mobileTopbar">
+    <div class="mobile-topbar-logo">
+      <img src="https://i.postimg.cc/8PShHcVc/nebras-logo.png" alt="Nebras Solutions" />
+    </div>
+    <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="فتح القائمة">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
   </div>
 
-  <!-- DECORATIONS GALLERY -->
+  <!-- MOBILE MENU OVERLAY -->
+  <div class="mobile-menu-overlay" id="mobileMenuOverlay">
+    <div class="mm-sheet">
+      <div class="mm-header">
+        <button class="mm-close" id="mobileMenuClose" aria-label="إغلاق القائمة">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+        <div class="mm-header-logo">
+          <img src="https://i.postimg.cc/8PShHcVc/nebras-logo.png" style="height:28px; filter: brightness(0) invert(1);" alt="Nebras Solutions" />
+        </div>
+      </div>
+      <div class="mm-body">
+        <nav class="mm-links">
+          <a href="index.html" class="mm-link">
+            <span class="mm-link-label">الرئيسية</span>
+            <span class="mm-link-icon"><svg viewBox="0 0 24 24"><path d="M3 12l9-9 9 9"/><path d="M5 10v10h14V10"/></svg></span>
+          </a>
+          <a href="https://neb-elc.vercel.app/" target="_blank" rel="noopener" class="mm-link">
+            <span class="mm-link-label">إلكتروميكانيك</span>
+            <span class="mm-link-icon"><svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></span>
+          </a>
+          <a href="projects.html" class="mm-link">
+            <span class="mm-link-label">مشاريع</span>
+            <span class="mm-link-icon"><svg viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg></span>
+          </a>
+          <a href="decorations.html" class="mm-link active">
+            <span class="mm-link-label">ديكورات</span>
+            <span class="mm-link-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></span>
+          </a>
+          <a href="contact.html" class="mm-link">
+            <span class="mm-link-label">تواصل معنا</span>
+            <span class="mm-link-icon"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.43 2 2 0 0 1 3.58 1H6.6a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 8.5a16 16 0 0 0 5.55 5.55l.95-.95a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span>
+          </a>
+        </nav>
+      </div>
+    </div>
+  </div>
+
+  <!-- NAVBAR -->
+  <nav id="navbar">
+    <div class="nav-logo">
+      <img src="https://i.postimg.cc/8PShHcVc/nebras-logo.png" alt="Nebras Solutions" />
+    </div>
+    <ul class="nav-links">
+      <li><a href="index.html">الرئيسية</a></li>
+      <li><a href="https://neb-elc.vercel.app/" target="_blank" rel="noopener">إلكتروميكانيك</a></li>
+      <li><a href="projects.html">مشاريع</a></li>
+      <li><a href="decorations.html">ديكورات</a></li>
+      <li><a href="contact.html">تواصل معنا</a></li>
+    </ul>
+  </nav>
+<!-- DECORATIONS GALLERY -->
   <section id="decorations">
     <div class="proj-header">
       <span class="proj-eyebrow">DECORATION WORKS</span>
@@ -519,6 +897,43 @@
       if (e.key === 'ArrowLeft') navigate(1);
       if (e.key === 'Escape') closeLB();
     });
+
+    /* ─── MOBILE MENU ───────────────────────────────────── */
+    (() => {
+      const menuBtn = document.getElementById('mobileMenuBtn');
+      const menuClose = document.getElementById('mobileMenuClose');
+      const overlay = document.getElementById('mobileMenuOverlay');
+
+      const openMenu = () => {
+        if (!overlay) return;
+        overlay.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      };
+
+      const closeMenu = () => {
+        if (!overlay) return;
+        overlay.classList.remove('open');
+        document.body.style.overflow = '';
+      };
+
+      menuBtn?.addEventListener('click', openMenu);
+      menuClose?.addEventListener('click', closeMenu);
+
+      overlay?.addEventListener('click', (e) => {
+        if (e.target === overlay) closeMenu();
+      });
+
+      overlay?.querySelectorAll('.mm-link').forEach((link) => {
+        link.addEventListener('click', () => {
+          if (link.target !== '_blank') closeMenu();
+        });
+      });
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeMenu();
+      });
+    })();
+
   </script>
 </body>
 </html>
