@@ -727,7 +727,9 @@
     .mm-lang-option {
       width: 100%;
       text-align: right;
-      margin-bottom: 14px;
+      margin-bottom: 18px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
     }
     .mm-lang-option a {
       color: rgba(255,255,255,0.6);
@@ -741,25 +743,27 @@
 
     .mm-links {
       display: flex; flex-direction: column;
+      gap: 10px;
       width: 100%;
     }
 
     .mm-link {
       display: flex; align-items: center; justify-content: flex-end; gap: 14px;
-      padding: 13px 4px;
-      background: transparent;
-      border: none;
-      border-top: 1px solid rgba(255,255,255,0.07);
+      padding: 14px 16px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.09);
+      border-radius: 14px;
       text-decoration: none; color: #fff;
       opacity: 1;
       transform: none;
+      transition: background 0.2s ease, border-color 0.2s ease;
     }
-    .mm-links a.mm-link:first-child { border-top: none; }
+    .mm-link:hover { background: rgba(255,255,255,0.09); }
 
     .mm-link:hover .mm-link-label { color: var(--sky); }
     .mm-link-label { font-size: 1rem; font-weight: 600; color: #fff; letter-spacing: 0.2px; }
     .mm-link-icon {
-      width: 32px; height: 32px; border-radius: 10px;
+      width: 34px; height: 34px; border-radius: 10px;
       background: rgba(255, 255, 255, 0.08);
       display: flex; align-items: center; justify-content: center;
       flex-shrink: 0;
@@ -767,9 +771,9 @@
     }
     .mm-link-icon svg { width: 16px; height: 16px; stroke: #fff; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 
-    .mm-link.active { background: rgba(59, 157, 255, 0.14); border-radius: 12px; }
+    .mm-link.active { background: rgba(59, 157, 255, 0.16); border-color: rgba(59, 157, 255, 0.4); }
     .mm-link.active .mm-link-label { color: var(--sky) !important; }
-    .mm-link.active .mm-link-icon { background: rgba(59, 157, 255, 0.25) !important; }
+    .mm-link.active .mm-link-icon { background: rgba(59, 157, 255, 0.28) !important; }
     .mm-link.active .mm-link-icon svg { stroke: var(--sky) !important; }
 
     /* ─── AMBIENT BLOBS ───────────────────────────────── */
