@@ -158,7 +158,7 @@
       transition: color 0.25s ease, background 0.25s ease;
     }
     .nav-links a:hover { color: var(--sky-dark); background: var(--sky-light); }
-    @media (max-width: 900px) { nav { display: none !important; } }
+    @media (max-width: 900px) { nav#navbar { display: none !important; } }
 
     /* ─── HERO ───────────────────────────────────────── */
     #hero {
@@ -583,8 +583,27 @@
       .hero-actions { justify-content: center; }
     }
     @media (max-width: 600px) {
-      .hero-content { padding: 34px 26px; border-radius: var(--radius-lg); }
+      .hero-content { padding: 34px 26px; border-radius: var(--radius-lg); display: flex; flex-direction: column; }
       .hero-heading { font-size: 2.1rem; }
+      .hero-actions {
+        order: -1;
+        margin-bottom: 26px;
+        gap: 10px;
+        justify-content: center;
+      }
+      .hero-actions .btn-glass {
+        padding: 12px 22px;
+        font-size: 0.86rem;
+      }
+      .hero-actions .btn-glass-primary {
+        background: rgba(var(--sky-rgb), 0.92);
+        border-color: rgba(255,255,255,0.7);
+        box-shadow: 0 8px 24px rgba(var(--sky-rgb),0.5);
+      }
+      .hero-actions .btn-glass-ghost {
+        background: rgba(255,255,255,0.14);
+        border-color: rgba(255,255,255,0.6);
+      }
       .gallery-list { padding: 0 5%; gap: 18px; }
       .gallery-item { aspect-ratio: 4 / 3; }
       .partner-logo-item { height: 55px; }
