@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>نبراس سولوشنز | إلكتروميكانيك</title>
+  <title>نبراس سولوشنز | كهرباء إنشاءات وإلكتروميكانيك</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -253,7 +253,7 @@
     @keyframes cueBounce { 0%,100% { transform: translateY(0); } 50% { transform: translateY(6px); } }
     @media (prefers-reduced-motion: reduce) { .hero-scroll-cue .cue-ring { animation: none; } }
 
-    /* ─── SHOWCASE BAND ──────────────────────────────── */
+    /* ─── SHOWCASE BAND & CONTENT SECTIONS ──────────────── */
     #showcase {
       padding: 84px 6%;
       background:
@@ -266,94 +266,233 @@
     }
     @media (max-width: 900px) { .showcase-grid { grid-template-columns: 1fr; } }
 
-    .growth-card {
-      padding: 30px 30px 24px;
-      background: rgba(10,14,20,0.85);
-      -webkit-backdrop-filter: blur(var(--blur-md)) saturate(160%);
-      backdrop-filter: blur(var(--blur-md)) saturate(160%);
-      border: 1px solid var(--glass-dark-border);
+    /* Custom Content Sections (الفكرة، طبيعة العمل، المميزات) */
+    .content-blocks-section {
+      padding: 60px 6%;
+      background: var(--bg-soft);
+    }
+    .content-block-card {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 40px;
+      align-items: center;
+      max-width: 1100px;
+      margin: 0 auto 50px auto;
+      padding: 40px;
+      background: var(--glass-bg);
+      -webkit-backdrop-filter: blur(var(--blur-md));
+      backdrop-filter: blur(var(--blur-md));
+      border: 1px solid var(--glass-border);
       border-radius: var(--radius-xl);
-      box-shadow: var(--shadow-dark-glass);
-      display: flex; flex-direction: column;
+      box-shadow: var(--shadow-glass-sm);
     }
-    .growth-card-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 22px; }
-    .growth-card-title { display: flex; align-items: center; gap: 11px; }
-    .growth-card-title .gci {
-      width: 40px; height: 40px; border-radius: 12px; flex-shrink: 0;
-      background: rgba(var(--sky-rgb),0.18); border: 1px solid rgba(var(--sky-rgb),0.4);
-      display: flex; align-items: center; justify-content: center;
+    .content-block-card:nth-child(even) {
+      direction: ltr;
     }
-    .growth-card-title .gci svg { width: 20px; height: 20px; stroke: var(--sky); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-    .growth-card-title span { font-size: 1.08rem; font-weight: 700; color: rgba(255,255,255,0.94); }
-    .growth-card-badge {
-      display: inline-flex; align-items: center; gap: 5px;
-      font-family: var(--font-en); font-size: 0.78rem; font-weight: 700;
-      color: var(--up); background: rgba(47,214,126,0.14); border: 1px solid rgba(47,214,126,0.35);
-      padding: 5px 12px; border-radius: var(--radius-pill); letter-spacing: 0.3px;
+    .content-block-card:nth-child(even) > * {
+      direction: rtl;
     }
-    .growth-card-badge svg { width: 13px; height: 13px; stroke: var(--up); fill: none; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
-    .growth-chart-wrap { position: relative; width: 100%; flex: 1; min-height: 200px; }
-    .growth-chart-wrap svg { width: 100%; height: 100%; overflow: visible; }
-    .growth-line {
-      fill: none; stroke: url(#growthLineGrad); stroke-width: 2.4;
-      stroke-linecap: round; stroke-dasharray: 6 7;
-      stroke-dashoffset: 500; animation: growthDraw 3.2s ease-out 0.6s forwards, growthFlow 22s linear 3.8s infinite;
+    @media (max-width: 900px) {
+      .content-block-card { grid-template-columns: 1fr; gap: 24px; padding: 24px; }
+      .content-block-card:nth-child(even) { direction: rtl; }
     }
-    @keyframes growthDraw { to { stroke-dashoffset: 0; } }
-    @keyframes growthFlow { to { stroke-dashoffset: -1000; } }
-    .growth-area { opacity: 0; animation: fadeUp 1s ease 1.6s forwards; }
-    .growth-dot { animation: dotPop 0.5s var(--ease-out) both; }
-    .growth-dot circle:first-child { animation: dotGlow 2.6s ease-in-out infinite; transform-origin: center; }
-    @keyframes dotPop { from { opacity: 0; transform: scale(0.4); } to { opacity: 1; transform: scale(1); } }
-    @keyframes dotGlow { 0%,100% { opacity: 0.45; transform: scale(1); } 50% { opacity: 0.15; transform: scale(1.9); } }
-    .growth-pill {
-      position: absolute; transform: translate(-50%, -100%);
-      display: flex; align-items: center; gap: 6px;
-      padding: 6px 14px; border-radius: var(--radius-pill);
-      background: rgba(10,14,20,0.85);
-      border: 1px solid rgba(var(--sky-rgb),0.4);
-      box-shadow: 0 8px 20px rgba(0,0,0,0.35);
-      font-family: var(--font-en); font-size: 0.82rem; font-weight: 700; color: #fff;
-      white-space: nowrap; opacity: 0; animation: pillIn 0.6s var(--ease-out) both;
+    .content-block-text h2 {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--text-dark);
+      margin-bottom: 18px;
+      position: relative;
     }
-    .growth-pill .unit { font-weight: 500; font-size: 0.7rem; color: rgba(255,255,255,0.6); }
-    .growth-pill.p1 { left: 26%; top: 68%; animation-delay: 1.9s; }
-    .growth-pill.p2 { left: 99%; top: 8%; animation-delay: 2.6s; }
-    @keyframes pillIn { from { opacity: 0; transform: translate(-50%, -85%); } to { opacity: 1; transform: translate(-50%, -100%); } }
-    .growth-axis { display: flex; justify-content: space-between; margin-top: 14px; padding-top: 14px; border-top: 1px solid rgba(255,255,255,0.08); }
-    .growth-axis span { font-family: var(--font-en); font-size: 0.72rem; font-weight: 600; letter-spacing: 0.5px; color: rgba(255,255,255,0.45); }
-    @media (prefers-reduced-motion: reduce) { .growth-line, .growth-dot circle:first-child { animation: none; stroke-dashoffset: 0; } }
+    .content-block-text h2::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      right: 0;
+      width: 50px;
+      height: 4px;
+      background: linear-gradient(90deg, var(--sky-dark), var(--sky));
+      border-radius: 2px;
+    }
+    .content-block-text p {
+      font-size: 1.05rem;
+      color: var(--text-mid);
+      line-height: 1.9;
+      margin-bottom: 12px;
+    }
+    .content-block-image img {
+      width: 100%;
+      height: auto;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-glass);
+      object-fit: cover;
+      display: block;
+    }
 
-    .intro-card {
-      padding: 34px 34px 30px;
-      background: rgba(10,14,20,0.85);
-      -webkit-backdrop-filter: blur(var(--blur-md)) saturate(160%);
-      backdrop-filter: blur(var(--blur-md)) saturate(160%);
-      border: 1px solid var(--glass-dark-border);
-      border-radius: var(--radius-xl);
-      box-shadow: var(--shadow-dark-glass);
-      display: flex; flex-direction: column;
-      transition: transform 0.4s var(--ease-out), box-shadow 0.4s ease;
+    /* ─── CARDS & SLIDERS FOR PROJECTS / VIDEOS ─────────── */
+    .projects-section {
+      padding: 60px 6%;
+      text-align: center;
     }
-    .intro-card:hover { transform: translateY(-4px); box-shadow: 0 16px 50px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.08); }
-    .intro-card-icon {
-      width: 56px; height: 56px; border-radius: 16px; margin-bottom: 22px;
-      background: linear-gradient(135deg, rgba(var(--sky-rgb),0.22), rgba(var(--sky-rgb),0.06));
-      border: 1px solid rgba(var(--sky-rgb),0.4);
+    .projects-section h2 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      margin-bottom: 35px;
+      color: var(--text-dark);
+    }
+    .projects-section h2 span {
+      background: linear-gradient(135deg, var(--sky-dark) 0%, var(--sky) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .slider-container {
+      position: relative;
+      max-width: 1200px;
+      margin: 0 auto;
+      overflow: hidden;
+    }
+    .slider-wrapper {
+      display: flex;
+      gap: 20px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      padding: 20px 10px;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      scroll-behavior: smooth;
+    }
+    .slider-wrapper::-webkit-scrollbar { display: none; }
+    
+    .project-card {
+      flex: 0 0 380px;
+      scroll-snap-align: start;
+      background: rgba(255,255,255,0.85);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-glass-sm);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 280px;
+      position: relative;
+    }
+    .project-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-glass);
+    }
+    .project-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.5s ease;
+    }
+    .project-card:hover img { transform: scale(1.05); }
+
+    /* Video Card Style */
+    .video-card {
+      flex: 0 0 380px;
+      scroll-snap-align: start;
+      background: #000;
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-glass-sm);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 280px;
+      position: relative;
+    }
+    .video-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-glass);
+    }
+    .video-card iframe {
+      width: 100%;
+      height: 100%;
+      min-height: 280px;
+      border: none;
+      pointer-events: none;
+    }
+    .video-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+    }
+    .play-icon {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 60px;
+      height: 60px;
+      background: rgba(59, 157, 255, 0.85);
+      border-radius: 50%;
+      z-index: 3;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+      pointer-events: none;
+    }
+    .play-icon::after {
+      content: '';
+      border-left: 24px solid white;
+      border-top: 14px solid transparent;
+      border-bottom: 14px solid transparent;
+      margin-left: 5px;
+    }
+    .video-card:hover .play-icon {
+      background: var(--sky);
+      transform: translate(-50%, -50%) scale(1.15);
+    }
+
+    .section-divider {
+      width: 40%;
+      margin: 40px auto;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, rgba(59,157,255,0.3), transparent);
+    }
+
+    /* Video Overlay Modal */
+    .video-overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.85);
+      z-index: 10000;
+      justify-content: center;
+      align-items: center;
+      backdrop-filter: blur(8px);
+    }
+    .video-overlay.active { display: flex; }
+    .enlarged-video {
+      width: 90%; height: 80vh; max-width: 900px;
+      border-radius: var(--radius-md);
+      box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+    }
+    .close-vid-btn {
+      position: absolute;
+      top: 25px; right: 25px;
+      background: var(--sky);
+      color: white; border: none;
+      width: 45px; height: 45px;
+      border-radius: 50%;
+      font-size: 26px;
+      cursor: pointer;
+      z-index: 10001;
       display: flex; align-items: center; justify-content: center;
+      transition: transform 0.3s;
     }
-    .intro-card-icon svg { width: 26px; height: 26px; fill: var(--sky); }
-    .intro-card h3 { font-size: 1.32rem; font-weight: 700; color: #fff; margin-bottom: 14px; line-height: 1.5; }
-    .intro-card p { font-size: 0.96rem; font-weight: 300; color: rgba(255,255,255,0.68); line-height: 1.9; margin-bottom: 24px; }
-    .intro-card-link {
-      margin-top: auto; display: inline-flex; align-items: center; gap: 8px; align-self: flex-start;
-      font-size: 0.94rem; font-weight: 700; color: var(--sky);
-      text-decoration: none; transition: gap 0.3s ease, color 0.3s ease;
-    }
-    .intro-card-link svg { width: 17px; height: 17px; transition: transform 0.3s ease; }
-    .intro-card-link:hover { gap: 12px; color: var(--sky-dark); }
-    .intro-card-link:hover svg { transform: translateX(4px); }
-    [dir="rtl"] .intro-card-link:hover svg { transform: translateX(-4px); }
+    .close-vid-btn:hover { transform: scale(1.1); }
 
     /* ─── STATS ────────────────────────────────────────── */
     #stats { padding: 76px 6% 92px; }
@@ -385,14 +524,11 @@
       font-family: var(--font-en); font-size: 0.68rem; font-weight: 700;
       color: var(--up); background: rgba(47,214,126,0.12); border: 1px solid rgba(47,214,126,0.35);
       padding: 3px 9px; border-radius: var(--radius-pill); letter-spacing: 0.3px;
-      animation: trendFloat 2.4s ease-in-out infinite;
     }
     .trend-badge svg { width: 11px; height: 11px; stroke: var(--up); fill: none; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; }
-    @keyframes trendFloat { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
-    @media (prefers-reduced-motion: reduce) { .trend-badge { animation: none; } }
     .stat-label { font-size: 0.92rem; color: var(--text-mid); font-weight: 500; }
 
-    /* ─── GAP-LESS SEAMLESS BLUE PARTNERS TICKER (CONVEYOR BELT) ─── */
+    /* ─── PARTNERS TICKER ──────────────────────────────── */
     .partners-ticker-section {
       padding: 10px 0 50px 0;
       background: transparent;
@@ -400,113 +536,27 @@
       width: 100%;
     }
     .ticker-wrap {
-      position: relative;
-      width: 100%;
-      overflow: hidden;
-      background: transparent;
-      border: none;
-      box-shadow: none;
-      padding: 20px 0;
+      position: relative; width: 100%; overflow: hidden; padding: 20px 0;
     }
     .ticker-track {
-      display: flex;
-      gap: 70px;
-      align-items: center;
-      width: max-content;
+      display: flex; gap: 70px; align-items: center; width: max-content;
       will-change: transform;
       animation: tickerScroll 25s linear infinite;
     }
-    .ticker-wrap:hover .ticker-track {
-      animation-play-state: paused;
-    }
+    .ticker-wrap:hover .ticker-track { animation-play-state: paused; }
     .partner-logo-item {
-      height: 75px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
+      height: 75px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;
       transition: transform 0.3s ease;
     }
-    .partner-logo-item:hover {
-      transform: scale(1.1);
-    }
+    .partner-logo-item:hover { transform: scale(1.1); }
     .partner-logo-item img {
-      height: 100%;
-      max-height: 75px;
-      width: auto;
-      object-fit: contain;
-      display: block;
-      /* توحيد اللون الأزرق بالكامل */
+      height: 100%; max-height: 75px; width: auto; object-fit: contain; display: block;
       filter: brightness(0) saturate(100%) invert(53%) sepia(88%) saturate(1987%) hue-rotate(190deg) brightness(102%) contrast(101%);
-      transition: filter 0.3s ease;
     }
     @keyframes tickerScroll {
       0% { transform: translateX(0); }
       100% { transform: translateX(-20%); }
     }
-    @media (prefers-reduced-motion: reduce) {
-      .ticker-track { animation: none; }
-    }
-
-    /* ─── GALLERY ─────────────────────────────────────── */
-    #gallery { padding: 20px 0 110px 0; background: var(--bg-soft); }
-    .gallery-header { text-align: center; padding: 0 10% 56px; }
-    .section-label {
-      font-family: var(--font-en); font-size: 0.75rem; font-weight: 700;
-      letter-spacing: 4px; color: var(--sky-dark); text-transform: uppercase; margin-bottom: 18px;
-    }
-    .section-title { font-size: clamp(1.9rem, 4vw, 2.6rem); font-weight: 800; letter-spacing: -0.01em; color: var(--text-dark); margin-bottom: 14px; }
-    .section-title em {
-      font-style: normal;
-      background: linear-gradient(100deg, var(--sky-dark), var(--sky));
-      -webkit-background-clip: text; background-clip: text; color: transparent;
-    }
-    .section-sub { font-size: 1.05rem; color: var(--text-mid); font-weight: 400; max-width: 540px; margin: 0 auto; }
-
-    .gallery-list {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 26px;
-      max-width: 860px;
-      padding: 0 6%;
-      margin: 0 auto;
-    }
-    .gallery-item {
-      position: relative; display: block; overflow: hidden; line-height: 0;
-      border-radius: var(--radius-md);
-      box-shadow: var(--shadow-glass-sm);
-      border: 1px solid var(--glass-border);
-      background: var(--glass-bg);
-      aspect-ratio: 16 / 9;
-    }
-    .gallery-item img {
-      width: 100%; height: 100%; display: block; object-fit: cover;
-      transition: transform 0.6s var(--ease-out);
-    }
-    .gallery-item::after {
-      content: '';
-      position: absolute; inset: 0;
-      background: linear-gradient(to top, rgba(0,10,20,0.55) 0%, rgba(0,10,20,0) 45%);
-      opacity: 0; transition: opacity 0.4s ease;
-    }
-    .gallery-item .gallery-glass-tag {
-      position: absolute; bottom: 16px; right: 16px; left: 16px;
-      display: flex; align-items: center; justify-content: center; gap: 8px;
-      padding: 11px 16px;
-      background: rgba(255,255,255,0.18);
-      -webkit-backdrop-filter: blur(var(--blur-sm));
-      backdrop-filter: blur(var(--blur-sm));
-      border: 1px solid rgba(255,255,255,0.4);
-      border-radius: var(--radius-pill);
-      color: #fff; font-size: 0.85rem; font-weight: 600;
-      opacity: 0; transform: translateY(10px);
-      transition: opacity 0.4s ease, transform 0.4s ease;
-    }
-    .gallery-item { transition: transform 0.5s var(--ease-out), box-shadow 0.5s ease; }
-    .gallery-item:hover { transform: translateY(-6px) scale(1.01); box-shadow: 0 22px 55px rgba(15,23,42,0.18), 0 0 0 1px rgba(var(--sky-rgb),0.25); }
-    .gallery-item:hover img { transform: scale(1.06); }
-    .gallery-item:hover::after { opacity: 1; }
-    .gallery-item:hover .gallery-glass-tag { opacity: 1; transform: translateY(0); }
 
     /* ─── CONTACT ─────────────────────────────────────── */
     #contact {
@@ -515,14 +565,11 @@
       display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
       overflow: hidden;
     }
-    #contact::before {
-      content: ''; position: absolute; top: -180px; left: -140px;
-      width: 480px; height: 480px; border-radius: 50%;
-      background: radial-gradient(circle, rgba(var(--sky-rgb),0.22) 0%, rgba(var(--sky-rgb),0) 70%);
-      filter: blur(20px); pointer-events: none;
-    }
     .contact-intro { position: relative; z-index: 1; }
-    .contact-intro .section-label { color: var(--sky); }
+    .section-label {
+      font-family: var(--font-en); font-size: 0.75rem; font-weight: 700;
+      letter-spacing: 4px; color: var(--sky-dark); text-transform: uppercase; margin-bottom: 18px;
+    }
     .contact-title { font-size: clamp(1.9rem, 4vw, 2.6rem); font-weight: 800; letter-spacing: -0.01em; line-height: 1.3; margin-bottom: 20px; }
     .contact-title em {
       font-style: normal;
@@ -575,68 +622,7 @@
     }
     .wa-glass-btn:hover { background: #25d366; color: #fff; }
 
-    /* ─── RESPONSIVE ──────────────────────────────────── */
-    @media (max-width: 900px) {
-      #contact { grid-template-columns: 1fr; gap: 48px; }
-      .hero-grid { justify-content: center; }
-      .hero-content { text-align: center; }
-      .hero-actions { justify-content: center; }
-    }
-    @media (max-width: 600px) {
-      .hero-content { padding: 34px 26px; border-radius: var(--radius-lg); display: flex; flex-direction: column; }
-      .hero-heading { font-size: 2.1rem; }
-      .hero-actions {
-        order: -1;
-        margin-bottom: 26px;
-        gap: 10px;
-        justify-content: center;
-      }
-      .hero-actions .btn-glass {
-        padding: 12px 22px;
-        font-size: 0.86rem;
-      }
-      .hero-actions .btn-glass-primary {
-        background: rgba(var(--sky-rgb), 0.92);
-        border-color: rgba(255,255,255,0.7);
-        box-shadow: 0 8px 24px rgba(var(--sky-rgb),0.5);
-      }
-      .hero-actions .btn-glass-ghost {
-        background: rgba(255,255,255,0.14);
-        border-color: rgba(255,255,255,0.6);
-      }
-      .gallery-list { padding: 0 5%; gap: 18px; }
-      .gallery-item { aspect-ratio: 4 / 3; }
-      .partner-logo-item { height: 55px; }
-      .partner-logo-item img { max-height: 55px; }
-      footer { flex-direction: column; gap: 14px; text-align: center; }
-      .stats-grid { grid-template-columns: repeat(2, 1fr); }
-    }
-
-    /* ─── USER AVATAR ────────────────────────────────── */
-    #user-avatar-wrap { position: fixed; top: 16px; left: 22px; z-index: 2000; display: none; }
-    #user-avatar-wrap.show { display: block; }
-    .ua-btn { position: relative; cursor: pointer; display: block; }
-    .ua-btn img { width: 42px; height: 42px; border-radius: 50%; border: 2px solid var(--sky); object-fit: cover; display: block; box-shadow: 0 2px 12px rgba(0,0,0,0.3); transition: box-shadow 0.3s; }
-    .ua-btn:hover img { box-shadow: 0 0 0 3px rgba(var(--sky-rgb),0.4); }
-    .ua-dropdown {
-      position: absolute; top: 52px; left: 0; min-width: 180px;
-      background: rgba(10,20,28,0.72);
-      -webkit-backdrop-filter: blur(var(--blur-lg)) saturate(180%);
-      backdrop-filter: blur(var(--blur-lg)) saturate(180%);
-      border: 1px solid rgba(255,255,255,0.16);
-      border-radius: var(--radius-md); padding: 8px;
-      display: none; flex-direction: column; gap: 3px;
-      box-shadow: var(--shadow-dark-glass);
-    }
-    .ua-dropdown.open { display: flex; }
-    .ua-ditem { display: flex; align-items: center; gap: 9px; padding: 9px 13px; border-radius: var(--radius-sm); cursor: pointer; font-size: 0.87rem; color: #fff; font-family: var(--font-ar); transition: background 0.2s; border: none; background: transparent; width: 100%; text-align: right; }
-    .ua-ditem:hover { background: rgba(255,255,255,0.1); }
-    .ua-ditem.logout { color: #ff8585; }
-    .ua-ditem svg { flex-shrink:0; opacity:0.75; }
-    .ua-ditem.logout svg { opacity:1; }
-    @media (max-width: 768px) { #user-avatar-wrap { top: 72px; left: 14px; } }
-
-    /* ─── MOBILE TOP BAR ─────────────────────────────── */
+    /* ─── MOBILE TOP BAR & DRAWER ─────────────────────── */
     .mobile-topbar { display: none; }
     @media (max-width: 768px) {
       .mobile-topbar {
@@ -649,30 +635,22 @@
         border-bottom: 1px solid rgba(255,255,255,0.5);
         box-shadow: var(--shadow-glass-sm);
       }
-      .mobile-topbar.scrolled { box-shadow: 0 8px 30px rgba(15,23,42,0.12); background: rgba(255,255,255,0.9); }
-      
       .mobile-menu-btn {
         width: 44px; height: 44px; border-radius: 14px; border: none; cursor: pointer;
         display: flex; align-items: center; justify-content: center; flex-shrink: 0;
         background: var(--sky);
         box-shadow: 0 6px 18px rgba(var(--sky-rgb), 0.4);
-        transition: transform 0.3s ease, background 0.3s ease;
       }
-      .mobile-menu-btn:hover { transform: scale(1.05); }
       .mobile-menu-btn svg { width: 20px; height: 20px; stroke: #fff; fill: none; stroke-width: 2.6; stroke-linecap: round; }
       .mobile-topbar-logo img { height: 32px; object-fit: contain; display: block; }
     }
-
-    /* ─── MOBILE MENU OVERLAY (DROPDOWN COMPACT) ─── */
     .mobile-menu-overlay {
       position: fixed; inset: 0; z-index: 99999;
       display: flex; align-items: flex-start; justify-content: center;
       padding: 78px 16px 16px;
       background: rgba(5,8,14,0);
-      -webkit-backdrop-filter: blur(0px);
-      backdrop-filter: blur(0px);
       opacity: 0; visibility: hidden; pointer-events: none;
-      transition: opacity 0.3s ease, background 0.3s ease, backdrop-filter 0.3s ease, visibility 0.3s;
+      transition: opacity 0.3s ease, background 0.3s ease, visibility 0.3s;
     }
     .mobile-menu-overlay.open {
       opacity: 1; visibility: visible; pointer-events: all;
@@ -680,12 +658,10 @@
       -webkit-backdrop-filter: blur(12px) saturate(150%);
       backdrop-filter: blur(12px) saturate(150%);
     }
-
     .mm-sheet {
       width: 100%; max-width: 320px;
       max-height: calc(100vh - 110px);
       display: flex; flex-direction: column;
-      position: static;
       background: #0a0a0c;
       border-radius: 22px;
       overflow: hidden;
@@ -694,157 +670,66 @@
       opacity: 0;
       transition: transform 0.35s var(--ease-out), opacity 0.3s ease;
     }
-    .mobile-menu-overlay.open .mm-sheet {
-      transform: scale(1) translateY(0);
-      opacity: 1;
-    }
-
+    .mobile-menu-overlay.open .mm-sheet { transform: scale(1) translateY(0); opacity: 1; }
     .mm-header {
       display: flex; align-items: center; justify-content: space-between;
       padding: 16px 18px;
       background: linear-gradient(135deg, var(--sky-dark), var(--violet));
-      flex-shrink: 0;
     }
     .mm-close {
-      width: 36px; height: 36px; border-radius: 12px;
-      border: none;
+      width: 36px; height: 36px; border-radius: 12px; border: none;
       background: rgba(255, 255, 255, 0.25); color: #fff;
-      display: flex; align-items: center; justify-content: center;
-      cursor: pointer;
-      transition: transform 0.25s ease, background 0.2s;
+      display: flex; align-items: center; justify-content: center; cursor: pointer;
     }
-    .mm-close:hover { transform: scale(1.08); background: rgba(255, 255, 255, 0.35); }
     .mm-close svg { width: 16px; height: 16px; stroke: #fff; fill: none; stroke-width: 2.6; stroke-linecap: round; }
-
     .mm-body {
-      display: flex; flex-direction: column;
-      align-items: flex-end;
-      padding: 18px 18px 20px;
-      background: #0a0a0c;
-      overflow-y: auto;
+      display: flex; flex-direction: column; align-items: flex-end;
+      padding: 18px 18px 20px; background: #0a0a0c; overflow-y: auto;
     }
-
-    .mm-lang-option {
-      width: 100%;
-      text-align: right;
-      margin-bottom: 14px;
-    }
-    .mm-lang-option a {
-      color: rgba(255,255,255,0.6);
-      text-decoration: none;
-      font-size: 0.92rem;
-      font-weight: 500;
-      font-family: var(--font-en);
-      transition: color 0.2s;
-    }
-    .mm-lang-option a:hover { color: var(--sky); }
-
-    .mm-links {
-      display: flex; flex-direction: column;
-      width: 100%;
-    }
-
+    .mm-links { display: flex; flex-direction: column; width: 100%; }
     .mm-link {
       display: flex; align-items: center; justify-content: flex-end; gap: 14px;
-      padding: 13px 4px;
-      background: transparent;
-      border: none;
-      border-top: 1px solid rgba(255,255,255,0.07);
+      padding: 13px 4px; border-top: 1px solid rgba(255,255,255,0.07);
       text-decoration: none; color: #fff;
-      opacity: 1;
-      transform: none;
     }
-    .mm-links a.mm-link:first-child { border-top: none; }
-
-    .mm-link:hover .mm-link-label { color: var(--sky); }
-    .mm-link-label { font-size: 1rem; font-weight: 600; color: #fff; letter-spacing: 0.2px; }
+    .mm-link-label { font-size: 1rem; font-weight: 600; color: #fff; }
     .mm-link-icon {
       width: 32px; height: 32px; border-radius: 10px;
       background: rgba(255, 255, 255, 0.08);
       display: flex; align-items: center; justify-content: center;
-      flex-shrink: 0;
-      transition: background 0.3s ease;
     }
     .mm-link-icon svg { width: 16px; height: 16px; stroke: #fff; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-
     .mm-link.active { background: rgba(59, 157, 255, 0.14); border-radius: 12px; }
     .mm-link.active .mm-link-label { color: var(--sky) !important; }
-    .mm-link.active .mm-link-icon { background: rgba(59, 157, 255, 0.25) !important; }
-    .mm-link.active .mm-link-icon svg { stroke: var(--sky) !important; }
 
-    /* ─── AMBIENT BLOBS ───────────────────────────────── */
-    .ambient-blob {
-      position: fixed; z-index: 0; pointer-events: none;
-      border-radius: 50%; filter: blur(60px);
-      background: radial-gradient(circle, rgba(59,157,255,0.16) 0%, rgba(59,157,255,0) 70%);
-      will-change: transform;
-    }
-    .blob-a { width: 560px; height: 560px; top: -140px; right: -120px; animation: driftA 22s ease-in-out infinite; }
-    .blob-b { width: 460px; height: 460px; bottom: 10%; left: -160px; animation: driftB 26s ease-in-out infinite; }
-    .blob-c { width: 380px; height: 380px; top: 45%; right: 10%; background: radial-gradient(circle, rgba(108,184,255,0.10) 0%, rgba(108,184,255,0) 70%); animation: driftC 30s ease-in-out infinite; }
-    @keyframes driftA { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(-60px, 60px) scale(1.15); } }
-    @keyframes driftB { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(50px, -40px) scale(1.1); } }
-    @keyframes driftC { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(-40px, -50px) scale(0.9); } }
-    @media (prefers-reduced-motion: reduce) { .ambient-blob { animation: none !important; } }
-
-    /* ─── SPOTLIGHT & REVEAL ─────────────────────────── */
-    #spotlight {
-      position: fixed; inset: 0; z-index: 40; pointer-events: none;
-      mix-blend-mode: multiply;
-      background: radial-gradient(600px circle at var(--mx,50%) var(--my,50%), rgba(59,157,255,0.10), transparent 42%);
-      transition: opacity 0.3s ease; opacity: 0;
-    }
-    #spotlight.active { opacity: 1; }
-    section, footer { position: relative; z-index: 2; }
-    .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.8s var(--ease-out), transform 0.8s var(--ease-out); }
-    .reveal.in-view { opacity: 1; transform: none; }
-
-    /* ─── LIGHTBOX ───────────────────────────────────────── */
+    /* Lightbox Modal */
     #lightbox {
       position: fixed; inset: 0; z-index: 5000;
       display: none; align-items: center; justify-content: center;
-      padding: 40px;
-      background: rgba(0,0,0,0.72);
-      -webkit-backdrop-filter: blur(var(--blur-md)) saturate(140%);
-      backdrop-filter: blur(var(--blur-md)) saturate(140%);
+      padding: 40px; background: rgba(0,0,0,0.72);
+      backdrop-filter: blur(var(--blur-md));
       opacity: 0; transition: opacity 0.35s ease;
     }
     #lightbox.open { display: flex; opacity: 1; }
     .lightbox-frame {
       position: relative; max-width: min(90vw, 980px); max-height: 86vh;
-      background: rgba(10,14,20,0.85);
-      border: 1px solid var(--glass-dark-border);
-      border-radius: var(--radius-lg);
-      box-shadow: var(--shadow-dark-glass);
-      padding: 14px; transform: scale(0.94); transition: transform 0.35s var(--ease-out);
+      background: rgba(10,14,20,0.85); border-radius: var(--radius-lg); padding: 14px;
     }
-    #lightbox.open .lightbox-frame { transform: scale(1); }
     .lightbox-frame img { display: block; max-width: 100%; max-height: 78vh; border-radius: var(--radius-md); object-fit: contain; }
     .lightbox-close {
       position: absolute; top: -18px; left: -18px; width: 40px; height: 40px;
       border-radius: 50%; display: flex; align-items: center; justify-content: center;
-      background: rgba(10,14,20,0.85); border: 1px solid var(--glass-dark-border);
-      -webkit-backdrop-filter: blur(var(--blur-sm)); backdrop-filter: blur(var(--blur-sm));
-      color: #fff; cursor: pointer; box-shadow: var(--shadow-glass-sm); transition: transform 0.25s ease, background 0.25s ease;
+      background: rgba(10,14,20,0.85); color: #fff; cursor: pointer; border: 1px solid rgba(255,255,255,0.2);
     }
-    .lightbox-close:hover { transform: rotate(90deg); background: rgba(var(--sky-rgb),0.35); }
-
-    /* ─── SCROLL PROGRESS ────────────────────────────── */
     #scroll-progress {
       position: fixed; top: 0; left: 0; height: 2.5px; width: 0%; z-index: 1100;
       background: linear-gradient(90deg, var(--sky-dark), var(--sky));
-      box-shadow: 0 0 8px rgba(var(--sky-rgb),0.6);
-      transition: width 0.1s linear;
     }
   </style>
 </head>
 <body>
 
   <div id="scroll-progress"></div>
-  <div class="ambient-blob blob-a"></div>
-  <div class="ambient-blob blob-b"></div>
-  <div class="ambient-blob blob-c"></div>
-  <div id="spotlight"></div>
 
   <!-- PAGE TRANSITION OVERLAY -->
   <div id="page-transition">
@@ -864,33 +749,10 @@
     </div>
   </div>
 
-  <!-- USER AVATAR -->
-  <div id="user-avatar-wrap">
-    <div class="ua-btn" id="ua-btn" onclick="uaToggle()">
-      <img id="ua-img" src="" alt="user" />
-      <div class="ua-dropdown" id="ua-dropdown">
-        <button class="ua-ditem" onclick="uaSignOut()">
-          <svg width="15" height="15" fill="none" stroke="#ff8585" stroke-width="2" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
-          تسجيل الخروج
-        </button>
-        <button class="ua-ditem" onclick="uaSwitch()">
-          <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
-          تبديل الحساب
-        </button>
-      </div>
-    </div>
-  </div>
-
   <!-- PRELOADER -->
   <div id="preloader">
     <div class="preloader-ring-wrap">
       <svg class="preloader-ring" viewBox="0 0 140 140" aria-hidden="true">
-        <defs>
-          <linearGradient id="preloaderRingGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stop-color="var(--sky-dark)" />
-            <stop offset="100%" stop-color="var(--sky)" />
-          </linearGradient>
-        </defs>
         <circle class="preloader-ring-track" cx="70" cy="70" r="62"></circle>
         <circle class="preloader-ring-fill" id="preloader-ring-fill" cx="70" cy="70" r="62"></circle>
       </svg>
@@ -924,30 +786,12 @@
         </div>
       </div>
       <div class="mm-body">
-        <div class="mm-lang-option">
-          <a href="#">English</a>
-        </div>
         <nav class="mm-links">
-          <a href="index.html" class="mm-link">
-            <span class="mm-link-label">الرئيسية</span>
-            <span class="mm-link-icon"><svg viewBox="0 0 24 24"><path d="M3 12l9-9 9 9"/><path d="M5 10v10h14V10"/></svg></span>
-          </a>
-          <a href="electro.html" class="mm-link active">
-            <span class="mm-link-label">إلكتروميكانيك</span>
-            <span class="mm-link-icon"><svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></span>
-          </a>
-          <a href="projects.html" class="mm-link">
-            <span class="mm-link-label">مشاريع</span>
-            <span class="mm-link-icon"><svg viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg></span>
-          </a>
-          <a href="decorations.html" class="mm-link">
-            <span class="mm-link-label">ديكورات</span>
-            <span class="mm-link-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></span>
-          </a>
-          <a href="contact.html" class="mm-link">
-            <span class="mm-link-label">تواصل معنا</span>
-            <span class="mm-link-icon"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.43 2 2 0 0 1 3.58 1H6.6a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 8.5a16 16 0 0 0 5.55 5.55l.95-.95a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span>
-          </a>
+          <a href="#hero" class="mm-link active"><span class="mm-link-label">الرئيسية</span></a>
+          <a href="#ideas" class="mm-link"><span class="mm-link-label">الفكرة وطبيعة العمل</span></a>
+          <a href="#projects-foundation" class="mm-link"><span class="mm-link-label">أعمال التأسيس</span></a>
+          <a href="#projects-delivery" class="mm-link"><span class="mm-link-label">أعمال التسليم</span></a>
+          <a href="#contact" class="mm-link"><span class="mm-link-label">تواصل معنا</span></a>
         </nav>
       </div>
     </div>
@@ -959,132 +803,236 @@
       <img src="https://i.postimg.cc/8PShHcVc/nebras-logo.png" alt="Nebras Solutions" />
     </div>
     <ul class="nav-links">
-      <li><a href="index.html">الرئيسية</a></li>
-      <li><a href="electro.html">إلكتروميكانيك</a></li>
-      <li><a href="projects.html">مشاريع</a></li>
-      <li><a href="decorations.html">ديكورات</a></li>
-      <li><a href="contact.html">تواصل معنا</a></li>
+      <li><a href="#hero">الرئيسية</a></li>
+      <li><a href="#ideas">الفكرة وطبيعة العمل</a></li>
+      <li><a href="#projects-foundation">أعمال التأسيس</a></li>
+      <li><a href="#projects-delivery">أعمال التسليم</a></li>
+      <li><a href="#contact">تواصل معنا</a></li>
     </ul>
   </nav>
 
   <!-- HERO -->
   <section id="hero">
-    <video class="hero-video" id="hero-video" autoplay muted loop playsinline preload="auto">
-      <source src="nebras-bg.mp4" type="video/mp4" />
-    </video>
     <div class="hero-overlay"></div>
     <div class="hero-grid">
       <div class="hero-content" id="hero-content">
-        <p class="hero-eyebrow">ELECTROMECHANICAL</p>
-        <h1 class="hero-heading">أعمال <em>كهروميكانيكية</em><br/>بمعايير عالمية</h1>
-        <p class="hero-sub">تصميم وتنفيذ وصيانة الأنظمة الكهربائية والميكانيكية للمشاريع السكنية والتجارية والصناعية، بفريق هندسي متخصص وأحدث معايير السلامة والجودة.</p>
+        <p class="hero-eyebrow">ELECTROMECHANICAL & ELECTRICAL</p>
+        <h1 class="hero-heading">شركة نبراس <em>لأعمال الكهرباء</em><br/>تأسيس وتشطيب متكامل</h1>
+        <p class="hero-sub">نستلم الموقع من البداية إلى التسليم مع الالتزام التام بالمواعيد المحددة وتقديم خدمة متابعة فائقة الجودة لجميع مشاريعنا.</p>
         <div class="hero-actions">
-          <a href="#gallery" class="btn-glass btn-glass-primary">اكتشف المزيد</a>
-          <a href="contact.html" class="btn-glass btn-glass-ghost">تواصل معنا</a>
+          <a href="#projects-foundation" class="btn-glass btn-glass-primary">استعرض أعمالنا</a>
+          <a href="#contact" class="btn-glass btn-glass-ghost">تواصل معنا</a>
         </div>
-      </div>
-    </div>
-    <button class="hero-scroll-cue" id="scrollCue" aria-label="مرر للأسفل">
-      <span>مرر للأسفل</span>
-      <span class="cue-ring">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-      </span>
-    </button>
-  </section>
-
-  <!-- SHOWCASE BAND -->
-  <section id="showcase">
-    <div class="showcase-grid">
-      <div class="growth-card reveal" aria-hidden="true">
-        <div class="growth-card-head">
-          <div class="growth-card-title">
-            <span class="gci"><svg viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M18.7 8l-5.1 5.1-4-4L3 15.5"/></svg></span>
-            <span>نمو المشاريع</span>
-          </div>
-          <span class="growth-card-badge"><svg viewBox="0 0 24 24"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>27%</span>
-        </div>
-        <div class="growth-chart-wrap">
-          <svg viewBox="0 0 460 190" preserveAspectRatio="none">
-            <defs>
-              <linearGradient id="growthLineGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stop-color="var(--sky-dark)" />
-                <stop offset="100%" stop-color="var(--sky)" />
-              </linearGradient>
-              <linearGradient id="growthAreaGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-                <stop offset="0%" stop-color="rgba(59,157,255,0.32)" />
-                <stop offset="100%" stop-color="rgba(59,157,255,0)" />
-              </linearGradient>
-            </defs>
-            <path class="growth-area" d="M2,144 C62,150 84,160 120,130 C160,98 182,56 230,72 C270,86 288,140 328,108 C364,80 386,24 456,16 L456,190 L2,190 Z" fill="url(#growthAreaGrad)" />
-            <path class="growth-line" d="M2,144 C62,150 84,160 120,130 C160,98 182,56 230,72 C270,86 288,140 328,108 C364,80 386,24 456,16" />
-            <g class="growth-dot" style="animation-delay:1.9s">
-              <circle cx="120" cy="130" r="13" fill="var(--sky)" opacity="0.3" />
-              <circle cx="120" cy="130" r="5.5" fill="#fff" stroke="var(--sky)" stroke-width="2.4" />
-            </g>
-            <g class="growth-dot" style="animation-delay:2.6s">
-              <circle cx="456" cy="16" r="13" fill="var(--sky)" opacity="0.3" />
-              <circle cx="456" cy="16" r="5.5" fill="#fff" stroke="var(--sky)" stroke-width="2.4" />
-            </g>
-          </svg>
-          <div class="growth-pill p1">45 <span class="unit">مشروع</span></div>
-          <div class="growth-pill p2">120+ <span class="unit">مشروع</span></div>
-        </div>
-        <div class="growth-axis"><span>2019</span><span>2026</span></div>
-      </div>
-
-      <div class="intro-card reveal" style="transition-delay:100ms">
-        <div class="intro-card-icon">
-          <svg viewBox="0 0 24 24"><path d="M13 2L3 14h7l-1 8 10-12h-7l1-8z"/></svg>
-        </div>
-        <h3>لماذا تختار نبراس سولوشنز؟</h3>
-        <p>نجمع بين الخبرة الهندسية والدقة التنفيذية لنقدّم حلولاً كهروميكانيكية وتصميمات ديكور متكاملة، بمتابعة مباشرة من فريقنا من أول استشارة وحتى التسليم النهائي، وبمعايير جودة صارمة تناسب المشاريع السكنية والتجارية على حد سواء.</p>
-        <a href="contact.html" class="intro-card-link">
-          <span>اكتشف المزيد</span>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
-        </a>
       </div>
     </div>
   </section>
 
-  <!-- STATS (UPDATED WITH NEW VALUES) -->
+  <!-- CONTENT BLOCKS (الفكرة - طبيعة العمل - المميزات) -->
+  <section class="content-blocks-section" id="ideas">
+    
+    <!-- Section 1: الفكرة -->
+    <div class="content-block-card">
+      <div class="content-block-text">
+        <h2>الفكرة</h2>
+        <p>نحن شركة لأعمال الكهرباء تأسيس وتشطيب نستلم الموقع من البداية الى التسليم كما نستلم ملحقات مواقع اهم ما يميزنا التسليم دائما في المواعيد المحدده متابعه الاعمال التي قامت بها الشركه في حاله طلب العميل لذلك. مجالتنا متفرعه في عالم الكهرباء.</p>
+      </div>
+      <div class="content-block-image">
+        <img src="https://i.postimg.cc/TpvKyJn8/b9dddccb-47ef-4b23-862e-74f0bd7cad70.png" alt="الفكرة">
+      </div>
+    </div>
+
+    <!-- Section 2: طبيعة العمل -->
+    <div class="content-block-card">
+      <div class="content-block-text">
+        <h2>طبيعة العمل</h2>
+        <p>نحن شركة نعمل في كهرباء PVC. نعمل على المخططات المطلوبة وتنفيذها.</p>
+        <p>نعمل أيضا في مجال كهرباء التيار الخفيف Low Current مثل تركيب الكاميرات والدش والواي فاي والداتا ومنظومة الفاير Fire Alarm System تركيب وصيانة.</p>
+        <p>نعمل في مجال الباور كنترول Power Control رسم المخططات المطلوبة مع تنفيذها بكل دقة واحترافية، تركيب لوحات الباور وصيانتها وتغيير المطلوب إن وجد.</p>
+        <p>كما يوجد قسم لتركيب التريهات وتصنيعها، كما نقوم بتغيير أنظمة الإنارة إلى سمارت هوم وما شابه ذلك.</p>
+      </div>
+      <div class="content-block-image">
+        <img src="https://i.postimg.cc/30FY0mQz/bbbb.png" alt="طبيعة العمل">
+      </div>
+    </div>
+
+    <!-- Section 3: المميزات -->
+    <div class="content-block-card">
+      <div class="content-block-text">
+        <h2>المميزات</h2>
+        <p>• متابعة أعمال الكهرباء سواء صيانة أو تركيب.</p>
+        <p>• التواصل مع العملاء الذين قمنا لهم بعمل المشروع لوجود أي مشاكل أو أعطال لحلها في أسرع وقت.</p>
+        <p>• نحن فريق عمل منظم ودقيق في عدم إهدار أي مواد أو خامات يتم العمل بها في المشروع.</p>
+        <p>• العمل دائما بجد ونشاط لانتهاء العمل قبل الميعاد المحدد.</p>
+        <p>• طقم إشراف قوي لتنظيم حركة العمل.</p>
+      </div>
+      <div class="content-block-image">
+        <img src="https://i.postimg.cc/pp1XfQFb/image.png" alt="المميزات">
+      </div>
+    </div>
+
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- SECTION: صور تأسيس من بعض المواقع -->
+  <section class="projects-section" id="projects-foundation">
+    <h2><span>صور تأسيس من بعض المواقع</span></h2>
+    <div class="slider-container">
+      <div class="slider-wrapper">
+        <div class="project-card" onclick="openLightboxImg(this)"><img src="https://i.postimg.cc/bvfy80RH/IMG-20251205-WA0121.jpg" alt="تأسيس"></div>
+        <div class="project-card" onclick="openLightboxImg(this)"><img src="https://i.postimg.cc/BbLRrwtK/0b4dc765-fb65-4526-bd51-693a4f337520.jpg" alt="تأسيس"></div>
+        <div class="project-card" onclick="openLightboxImg(this)"><img src="https://i.postimg.cc/k4hkhdMg/1747860326102.jpg" alt="تأسيس"></div>
+        <div class="project-card" onclick="openLightboxImg(this)"><img src="https://i.postimg.cc/3RbPbHrN/282770fd-9510-46b4-9e48-f53dc15a404b.jpg" alt="تأسيس"></div>
+        <div class="project-card" onclick="openLightboxImg(this)"><img src="https://i.postimg.cc/KjkC6s4R/37eb96ca-e486-4140-a397-2d8b08fffc89.jpg" alt="تأسيس"></div>
+        <div class="project-card" onclick="openLightboxImg(this)"><img src="https://i.postimg.cc/y8mC65j8/3d3.png" alt="تأسيس"></div>
+        <div class="project-card" onclick="openLightboxImg(this)"><img src="https://i.postimg.cc/kG6L0hD6/9cbd6aa1-63e3-4c17-87f7-87c4009bb920.jpg" alt="تأسيس"></div>
+        <div class="project-card" onclick="openLightboxImg(this)"><img src="https://i.postimg.cc/HxLq2LgR/IMG-20251205-WA0072.jpg" alt="تأسيس"></div>
+        <div class="project-card" onclick="openLightboxImg(this)"><img src="https://i.postimg.cc/Pxqg4qj3/IMG-20251205-WA0074.jpg" alt="تأسيس"></div>
+        <div class="project-card" onclick="openLightboxImg(this)"><img src="https://i.postimg.cc/SsKBrKhz/IMG-20251205-WA0092.jpg" alt="تأسيس"></div>
+        <div class="project-card" onclick="openLightboxImg(this)"><img src="https://i.postimg.cc/QtM2bM3T/IMG-20251205-WA0104.jpg" alt="تأسيس"></div>
+        <div class="project-card" onclick="openLightboxImg(this)"><img src="https://i.postimg.cc/1zMxwqL0/IMG-20251205-WA0109.jpg" alt="تأسيس"></div>
+        <div class="project-card" onclick="openLightboxImg(this)"><img src="https://i.postimg.cc/RFbjbzCq/IMG-20251227-152426.jpg" alt="تأسيس"></div>
+        <div class="project-card" onclick="openLightboxImg(this)"><img src="https://i.postimg.cc/qRZ9ZdBB/IMG-20251227-152453.jpg" alt="تأسيس"></div>
+        <div class="project-card" onclick="openLightboxImg(this)"><img src="https://i.postimg.cc/26XPXfjr/IMG-20251227-152546.jpg" alt="تأسيس"></div>
+        <div class="project-card" onclick="openLightboxImg(this)"><img src="https://i.postimg.cc/0QHLHq5x/IMG-20251227-152609.jpg" alt="تأسيس"></div>
+        <div class="project-card" onclick="openLightboxImg(this)"><img src="https://i.postimg.cc/50kZkM4h/IMG-20251227-152744.jpg" alt="تأسيس"></div>
+        <div class="project-card" onclick="openLightboxImg(this)"><img src="https://i.postimg.cc/XJDTD0j1/IMG-20251227-152900.jpg" alt="تأسيس"></div>
+        <div class="project-card" onclick="openLightboxImg(this)"><img src="https://i.postimg.cc/FRn2nQrn/IMG20240926094103.jpg" alt="تأسيس"></div>
+        <div class="project-card" onclick="openLightboxImg(this)"><img src="https://i.postimg.cc/W3fQfPp3/IMG20240929103733.jpg" alt="تأسيس"></div>
+        <div class="project-card" onclick="openLightboxImg(this)"><img src="https://i.postimg.cc/KYmS1NsG/IMG20241007071231.jpg" alt="تأسيس"></div>
+        <div class="project-card" onclick="openLightboxImg(this)"><img src="https://i.postimg.cc/g0GFxDBd/IMG20241007071356.jpg" alt="تأسيس"></div>
+        <div class="project-card" onclick="openLightboxImg(this)"><img src="https://i.postimg.cc/7LXv02pT/IMG20241019081604.jpg" alt="تأسيس"></div>
+        <div class="project-card" onclick="openLightboxImg(this)"><img src="https://i.postimg.cc/SKmFnr1w/Screenshot-pngnnnn.png" alt="تأسيس"></div>
+        <div class="project-card" onclick="openLightboxImg(this)"><img src="https://i.postimg.cc/QdQZNPmz/sr4.png" alt="تأسيس"></div>
+        <div class="project-card" onclick="openLightboxImg(this)"><img src="https://i.postimg.cc/mrTfPwpK/ʿqghʾb.png" alt="تأسيس"></div>
+        <div class="project-card" onclick="openLightboxImg(this)"><img src="https://i.postimg.cc/VNzQJRZh/gh5z.png" alt="تأسيس"></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- SECTION: فيديوهات تأسيس من مواقع -->
+  <section class="projects-section">
+    <h2><span>فيديوهات تأسيس من مواقع</span></h2>
+    <div class="slider-container">
+      <div class="slider-wrapper">
+        <div class="video-card" onclick="openVideoModal('https://drive.google.com/file/d/1HqwVcDWf7O4ZVX7aHI6EOx7PyXxiRsmV/preview')"><iframe src="https://drive.google.com/file/d/1HqwVcDWf7O4ZVX7aHI6EOx7PyXxiRsmV/preview" allow="autoplay" muted></iframe><div class="play-icon"></div></div>
+        <div class="video-card" onclick="openVideoModal('https://drive.google.com/file/d/1EbRTU7aaBqSis-LdnAh7nK1rqR5P30FH/preview')"><iframe src="https://drive.google.com/file/d/1EbRTU7aaBqSis-LdnAh7nK1rqR5P30FH/preview" allow="autoplay" muted></iframe><div class="play-icon"></div></div>
+        <div class="video-card" onclick="openVideoModal('https://drive.google.com/file/d/1dAaFoXWptxV0oxhJNzGLtl5Wjv105vra/preview')"><iframe src="https://drive.google.com/file/d/1dAaFoXWptxV0oxhJNzGLtl5Wjv105vra/preview" allow="autoplay" muted></iframe><div class="play-icon"></div></div>
+        <div class="video-card" onclick="openVideoModal('https://drive.google.com/file/d/1KMIS5CcQZl5e9Sf_KDT7lA6RR0Dg7Y5T/preview')"><iframe src="https://drive.google.com/file/d/1KMIS5CcQZl5e9Sf_KDT7lA6RR0Dg7Y5T/preview" allow="autoplay" muted></iframe><div class="play-icon"></div></div>
+        <div class="video-card" onclick="openVideoModal('https://drive.google.com/file/d/1BusTViaMcx9U6C_8iDQUSQOzQ3CI4gg1/preview')"><iframe src="https://drive.google.com/file/d/1BusTViaMcx9U6C_8iDQUSQOzQ3CI4gg1/preview" allow="autoplay" muted></iframe><div class="play-icon"></div></div>
+        <div class="video-card" onclick="openVideoModal('https://drive.google.com/file/d/1ksk9gaduRW4Di3zgBnw2RXB57ZSJkoe5/preview')"><iframe src="https://drive.google.com/file/d/1ksk9gaduRW4Di3zgBnw2RXB57ZSJkoe5/preview" allow="autoplay" muted></iframe><div class="play-icon"></div></div>
+        <div class="video-card" onclick="openVideoModal('https://drive.google.com/file/d/1vIruHVKupDPMttsbmeufsEmsyBSsbYxl/preview')"><iframe src="https://drive.google.com/file/d/1vIruHVKupDPMttsbmeufsEmsyBSsbYxl/preview" allow="autoplay" muted></iframe><div class="play-icon"></div></div>
+        <div class="video-card" onclick="openVideoModal('https://drive.google.com/file/d/15v9tBaXcuKg_-6PZys586j8rqSsE7Ljc/preview')"><iframe src="https://drive.google.com/file/d/15v9tBaXcuKg_-6PZys586j8rqSsE7Ljc/preview" allow="autoplay" muted></iframe><div class="play-icon"></div></div>
+        <div class="video-card" onclick="openVideoModal('https://drive.google.com/file/d/11K3JH-wtHHgVubYRsA-Y6hOHWJ-V6cZf/preview')"><iframe src="https://drive.google.com/file/d/11K3JH-wtHHgVubYRsA-Y6hOHWJ-V6cZf/preview" allow="autoplay" muted></iframe><div class="play-icon"></div></div>
+        <div class="video-card" onclick="openVideoModal('https://drive.google.com/file/d/177KCGfrDcRdkOfJK9lVQ7RhKyAoXGGjy/preview')"><iframe src="https://drive.google.com/file/d/177KCGfrDcRdkOfJK9lVQ7RhKyAoXGGjy/preview" allow="autoplay" muted></iframe><div class="play-icon"></div></div>
+        <div class="video-card" onclick="openVideoModal('https://drive.google.com/file/d/1CmiI1aN8Ayq-Z4j-xEOXDVE6YgLMlqfY/preview')"><iframe src="https://drive.google.com/file/d/1CmiI1aN8Ayq-Z4j-xEOXDVE6YgLMlqfY/preview" allow="autoplay" muted></iframe><div class="play-icon"></div></div>
+        <div class="video-card" onclick="openVideoModal('https://drive.google.com/file/d/1vzX6PWCZ7fzVT1sHXtiGyW2v4Oe1C0T2/preview')"><iframe src="https://drive.google.com/file/d/1vzX6PWCZ7fzVT1sHXtiGyW2v4Oe1C0T2/preview" allow="autoplay" muted></iframe><div class="play-icon"></div></div>
+        <div class="video-card" onclick="openVideoModal('https://drive.google.com/file/d/1cvjjGyUI6MGjROecgiasRD-EAK6H5kKa/preview')"><iframe src="https://drive.google.com/file/d/1cvjjGyUI6MGjROecgiasRD-EAK6H5kKa/preview" allow="autoplay" muted></iframe><div class="play-icon"></div></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- SECTION: صور تسليم من بعض المواقع -->
+  <section class="projects-section" id="projects-delivery">
+    <h2><span>صور تسليم من بعض المواقع</span></h2>
+    <div class="slider-container">
+      <div class="slider-wrapper">
+        <div class="project-card" onclick="openLightboxImg(this)"><img src="https://i.postimg.cc/q7mxKVTj/Messenger-creation-05A99EC1-CB13-43B5-82D4-DFD51C7D2C04.jpg" alt="تسليم"></div>
+        <div class="project-card" onclick="openLightboxImg(this)"><img src="https://i.postimg.cc/1zWrFhQK/Messenger-creation-069BF2D1-AA39-4454-B950-8AD918CA8AFF.jpg" alt="تسليم"></div>
+        <div class="project-card" onclick="openLightboxImg(this)"><img src="https://i.postimg.cc/XvNgXNTm/Messenger-creation-1B0B85E3-579A-4832-A7B9-ED075AD066CA.jpg" alt="تسليم"></div>
+        <div class="project-card" onclick="openLightboxImg(this)"><img src="https://i.postimg.cc/QMNqVNRW/Messenger-creation-2E06672A-A34F-4716-80E1-4609B290DDD2.jpg" alt="تسليم"></div>
+        <div class="project-card" onclick="openLightboxImg(this)"><img src="https://i.postimg.cc/xdjPqjWJ/Messenger-creation-2E294F93-C580-48C2-A16A-7B20B826AC36.jpg" alt="تسليم"></div>
+        <div class="project-card" onclick="openLightboxImg(this)"><img src="https://i.postimg.cc/8CymvQSx/Messenger-creation-3AE15E23-D19A-45E3-B78F-962AE8C43D07.jpg" alt="تسليم"></div>
+        <div class="project-card" onclick="openLightboxImg(this)"><img src="https://i.postimg.cc/jjqhCqG9/Messenger-creation-4B7C80BA-E5E2-4B2B-A18E-DCC060C0F33E.jpg" alt="تسليم"></div>
+        <div class="project-card" onclick="openLightboxImg(this)"><img src="https://i.postimg.cc/7LBnz84y/Messenger-creation-4D56F2AC-52CE-4779-B282-BAAC27EF2204.jpg" alt="تسليم"></div>
+        <div class="project-card" onclick="openLightboxImg(this)"><img src="https://i.postimg.cc/Ls4Vh4r1/Messenger-creation-50DF290F-404D-48F1-98EC-8875098F834F.jpg" alt="تسليم"></div>
+        <div class="project-card" onclick="openLightboxImg(this)"><img src="https://i.postimg.cc/rphN4XT6/Messenger-creation-560C81BB-DFC7-481B-9B59-AF935908C20E.jpg" alt="تسليم"></div>
+        <div class="project-card" onclick="openLightboxImg(this)"><img src="https://i.postimg.cc/mrZShZ0N/Messenger-creation-57DF6FAC-20EF-4543-B756-0F85C626F5DA.jpg" alt="تسليم"></div>
+        <div class="project-card" onclick="openLightboxImg(this)"><img src="https://i.postimg.cc/N0NkXqcz/Messenger-creation-5D569A95-54DC-4F42-9C40-25970C0F24B6.jpg" alt="تسليم"></div>
+        <div class="project-card" onclick="openLightboxImg(this)"><img src="https://i.postimg.cc/CxsNFn68/Messenger-creation-5F6625F3-4878-484D-BBB3-2D6A0C391BCF.jpg" alt="تسليم"></div>
+        <div class="project-card" onclick="openLightboxImg(this)"><img src="https://i.postimg.cc/0Nt0SRs3/Messenger-creation-5F72A934-0CA2-4779-9C3C-3DEBC5E63736.jpg" alt="تسليم"></div>
+        <div class="project-card" onclick="openLightboxImg(this)"><img src="https://i.postimg.cc/L83THg0f/Messenger-creation-65F61622-5F69-4B9E-AF33-BC7D6B883A83.jpg" alt="تسليم"></div>
+        <div class="project-card" onclick="openLightboxImg(this)"><img src="https://i.postimg.cc/L83THg0L/Messenger-creation-687B6392-8E59-40EE-BE36-F9773F31A7AB.jpg" alt="تسليم"></div>
+        <div class="project-card" onclick="openLightboxImg(this)"><img src="https://i.postimg.cc/3wLFG5Tq/Messenger-creation-6B50CB8D-CA38-405C-85D2-36511D7664AD.jpg" alt="تسليم"></div>
+        <div class="project-card" onclick="openLightboxImg(this)"><img src="https://i.postimg.cc/GmxQcTSt/Messenger-creation-72630B1A-478C-4C42-B09A-02F6E56EDCC7.jpg" alt="تسليم"></div>
+        <div class="project-card" onclick="openLightboxImg(this)"><img src="https://i.postimg.cc/N0NkXqcN/Messenger-creation-73560006-51C9-4B25-AF77-BB9BF81B8A64.jpg" alt="تسليم"></div>
+        <div class="project-card" onclick="openLightboxImg(this)"><img src="https://i.postimg.cc/DzfcmftP/Messenger-creation-793F7045-6AB5-4336-812C-90DC95B65721.jpg" alt="تسليم"></div>
+        <div class="project-card" onclick="openLightboxImg(this)"><img src="https://i.postimg.cc/s2fJ1ftJ/Messenger-creation-8012B6A8-9AB8-4DDE-B513-668E10A4AD32.jpg" alt="تسليم"></div>
+        <div class="project-card" onclick="openLightboxImg(this)"><img src="https://i.postimg.cc/PqfMNfBb/Messenger-creation-87BFEA17-952D-4020-BF1F-A39E1506751A.jpg" alt="تسليم"></div>
+        <div class="project-card" onclick="openLightboxImg(this)"><img src="https://i.postimg.cc/wBxk3xSb/Messenger-creation-A120D2B8-EB42-4307-98D8-A0042D0B3E51.jpg" alt="تسليم"></div>
+        <div class="project-card" onclick="openLightboxImg(this)"><img src="https://i.postimg.cc/25H7WRD0/Messenger-creation-B09B6DFC-BF5D-4203-B715-D2BED3927276.jpg" alt="تسليم"></div>
+        <div class="project-card" onclick="openLightboxImg(this)"><img src="https://i.postimg.cc/qvxLk6ZJ/Messenger-creation-C1D33CA4-4056-45E1-96F4-494069DBED82.jpg" alt="تسليم"></div>
+        <div class="project-card" onclick="openLightboxImg(this)"><img src="https://i.postimg.cc/RZLRMJbH/Messenger-creation-C8E1CDB1-145B-45FE-AD5A-8587E5773A8A.jpg" alt="تسليم"></div>
+        <div class="project-card" onclick="openLightboxImg(this)"><img src="https://i.postimg.cc/yNfyR4HQ/Messenger-creation-D5A33947-B453-4F23-B654-CA3EDD1C4CD4.jpg" alt="تسليم"></div>
+        <div class="project-card" onclick="openLightboxImg(this)"><img src="https://i.postimg.cc/zfDk3D9L/Messenger-creation-E5DFFDD2-29AD-4AF0-8BC7-A5088AA5154E.jpg" alt="تسليم"></div>
+        <div class="project-card" onclick="openLightboxImg(this)"><img src="https://i.postimg.cc/g0cKrcfT/Messenger-creation-E6BE6EBC-7F13-4B39-9EA2-8C57CE77E9DC.jpg" alt="تسليم"></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- SECTION: فيديوهات تسليم من مواقع -->
+  <section class="projects-section">
+    <h2><span>فيديوهات تسليم من مواقع</span></h2>
+    <div class="slider-container">
+      <div class="slider-wrapper">
+        <div class="video-card" onclick="openVideoModal('https://drive.google.com/file/d/1Eh7s8wNOn8MmwyU5GSZYS0o9LUCqHTrU/preview')"><iframe src="https://drive.google.com/file/d/1Eh7s8wNOn8MmwyU5GSZYS0o9LUCqHTrU/preview" allow="autoplay" muted></iframe><div class="play-icon"></div></div>
+        <div class="video-card" onclick="openVideoModal('https://drive.google.com/file/d/1-CUrrbZGUqplz8Z14fdRLWcBLoAlSmV5/preview')"><iframe src="https://drive.google.com/file/d/1-CUrrbZGUqplz8Z14fdRLWcBLoAlSmV5/preview" allow="autoplay" muted></iframe><div class="play-icon"></div></div>
+        <div class="video-card" onclick="openVideoModal('https://drive.google.com/file/d/17Ij_Vq29OwTsZQOeOUQVHxNK0YOLLjeR/preview')"><iframe src="https://drive.google.com/file/d/17Ij_Vq29OwTsZQOeOUQVHxNK0YOLLjeR/preview" allow="autoplay" muted></iframe><div class="play-icon"></div></div>
+        <div class="video-card" onclick="openVideoModal('https://drive.google.com/file/d/1dZI_KUO5UhZz2vcMXfM4QD9GVScZJQGs/preview')"><iframe src="https://drive.google.com/file/d/1dZI_KUO5UhZz2vcMXfM4QD9GVScZJQGs/preview" allow="autoplay" muted></iframe><div class="play-icon"></div></div>
+        <div class="video-card" onclick="openVideoModal('https://drive.google.com/file/d/1GwSWJqxgSxlfNqw3BBuTG0D63JO2vL4Z/preview')"><iframe src="https://drive.google.com/file/d/1GwSWJqxgSxlfNqw3BBuTG0D63JO2vL4Z/preview" allow="autoplay" muted></iframe><div class="play-icon"></div></div>
+        <div class="video-card" onclick="openVideoModal('https://drive.google.com/file/d/1lGv6558OvGXzRSjJKH41uCJnFn-Yvpo2/preview')"><iframe src="https://drive.google.com/file/d/1lGv6558OvGXzRSjJKH41uCJnFn-Yvpo2/preview" allow="autoplay" muted></iframe><div class="play-icon"></div></div>
+        <div class="video-card" onclick="openVideoModal('https://drive.google.com/file/d/1YBLM_9LVeBIE6hV9iInorR066vq2Ul2h/preview')"><iframe src="https://drive.google.com/file/d/1YBLM_9LVeBIE6hV9iInorR066vq2Ul2h/preview" allow="autoplay" muted></iframe><div class="play-icon"></div></div>
+        <div class="video-card" onclick="openVideoModal('https://drive.google.com/file/d/1t1vQlaPodsj386hlrxHUbD5HAYb_xLH9/preview')"><iframe src="https://drive.google.com/file/d/1t1vQlaPodsj386hlrxHUbD5HAYb_xLH9/preview" allow="autoplay" muted></iframe><div class="play-icon"></div></div>
+        <div class="video-card" onclick="openVideoModal('https://drive.google.com/file/d/1QkJGoF_RNsCvjgn5Slg_xEyZEtfEQyKM/preview')"><iframe src="https://drive.google.com/file/d/1QkJGoF_RNsCvjgn5Slg_xEyZEtfEQyKM/preview" allow="autoplay" muted></iframe><div class="play-icon"></div></div>
+        <div class="video-card" onclick="openVideoModal('https://drive.google.com/file/d/1FURNOb6AuwkQpW7JjjdAWtVDL4-53ncR/preview')"><iframe src="https://drive.google.com/file/d/1FURNOb6AuwkQpW7JjjdAWtVDL4-53ncR/preview" allow="autoplay" muted></iframe><div class="play-icon"></div></div>
+        <div class="video-card" onclick="openVideoModal('https://drive.google.com/file/d/15M1RnD9ccIE2qApzhmQm4LmvxMZcNom7/preview')"><iframe src="https://drive.google.com/file/d/15M1RnD9ccIE2qApzhmQm4LmvxMZcNom7/preview" allow="autoplay" muted></iframe><div class="play-icon"></div></div>
+        <div class="video-card" onclick="openVideoModal('https://drive.google.com/file/d/1DxUtIIHvsEFdZKmQ3DYAj26_I44p_iNa/preview')"><iframe src="https://drive.google.com/file/d/1DxUtIIHvsEFdZKmQ3DYAj26_I44p_iNa/preview" allow="autoplay" muted></iframe><div class="play-icon"></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VIDEO MODAL OVERLAY -->
+  <div class="video-overlay" id="videoOverlay">
+    <button class="close-vid-btn" onclick="closeVideoModal()">×</button>
+    <iframe src="" class="enlarged-video" id="enlargedVideo" allow="autoplay" frameborder="0"></iframe>
+  </div>
+
+  <!-- STATS -->
   <section id="stats">
     <div class="stats-grid">
-      <div class="stat-card reveal">
-        <div class="stat-icon">
-          <svg viewBox="0 0 24 24"><path d="M20 7h-9M14 17H5"/><circle cx="17" cy="17" r="3"/><circle cx="7" cy="7" r="3"/></svg>
-        </div>
-        <div class="stat-value"><span class="stat-plus">+</span><span class="stat-number" data-target="8">0</span><span class="trend-badge up"><svg viewBox="0 0 24 24"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>12%</span></div>
+      <div class="stat-card">
+        <div class="stat-icon"><svg viewBox="0 0 24 24"><path d="M20 7h-9M14 17H5"/><circle cx="17" cy="17" r="3"/><circle cx="7" cy="7" r="3"/></svg></div>
+        <div class="stat-value"><span class="stat-plus">+</span><span class="stat-number" data-target="8">0</span></div>
         <div class="stat-label">سنوات من الخبرة</div>
       </div>
-      <div class="stat-card reveal" style="transition-delay:80ms">
-        <div class="stat-icon">
-          <svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-        </div>
-        <div class="stat-value"><span class="stat-plus">+</span><span class="stat-number" data-target="7">0</span><span class="trend-badge up"><svg viewBox="0 0 24 24"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>27%</span></div>
+      <div class="stat-card">
+        <div class="stat-icon"><svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
+        <div class="stat-value"><span class="stat-plus">+</span><span class="stat-number" data-target="50">0</span></div>
         <div class="stat-label">مشروع منجز بنجاح</div>
       </div>
-      <div class="stat-card reveal" style="transition-delay:160ms">
-        <div class="stat-icon">
-          <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
-        </div>
-        <div class="stat-value"><span class="stat-plus">+</span><span class="stat-number" data-target="350">0</span><span class="trend-badge up"><svg viewBox="0 0 24 24"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>18%</span></div>
+      <div class="stat-card">
+        <div class="stat-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg></div>
+        <div class="stat-value"><span class="stat-plus">+</span><span class="stat-number" data-target="350">0</span></div>
         <div class="stat-label">عميل يثق بنا</div>
       </div>
-      <div class="stat-card reveal" style="transition-delay:240ms">
-        <div class="stat-icon">
-          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-        </div>
+      <div class="stat-card">
+        <div class="stat-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
         <div class="stat-value"><span class="stat-number" data-target="24" data-suffix="/7">0</span></div>
         <div class="stat-label">دعم وصيانة فنية</div>
       </div>
     </div>
   </section>
 
-  <!-- SEAMLESS CONTINUOUS PARTNERS TICKER -->
+  <!-- PARTNERS TICKER -->
   <section class="partners-ticker-section">
     <div class="ticker-wrap">
       <div class="ticker-track">
-        <!-- Set 1 (7 Logos) -->
         <div class="partner-logo-item"><img src="https://i.postimg.cc/SxVB6y80/Em1.png" alt="Partner"></div>
         <div class="partner-logo-item"><img src="https://i.postimg.cc/KYzdQdrT/Group-1.png" alt="Partner"></div>
         <div class="partner-logo-item"><img src="https://i.postimg.cc/zGpsCJhd/image.png" alt="Partner"></div>
@@ -1093,34 +1041,6 @@
         <div class="partner-logo-item"><img src="https://i.postimg.cc/L4BNYxj6/Asset-114x.png" alt="Partner"></div>
         <div class="partner-logo-item"><img src="https://i.postimg.cc/qRHxgKRR/Asset-4-16x.png" alt="Partner"></div>
         
-        <!-- Set 2 -->
-        <div class="partner-logo-item"><img src="https://i.postimg.cc/SxVB6y80/Em1.png" alt="Partner"></div>
-        <div class="partner-logo-item"><img src="https://i.postimg.cc/KYzdQdrT/Group-1.png" alt="Partner"></div>
-        <div class="partner-logo-item"><img src="https://i.postimg.cc/zGpsCJhd/image.png" alt="Partner"></div>
-        <div class="partner-logo-item"><img src="https://i.postimg.cc/JzKfN1JL/thailand-logo-removebg-preview.png" alt="Partner"></div>
-        <div class="partner-logo-item"><img src="https://i.postimg.cc/mgVvYbMf/ticket-(3).png" alt="Partner"></div>
-        <div class="partner-logo-item"><img src="https://i.postimg.cc/L4BNYxj6/Asset-114x.png" alt="Partner"></div>
-        <div class="partner-logo-item"><img src="https://i.postimg.cc/qRHxgKRR/Asset-4-16x.png" alt="Partner"></div>
-
-        <!-- Set 3 -->
-        <div class="partner-logo-item"><img src="https://i.postimg.cc/SxVB6y80/Em1.png" alt="Partner"></div>
-        <div class="partner-logo-item"><img src="https://i.postimg.cc/KYzdQdrT/Group-1.png" alt="Partner"></div>
-        <div class="partner-logo-item"><img src="https://i.postimg.cc/zGpsCJhd/image.png" alt="Partner"></div>
-        <div class="partner-logo-item"><img src="https://i.postimg.cc/JzKfN1JL/thailand-logo-removebg-preview.png" alt="Partner"></div>
-        <div class="partner-logo-item"><img src="https://i.postimg.cc/mgVvYbMf/ticket-(3).png" alt="Partner"></div>
-        <div class="partner-logo-item"><img src="https://i.postimg.cc/L4BNYxj6/Asset-114x.png" alt="Partner"></div>
-        <div class="partner-logo-item"><img src="https://i.postimg.cc/qRHxgKRR/Asset-4-16x.png" alt="Partner"></div>
-
-        <!-- Set 4 -->
-        <div class="partner-logo-item"><img src="https://i.postimg.cc/SxVB6y80/Em1.png" alt="Partner"></div>
-        <div class="partner-logo-item"><img src="https://i.postimg.cc/KYzdQdrT/Group-1.png" alt="Partner"></div>
-        <div class="partner-logo-item"><img src="https://i.postimg.cc/zGpsCJhd/image.png" alt="Partner"></div>
-        <div class="partner-logo-item"><img src="https://i.postimg.cc/JzKfN1JL/thailand-logo-removebg-preview.png" alt="Partner"></div>
-        <div class="partner-logo-item"><img src="https://i.postimg.cc/mgVvYbMf/ticket-(3).png" alt="Partner"></div>
-        <div class="partner-logo-item"><img src="https://i.postimg.cc/L4BNYxj6/Asset-114x.png" alt="Partner"></div>
-        <div class="partner-logo-item"><img src="https://i.postimg.cc/qRHxgKRR/Asset-4-16x.png" alt="Partner"></div>
-
-        <!-- Set 5 -->
         <div class="partner-logo-item"><img src="https://i.postimg.cc/SxVB6y80/Em1.png" alt="Partner"></div>
         <div class="partner-logo-item"><img src="https://i.postimg.cc/KYzdQdrT/Group-1.png" alt="Partner"></div>
         <div class="partner-logo-item"><img src="https://i.postimg.cc/zGpsCJhd/image.png" alt="Partner"></div>
@@ -1130,52 +1050,25 @@
         <div class="partner-logo-item"><img src="https://i.postimg.cc/qRHxgKRR/Asset-4-16x.png" alt="Partner"></div>
       </div>
     </div>
-  </section>
-
-  <!-- GALLERY -->
-  <section id="gallery">
-    <div class="gallery-header reveal">
-      <p class="section-label">OUR PROJECTS</p>
-      <h2 class="section-title">أعمالنا <em>الكهروميكانيكية</em></h2>
-      <p class="section-sub">نماذج من مشاريعنا الكهروميكانيكية المنجزة التي تعكس مستوى الجودة والاحترافية التي نلتزم بها في كل عمل</p>
-    </div>
-    <div class="gallery-list" id="gallery-list"></div>
   </section>
 
   <!-- CONTACT -->
   <section id="contact">
-    <div class="contact-intro reveal">
+    <div class="contact-intro">
       <p class="section-label">CONTACT US</p>
       <h2 class="contact-title">هل لديك <em>مشروع</em> في ذهنك؟</h2>
-      <p class="contact-body">
-        نسعد بالتواصل معك ومناقشة تفاصيل مشروعك. فريقنا المتخصص جاهز لتقديم الاستشارة والدعم اللازم لإنجاح مشروعك.
-      </p>
+      <p class="contact-body">نسعد بالتواصل معك ومناقشة تفاصيل مشروعك الكهربائي أو التشطيب. فريقنا المتخصص جاهز لتقديم الاستشارة والدعم.</p>
     </div>
     <div class="contact-info">
-      <div class="contact-item reveal">
-        <div class="contact-item-icon">
-          <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.43 2 2 0 0 1 3.58 1H6.6a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 8.5a16 16 0 0 0 5.55 5.55l.95-.95a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-        </div>
+      <div class="contact-item">
+        <div class="contact-item-icon"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.43 2 2 0 0 1 3.58 1H6.6a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 8.5a16 16 0 0 0 5.55 5.55l.95-.95a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
         <div class="contact-item-text">
           <strong>PHONE</strong>
-          <span dir="ltr">+966 53 183 7882</span><br/>
-          <span dir="ltr">+966 55 418 6401</span><br/>
-          <span dir="ltr">+966 11 210 9222</span>
+          <span dir="ltr">+966 53 183 7882</span>
         </div>
       </div>
-      <div class="contact-item reveal">
-        <div class="contact-item-icon">
-          <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-        </div>
-        <div class="contact-item-text">
-          <strong>EMAIL</strong>
-          <span>gerald.d@nebras.com.sa</span>
-        </div>
-      </div>
-      <div class="contact-item reveal">
-        <div class="contact-item-icon">
-          <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-        </div>
+      <div class="contact-item">
+        <div class="contact-item-icon"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
         <div class="contact-item-text">
           <strong>LOCATION</strong>
           <span>المملكة العربية السعودية</span>
@@ -1188,323 +1081,71 @@
   <footer>
     <img src="https://i.postimg.cc/8PShHcVc/nebras-logo.png" alt="Nebras Solutions" />
     <div style="text-align:center;">
-      <p>جميع الحقوق محفوظة &copy; 2025 Nebras Solutions</p>
-      <p style="margin-top:6px; font-size:0.78rem; color:rgba(0,0,0,0.32);">تطوير: اياد محمد عبدالله</p>
-      <a href="https://wa.me/2001096724839" target="_blank" rel="noopener" class="wa-glass-btn">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-        تحدث إلى المطور
-      </a>
+      <p>جميع الحقوق محفوظة &copy; 2026 Nebras Solution</p>
+      <p style="margin-top:4px; font-size:0.78rem; color:rgba(0,0,0,0.35);">تطوير: اياد محمد عبدالله</p>
     </div>
     <div style="width:80px;"></div>
   </footer>
 
-  <!-- Firebase Auth -->
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-    import { getAuth, onAuthStateChanged, signOut, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-
-    const firebaseConfig = {
-      apiKey: "AIzaSyAIc7Hx3lfY-1lY1cLahiRS-9a_9qoFbOo",
-      authDomain: "nebrassolutions.firebaseapp.com",
-      projectId: "nebrassolutions",
-      storageBucket: "nebrassolutions.firebasestorage.app",
-      messagingSenderId: "319290023869",
-      appId: "1:319290023869:web:4913a884e08532aacffcd4"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const provider = new GoogleAuthProvider();
-
-    window._auth = auth;
-    window._signOut = signOut;
-    window._provider = provider;
-    window._signInWithPopup = signInWithPopup;
-
-    onAuthStateChanged(auth, (user) => {
-      const avatarWrap = document.getElementById('user-avatar-wrap');
-      if (!user) {
-        if (avatarWrap) avatarWrap.classList.remove('show');
-      } else {
-        const avatar = user.photoURL || `https://ui-avatars.com/api/?name=${encodeURIComponent(user.displayName || user.email)}&background=1f7fa0&color=fff&size=80`;
-        document.getElementById('ua-img').src = avatar;
-        if (avatarWrap) avatarWrap.classList.add('show');
-      }
-    });
-  </script>
-
   <script>
-    const navbar = document.getElementById('navbar');
-    const mobileTopbar = document.getElementById('mobileTopbar');
-    window.addEventListener('scroll', () => {
-      navbar.classList.toggle('scrolled', window.scrollY > 40);
-      if (mobileTopbar) mobileTopbar.classList.toggle('scrolled', window.scrollY > 40);
+    // Preloader hide
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        const pre = document.getElementById('preloader');
+        if (pre) pre.classList.add('hide');
+      }, 1500);
     });
 
-    /* ─── Mobile Menu Drawer Handling ────────────────── */
+    // Mobile Menu Drawer
     const mobileMenuBtn = document.getElementById('mobileMenuBtn');
     const mobileMenuClose = document.getElementById('mobileMenuClose');
     const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
 
-    function openMobileMenu() {
-      if (mobileMenuOverlay) mobileMenuOverlay.classList.add('open');
-      document.body.style.overflow = 'hidden';
-      const avatarWrap = document.getElementById('user-avatar-wrap');
-      if (avatarWrap) avatarWrap.style.visibility = 'hidden';
-    }
-
-    function closeMobileMenu() {
-      if (mobileMenuOverlay) mobileMenuOverlay.classList.remove('open');
-      document.body.style.overflow = '';
-      const avatarWrap = document.getElementById('user-avatar-wrap');
-      if (avatarWrap) avatarWrap.style.visibility = '';
-    }
-
-    if (mobileMenuBtn) mobileMenuBtn.addEventListener('click', openMobileMenu);
-    if (mobileMenuClose) mobileMenuClose.addEventListener('click', closeMobileMenu);
-
+    if (mobileMenuBtn) mobileMenuBtn.addEventListener('click', () => mobileMenuOverlay.classList.add('open'));
+    if (mobileMenuClose) mobileMenuClose.addEventListener('click', () => mobileMenuOverlay.classList.remove('open'));
     if (mobileMenuOverlay) {
       mobileMenuOverlay.addEventListener('click', (e) => {
-        if (e.target === mobileMenuOverlay) closeMobileMenu();
+        if (e.target === mobileMenuOverlay) mobileMenuOverlay.classList.remove('open');
       });
-
-      mobileMenuOverlay.querySelectorAll('.mm-link').forEach((link) => {
-        link.addEventListener('click', (e) => {
-          mobileMenuOverlay.querySelectorAll('.mm-link').forEach(l => l.classList.remove('active'));
-          link.classList.add('active');
-
-          const href = link.getAttribute('href');
-          if (href && href.startsWith('#')) {
-            e.preventDefault();
-            setTimeout(() => {
-              closeMobileMenu();
-              const target = document.querySelector(href);
-              if (target) target.scrollIntoView({ behavior: 'smooth' });
-            }, 300);
-          } else {
-            const pageTransition = document.getElementById('page-transition');
-            setTimeout(() => {
-              if (pageTransition) pageTransition.classList.add('active');
-            }, 100);
-            setTimeout(() => {
-              closeMobileMenu();
-              window.location.href = href;
-            }, 500);
-          }
-        });
+      mobileMenuOverlay.querySelectorAll('.mm-link').forEach(link => {
+        link.addEventListener('click', () => mobileMenuOverlay.classList.remove('open'));
       });
     }
 
-    const pctNumEl = document.getElementById('preloader-pct-num');
-    const ringFill = document.getElementById('preloader-ring-fill');
-    const RING_CIRC = 389.6;
-    if (pctNumEl && ringFill) {
-      let pct = 0;
-      const pctTimer = setInterval(() => {
-        pct = Math.min(100, pct + Math.random() * 9 + 3);
-        pctNumEl.textContent = Math.round(pct);
-        ringFill.style.strokeDashoffset = RING_CIRC - (RING_CIRC * pct / 100);
-        if (pct >= 100) clearInterval(pctTimer);
-      }, 140);
-    }
-
-    setTimeout(() => {
-      const pre = document.getElementById('preloader');
-      if (pre) pre.classList.add('hide');
-    }, 2800);
-
-    function uaToggle() {
-      document.getElementById('ua-dropdown').classList.toggle('open');
-    }
-    function uaSignOut() {
-      window._signOut(window._auth).then(() => {
-        window.location.href = 'login.html';
-      });
-    }
-    function uaSwitch() {
-      document.getElementById('ua-dropdown').classList.remove('open');
-      window._provider.setCustomParameters({ prompt: 'select_account' });
-      window._signOut(window._auth).then(() => {
-        window.location.href = 'login.html';
-      });
-    }
-    document.addEventListener('click', function(e) {
-      const btn = document.getElementById('ua-btn');
-      if (btn && !btn.contains(e.target)) {
-        document.getElementById('ua-dropdown').classList.remove('open');
-      }
-    });
-
-    // Build gallery grid
-    const galleryImages = [
-      { src: "https://i.postimg.cc/63vMb0hC/1.jpg", alt: "مشروع 1" },
-      { src: "https://i.postimg.cc/s28nJ85X/2.jpg", alt: "مشروع 2" },
-      { src: "https://i.postimg.cc/28WnKdXM/Whats-App-Image-2026-04-30-at-17-49-53.jpg", alt: "مشروع" },
-      { src: "https://i.postimg.cc/QMP6qPcT/3.jpg", alt: "مشروع 3" },
-      { src: "https://i.postimg.cc/g0XJRjNf/Whats-App-Image-2026-05-09-at-12-37-01.jpg", alt: "ديكور 1" },
-      { src: "https://i.postimg.cc/QtTfYbqt/4.jpg", alt: "مشروع 4" },
-      { src: "https://i.postimg.cc/SK5ZG5cF/5.jpg", alt: "مشروع 5" },
-      { src: "https://i.postimg.cc/DyG1MQY6/Whats-App-Image-2026-04-30-at-20-44-37.jpg", alt: "مشروع" },
-      { src: "https://i.postimg.cc/s28nJ85R/6.jpg", alt: "مشروع 6" },
-      { src: "https://i.postimg.cc/KYkzLj0X/Whats-App-Image-2026-05-09-at-12-37-01-(1).jpg", alt: "ديكور 2" },
-      { src: "https://i.postimg.cc/SK5ZG5cK/7.jpg", alt: "مشروع 7" },
-      { src: "https://i.postimg.cc/tg7SWyZP/8.jpg", alt: "مشروع 8" },
-      { src: "https://i.postimg.cc/R0qsK96y/9.jpg", alt: "مشروع 9" },
-      { src: "https://i.postimg.cc/s28nJ878/10.jpg", alt: "مشروع 10" },
-      { src: "https://i.postimg.cc/Mpyx8BPL/Whats-App-Image-2026-05-09-at-12-48-28.jpg", alt: "ديكور 3" },
-      { src: "https://i.postimg.cc/XYs1rXJn/11.jpg", alt: "مشروع 11" },
-      { src: "https://i.postimg.cc/6pMb8T3r/12.jpg", alt: "مشروع 12" },
-      { src: "https://i.postimg.cc/0ypxqSWV/Whats-App-Image-2026-05-09-at-12-48-28-(2).jpg", alt: "ديكور 5" },
-      { src: "https://i.postimg.cc/Z5wsW0R6/14.jpg", alt: "مشروع 14" },
-      { src: "https://i.postimg.cc/rwScL4nh/Whats-App-Image-2026-05-09-at-12-48-28-(1).jpg", alt: "ديكور 4" },
-      { src: "https://i.postimg.cc/nhFwVqHn/15.jpg", alt: "مشروع 15" },
-      { src: "https://i.postimg.cc/rwVYy58w/16.jpg", alt: "مشروع 16" },
-      { src: "https://i.postimg.cc/4NTSMrqv/17.jpg", alt: "مشروع 17" },
-      { src: "https://i.postimg.cc/bwyFY1q6/18.jpg", alt: "مشروع 18" },
-      { src: "https://i.postimg.cc/yYXbzLzq/19.jpg", alt: "مشروع 19" },
-      { src: "https://i.postimg.cc/htD34VKY/20.jpg", alt: "مشروع 20" },
-      { src: "https://i.postimg.cc/kgJhMWnP/21.jpg", alt: "مشروع 21" },
-      { src: "https://i.postimg.cc/9Q3VSbpd/Whats-App-Image-2026-05-09-at-12-48-28-(3).jpg", alt: "ديكور 6" }
-    ];
-    const galleryList = document.getElementById('gallery-list');
-    galleryList.innerHTML = galleryImages.map((item) => `
-      <div class="gallery-item" role="button" tabindex="0" data-src="${item.src}" data-alt="${item.alt}">
-        <img src="${item.src}" alt="${item.alt}" />
-        <span class="gallery-glass-tag">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
-          عرض المشروع
-        </span>
-      </div>
-    `).join('');
-
-    /* ─── Lightbox ─────────────────────────────────── */
+    // Lightbox for Images
     const lightbox = document.getElementById('lightbox');
     const lightboxImg = document.getElementById('lightbox-img');
-    function openLightbox(src, alt) {
-      lightboxImg.src = src;
-      lightboxImg.alt = alt || '';
-      lightbox.classList.add('open');
-      document.body.style.overflow = 'hidden';
-    }
-    function closeLightbox() {
-      lightbox.classList.remove('open');
-      document.body.style.overflow = '';
-    }
-    galleryList.addEventListener('click', (e) => {
-      const item = e.target.closest('.gallery-item');
-      if (item) openLightbox(item.dataset.src, item.dataset.alt);
-    });
-    galleryList.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        const item = e.target.closest('.gallery-item');
-        if (item) { e.preventDefault(); openLightbox(item.dataset.src, item.dataset.alt); }
+    function openLightboxImg(card) {
+      const img = card.querySelector('img');
+      if (img) {
+        lightboxImg.src = img.src;
+        lightbox.classList.add('open');
       }
-    });
-    document.getElementById('lightbox-close').addEventListener('click', closeLightbox);
-    lightbox.addEventListener('click', (e) => { if (e.target === lightbox) closeLightbox(); });
-    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeLightbox(); });
+    }
+    document.getElementById('lightbox-close').addEventListener('click', () => lightbox.classList.remove('open'));
+    lightbox.addEventListener('click', (e) => { if (e.target === lightbox) lightbox.classList.remove('open'); });
 
-    /* ─── Scroll Progress & Parallax ───────────────── */
-    const progressBar = document.getElementById('scroll-progress');
-    function updateProgress() {
+    // Video Modal
+    const videoOverlay = document.getElementById('videoOverlay');
+    const enlargedVideo = document.getElementById('enlargedVideo');
+    function openVideoModal(url) {
+      enlargedVideo.src = url;
+      videoOverlay.classList.add('active');
+    }
+    function closeVideoModal() {
+      videoOverlay.classList.remove('active');
+      enlargedVideo.src = '';
+    }
+    videoOverlay.addEventListener('click', (e) => {
+      if (e.target === videoOverlay) closeVideoModal();
+    });
+
+    // Scroll Progress
+    window.addEventListener('scroll', () => {
       const h = document.documentElement;
       const scrolled = (h.scrollTop || document.body.scrollTop);
       const max = h.scrollHeight - h.clientHeight;
-      progressBar.style.width = max > 0 ? `${(scrolled / max) * 100}%` : '0%';
-    }
-
-    const heroContent = document.getElementById('hero-content');
-    const heroVideo = document.getElementById('hero-video');
-    function updateParallax() {
-      const y = window.scrollY;
-      if (y < window.innerHeight) {
-        if (heroContent) heroContent.style.transform = `translateY(${y * 0.22}px)`;
-        if (heroVideo) heroVideo.style.transform = `translate(-50%, -50%) scale(${1 + Math.min(y * 0.0003, 0.12)})`;
-      }
-    }
-
-    let ticking = false;
-    window.addEventListener('scroll', () => {
-      if (!ticking) {
-        requestAnimationFrame(() => { updateProgress(); updateParallax(); ticking = false; });
-        ticking = true;
-      }
-    });
-
-    /* ─── Cursor Spotlight ──────────────────────────── */
-    const spotlight = document.getElementById('spotlight');
-    let spotlightTimeout;
-    window.addEventListener('mousemove', (e) => {
-      spotlight.style.setProperty('--mx', `${e.clientX}px`);
-      spotlight.style.setProperty('--my', `${e.clientY}px`);
-      spotlight.classList.add('active');
-      clearTimeout(spotlightTimeout);
-      spotlightTimeout = setTimeout(() => spotlight.classList.remove('active'), 1400);
-    }, { passive: true });
-
-    /* ─── Scroll Cue ────────────────────────────────-- */
-    const scrollCue = document.getElementById('scrollCue');
-    if (scrollCue) {
-      scrollCue.addEventListener('click', () => {
-        document.getElementById('stats').scrollIntoView({ behavior: 'smooth' });
-      });
-    }
-
-    /* ─── Reveal Observer ───────────────────────────── */
-    const revealObserver = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('in-view');
-          revealObserver.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.12 });
-    document.querySelectorAll('.reveal').forEach((el) => revealObserver.observe(el));
-
-    /* ─── Animated Counters ─────────────────────────── */
-    function animateCount(el) {
-      const target = parseInt(el.dataset.target, 10) || 0;
-      const suffix = el.dataset.suffix || '';
-      const duration = 1500;
-      let start = null;
-      function step(ts) {
-        if (!start) start = ts;
-        const progress = Math.min((ts - start) / duration, 1);
-        const eased = 1 - Math.pow(1 - progress, 3);
-        el.textContent = Math.floor(eased * target) + suffix;
-        if (progress < 1) requestAnimationFrame(step);
-        else el.textContent = target + suffix;
-      }
-      requestAnimationFrame(step);
-    }
-    const statObserver = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          animateCount(entry.target);
-          statObserver.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.5 });
-    document.querySelectorAll('.stat-number').forEach((el) => statObserver.observe(el));
-
-    /* ─── Cinematic Page Transitions ─────────────────── */
-    const pageTransition = document.getElementById('page-transition');
-    function isInternalNav(link) {
-      const href = link.getAttribute('href');
-      if (!href) return false;
-      if (href.startsWith('#')) return false;
-      if (link.target === '_blank') return false;
-      if (href.startsWith('http://') || href.startsWith('https://')) return false;
-      return true;
-    }
-    document.querySelectorAll('a[href]').forEach((link) => {
-      if (!isInternalNav(link)) return;
-      link.addEventListener('click', (e) => {
-        e.preventDefault();
-        const dest = link.getAttribute('href');
-        pageTransition.classList.add('active');
-        setTimeout(() => { window.location.href = dest; }, 680);
-      });
+      document.getElementById('scroll-progress').style.width = max > 0 ? `${(scrolled / max) * 100}%` : '0%';
     });
   </script>
 
