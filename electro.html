@@ -348,114 +348,65 @@
     footer p { font-size: 0.85rem; color: var(--text-mid); }
     footer img { height: 32px; }
     @media (max-width: 768px) { footer { flex-direction: column; gap: 15px; text-align: center; } }
+  
+    /* Clean video-first hero */
+    html, body { margin: 0; padding: 0; overflow-x: hidden; }
+    #hero {
+      position: relative;
+      min-height: 100vh;
+      height: 100svh;
+      width: 100%;
+      overflow: hidden;
+      isolation: isolate;
+      background: #000;
+      display: flex;
+      align-items: center;
+    }
+    #hero::before, #hero::after { content: none !important; display: none !important; }
+    .hero-video {
+      position: absolute !important;
+      inset: 0 !important;
+      width: 100% !important;
+      height: 100% !important;
+      object-fit: cover !important;
+      object-position: center !important;
+      transform: none !important;
+      z-index: -3 !important;
+    }
+    .hero-overlay {
+      position: absolute !important;
+      inset: 0 !important;
+      background: linear-gradient(90deg, rgba(0,0,0,.70), rgba(0,0,0,.28)) !important;
+      z-index: -2 !important;
+    }
+    .hero-grid {
+      position: absolute !important;
+      inset: 0 !important;
+      display: block !important;
+      background: none !important;
+      clip-path: none !important;
+      transform: none !important;
+      z-index: -1 !important;
+      pointer-events: none !important;
+    }
+    .hero-grid::before, .hero-grid::after { content: none !important; display: none !important; }
+    .hero-content {
+      position: relative !important;
+      width: min(760px, 88%) !important;
+      margin: 0 8% !important;
+      padding: 110px 0 40px !important;
+      z-index: 2 !important;
+      transform: none !important;
+    }
+    @media (max-width: 900px) {
+      #hero { min-height: 100svh; }
+      .hero-content { margin: 0 6%; width: 88%; padding-top: 100px; }
+      .hero-overlay { background: linear-gradient(180deg, rgba(0,0,0,.35), rgba(0,0,0,.72)) !important; }
+    }
+
   </style>
 </head>
 <body>
-
-  <!-- PRELOADER -->
-  <div id="preloader">
-    <div class="preloader-ring-wrap">
-      <svg class="preloader-ring" viewBox="0 0 140 140" aria-hidden="true">
-        <defs>
-          <linearGradient id="preloaderRingGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stop-color="var(--sky-dark)" />
-            <stop offset="100%" stop-color="var(--sky)" />
-          </linearGradient>
-        </defs>
-        <circle class="preloader-ring-track" cx="70" cy="70" r="62"></circle>
-        <circle class="preloader-ring-fill" id="preloader-ring-fill" cx="70" cy="70" r="62"></circle>
-      </svg>
-      <div class="preloader-logo">
-        <img src="https://i.postimg.cc/8PShHcVc/nebras-logo.png" alt="Nebras Solutions" />
-      </div>
-    </div>
-    <div class="preloader-tagline">We Light Your Future</div>
-    <div class="preloader-pct" id="preloader-pct"><span id="preloader-pct-num">0</span><span class="preloader-pct-sign">%</span></div>
-  </div>
-
-  <!-- PAGE TRANSITION OVERLAY -->
-  <div id="page-transition">
-    <div class="pt-panel">
-      <img src="https://i.postimg.cc/8PShHcVc/nebras-logo.png" alt="" />
-      <div class="pt-bar-wrap"><div class="pt-bar-fill"></div></div>
-    </div>
-  </div>
-
-  <!-- LIGHTBOX -->
-  <div id="lightbox">
-    <div class="lightbox-frame">
-      <button class="lightbox-close" id="lightbox-close">×</button>
-      <img id="lightbox-img" src="" alt="" />
-    </div>
-  </div>
-
-  <!-- VIDEO MODAL -->
-  <div class="video-overlay" id="videoOverlay">
-    <button class="close-vid-btn" onclick="closeVideoModal()">×</button>
-    <iframe src="" class="enlarged-video" id="enlargedVideo" allow="autoplay" frameborder="0"></iframe>
-  </div>
-
-  <!-- MOBILE TOP BAR -->
-  <div class="mobile-topbar" id="mobileTopbar">
-    <div class="mobile-topbar-logo">
-      <img src="https://i.postimg.cc/8PShHcVc/nebras-logo.png" alt="Nebras Solutions" />
-    </div>
-    <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="فتح القائمة">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
-    </button>
-  </div>
-
-  <!-- MOBILE MENU OVERLAY -->
-  <div class="mobile-menu-overlay" id="mobileMenuOverlay">
-    <div class="mm-sheet">
-      <div class="mm-header">
-        <button class="mm-close" id="mobileMenuClose" aria-label="إغلاق القائمة">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-        </button>
-        <div class="mm-header-logo">
-          <img src="https://i.postimg.cc/8PShHcVc/nebras-logo.png" style="height:28px; filter: brightness(0) invert(1);" alt="Nebras Solutions" />
-        </div>
-      </div>
-      <div class="mm-body">
-        <nav class="mm-links">
-          <a href="index.html" class="mm-link">
-            <span class="mm-link-label">الرئيسية</span>
-            <span class="mm-link-icon"><svg viewBox="0 0 24 24"><path d="M3 12l9-9 9 9"/><path d="M5 10v10h14V10"/></svg></span>
-          </a>
-          <a href="electro.html" class="mm-link active">
-            <span class="mm-link-label">إلكتروميكانيك</span>
-            <span class="mm-link-icon"><svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></span>
-          </a>
-          <a href="projects.html" class="mm-link">
-            <span class="mm-link-label">مشاريع</span>
-            <span class="mm-link-icon"><svg viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg></span>
-          </a>
-          <a href="decorations.html" class="mm-link">
-            <span class="mm-link-label">ديكورات</span>
-            <span class="mm-link-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></span>
-          </a>
-          <a href="contact.html" class="mm-link">
-            <span class="mm-link-label">تواصل معنا</span>
-            <span class="mm-link-icon"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.43 2 2 0 0 1 3.58 1H6.6a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 8.5a16 16 0 0 0 5.55 5.55l.95-.95a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span>
-          </a>
-        </nav>
-      </div>
-    </div>
-  </div>
-
-  <!-- NAVBAR -->
-  <nav id="navbar">
-    <div class="nav-logo">
-      <img src="https://i.postimg.cc/8PShHcVc/nebras-logo.png" alt="Nebras Solutions" />
-    </div>
-    <ul class="nav-links">
-      <li><a href="index.html">الرئيسية</a></li>
-      <li><a href="electro.html" class="active">إلكتروميكانيك</a></li>
-      <li><a href="projects.html">مشاريع</a></li>
-      <li><a href="decorations.html">ديكورات</a></li>
-      <li><a href="contact.html">تواصل معنا</a></li>
-    </ul>
-  </nav>
 
   <!-- HERO -->
   <section id="hero">
