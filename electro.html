@@ -36,10 +36,8 @@
       --radius-pill: 999px;
       --shadow-glass: 0 20px 60px rgba(15,23,42,0.14), inset 0 1px 0 rgba(255,255,255,0.6);
       --shadow-glass-sm: 0 10px 30px rgba(15,23,42,0.10), inset 0 1px 0 rgba(255,255,255,0.5);
-      --shadow-dark-glass: 0 10px 40px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.08);
       --font-ar: 'Tajawal', sans-serif;
       --font-en: 'Montserrat', sans-serif;
-      --ease-out: cubic-bezier(0.16,1,0.3,1);
     }
 
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
@@ -62,41 +60,26 @@
       display: flex; flex-direction: column;
       align-items: center; justify-content: center;
       gap: 36px;
-      transition: opacity 0.8s ease, visibility 0.8s ease;
+      transition: opacity 0.4s ease, visibility 0.4s ease;
     }
     #preloader.hide { opacity: 0; visibility: hidden; pointer-events: none; }
-    #preloader::before {
-      content: ''; position: absolute; width: 420px; height: 420px;
-      background: radial-gradient(circle, rgba(var(--sky-rgb),0.16) 0%, rgba(var(--sky-rgb),0) 70%);
-      filter: blur(10px); border-radius: 50%;
-      animation: glowPulse 3.2s ease-in-out infinite;
-    }
-    @keyframes glowPulse { 0%,100% { transform: scale(1); opacity: 0.8; } 50% { transform: scale(1.12); opacity: 1; } }
-    .preloader-ring-wrap { position: relative; width: 140px; height: 140px; display: flex; align-items: center; justify-content: center; animation: logoFadeIn 0.9s ease both; }
+    .preloader-ring-wrap { position: relative; width: 140px; height: 140px; display: flex; align-items: center; justify-content: center; }
     .preloader-ring { position: absolute; inset: 0; width: 140px; height: 140px; transform: rotate(-90deg); }
     .preloader-ring-track { fill: none; stroke: rgba(var(--sky-rgb),0.12); stroke-width: 3; }
     .preloader-ring-fill {
       fill: none; stroke: url(#preloaderRingGrad); stroke-width: 3; stroke-linecap: round;
       stroke-dasharray: 389.6; stroke-dashoffset: 389.6;
-      filter: drop-shadow(0 0 6px rgba(var(--sky-rgb),0.55));
-      transition: stroke-dashoffset 0.25s ease-out;
+      transition: stroke-dashoffset 0.1s linear;
     }
     .preloader-logo { position: relative; }
     .preloader-logo img { height: 52px; object-fit: contain; display: block; }
-    @keyframes logoFadeIn {
-      from { opacity: 0; transform: translateY(14px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
     .preloader-tagline {
-      position: relative;
-      font-family: var(--font-en); font-size: 0.72rem;
-      letter-spacing: 5px; color: var(--sky-dark);
-      text-transform: uppercase;
+      position: relative; font-family: var(--font-en); font-size: 0.72rem;
+      letter-spacing: 5px; color: var(--sky-dark); text-transform: uppercase;
     }
     .preloader-pct {
       position: relative; display: flex; align-items: baseline; gap: 2px;
-      font-family: var(--font-en); font-size: 1.6rem; font-weight: 800;
-      letter-spacing: 1px; color: var(--sky-dark);
+      font-family: var(--font-en); font-size: 1.6rem; font-weight: 800; color: var(--sky-dark);
     }
     .preloader-pct-sign { font-size: 0.85rem; font-weight: 600; color: rgba(59,157,255,0.55); }
 
@@ -348,10 +331,8 @@
     </div>
   </section>
 
-  <!-- CONTENT BLOCKS (الفكرة - طبيعة العمل - المميزات) -->
+  <!-- CONTENT BLOCKS -->
   <section class="content-blocks-section" id="ideas">
-    
-    <!-- Section 1: الفكرة -->
     <div class="content-block-card">
       <div class="content-block-text">
         <h2>الفكرة</h2>
@@ -362,7 +343,6 @@
       </div>
     </div>
 
-    <!-- Section 2: طبيعة العمل -->
     <div class="content-block-card">
       <div class="content-block-text">
         <h2>طبيعة العمل</h2>
@@ -376,7 +356,6 @@
       </div>
     </div>
 
-    <!-- Section 3: المميزات -->
     <div class="content-block-card">
       <div class="content-block-text">
         <h2>المميزات</h2>
@@ -390,7 +369,6 @@
         <img src="https://i.postimg.cc/pp1XfQFb/image.png" alt="المميزات">
       </div>
     </div>
-
   </section>
 
   <div class="section-divider"></div>
@@ -551,7 +529,7 @@
   </footer>
 
   <script>
-    // Preloader Counter Fix
+    // Fast Lightning Preloader (وصل للـ 100% في أقل من ثانية)
     const pctNumEl = document.getElementById('preloader-pct-num');
     const ringFill = document.getElementById('preloader-ring-fill');
     const RING_CIRC = 389.6;
@@ -559,7 +537,7 @@
     if (pctNumEl && ringFill) {
       let pct = 0;
       const pctTimer = setInterval(() => {
-        pct = Math.min(100, pct + Math.random() * 15 + 5);
+        pct = Math.min(100, pct + Math.random() * 40 + 30);
         pctNumEl.textContent = Math.round(pct);
         ringFill.style.strokeDashoffset = RING_CIRC - (RING_CIRC * pct / 100);
         if (pct >= 100) {
@@ -567,9 +545,9 @@
           setTimeout(() => {
             const pre = document.getElementById('preloader');
             if (pre) pre.classList.add('hide');
-          }, 400);
+          }, 150);
         }
-      }, 100);
+      }, 30);
     }
 
     // Mobile Menu
