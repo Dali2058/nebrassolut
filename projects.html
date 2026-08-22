@@ -53,7 +53,7 @@
 
     /* ─── DESKTOP NAVBAR ──────────────────────────────── */
     #navbar {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
       display: flex; align-items: center; justify-content: space-between;
       height: 72px; padding: 0 6%;
       background: rgba(255,255,255,0.72);
@@ -67,26 +67,18 @@
       background: rgba(255,255,255,0.90);
       box-shadow: 0 8px 30px rgba(15,23,42,0.12);
     }
-    .nav-logo img { height: 32px; max-width: 170px; object-fit: contain; display: block; }
+    .nav-logo img { height: 42px; object-fit: contain; }
     .nav-links { display: flex; gap: 6px; list-style: none; }
     .nav-links a {
-      font-family: var(--font-ar); font-size: 0.95rem; color: var(--text-mid);
-      text-decoration: none; font-weight: 500; padding: 9px 16px; border-radius: 999px;
-      transition: color 0.3s, background 0.3s;
+      text-decoration: none; font-weight: 600; font-size: 0.92rem;
+      color: var(--text-mid); letter-spacing: 0.1px;
+      padding: 9px 16px; border-radius: 999px;
+      transition: color 0.25s ease, background 0.25s ease;
     }
     .nav-links a:hover, .nav-links a.active {
       color: var(--sky-dark);
       background: rgba(91,191,222,0.14);
     }
-    .nav-icon {
-      width: 38px; height: 38px; border-radius: 50%;
-      border: 1.5px solid rgba(31,127,160,0.22);
-      display: flex; align-items: center; justify-content: center;
-      font-family: var(--font-en); font-size: 0.95rem; font-weight: 700;
-      color: var(--sky-dark); background: rgba(91,191,222,0.10);
-      text-decoration: none; transition: all 0.3s;
-    }
-    .nav-icon:hover { background: var(--sky); border-color: var(--sky); color: #fff; }
 
     /* ─── MOBILE TOP BAR ─────────────────────────────── */
     .mobile-topbar { display: none; }
@@ -101,16 +93,16 @@
         border-bottom: 1px solid rgba(255,255,255,0.5);
         box-shadow: 0 4px 20px rgba(0,0,0,0.06);
       }
-      .mobile-topbar-logo img { height: 30px; max-width: 150px; object-fit: contain; display: block; }
+      .mobile-topbar-logo img { height: 32px; max-width: 170px; object-fit: contain; display: block; }
       .mobile-menu-btn {
-        width: 40px; height: 40px; border-radius: 12px; border: none; cursor: pointer;
+        width: 44px; height: 44px; border-radius: 14px; border: none; cursor: pointer;
         display: flex; align-items: center; justify-content: center; flex-shrink: 0;
         background: var(--sky);
-        box-shadow: 0 4px 14px rgba(91,191,222,0.4);
+        box-shadow: 0 6px 18px rgba(91,191,222,0.4);
         transition: transform 0.3s ease;
       }
       .mobile-menu-btn:hover { transform: scale(1.05); }
-      .mobile-menu-btn svg { width: 18px; height: 18px; stroke: #fff; fill: none; stroke-width: 2.5; stroke-linecap: round; }
+      .mobile-menu-btn svg { width: 20px; height: 20px; stroke: #fff; fill: none; stroke-width: 2.6; stroke-linecap: round; }
     }
 
     /* ─── MOBILE MENU OVERLAY (DROPDOWN COMPACT) ─── */
@@ -142,7 +134,7 @@
     .mobile-menu-overlay.open .mm-sheet { transform: scale(1) translateY(0); opacity: 1; }
     .mm-header {
       display: flex; align-items: center; justify-content: space-between;
-      padding: 16px 18px; background: linear-gradient(135deg, var(--sky-dark), #104a60); flex-shrink: 0;
+      padding: 16px 18px; background: linear-gradient(135deg, var(--sky-dark), #8a5cff); flex-shrink: 0;
     }
     .mm-close {
       width: 38px; height: 38px; border-radius: 12px; border: none;
@@ -175,9 +167,9 @@
       display: flex; align-items: center; justify-content: center; flex-shrink: 0;
     }
     .mm-link-icon svg { width: 16px; height: 16px; stroke: #fff; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-    .mm-link.active { background: rgba(91,191,222,0.16); border-color: rgba(91,191,222,0.4); }
+    .mm-link.active { background: rgba(59, 157, 255, 0.16); border-color: rgba(59, 157, 255, 0.4); }
     .mm-link.active .mm-link-label { color: var(--sky) !important; }
-    .mm-link.active .mm-link-icon { background: rgba(91,191,222,0.28) !important; }
+    .mm-link.active .mm-link-icon { background: rgba(59, 157, 255, 0.28) !important; }
     .mm-link.active .mm-link-icon svg { stroke: var(--sky) !important; }
 
     /* ─── HERO ────────────────────────────────────────── */
@@ -303,7 +295,7 @@
 
     /* ─── LIGHTBOX ────────────────────────────────────── */
     #lightbox {
-      display: none; position: fixed; inset: 0; z-index: 9000;
+      display: none; position: fixed; inset: 0; z-index: 5000;
       background: rgba(5,14,20,0.96); align-items: center; justify-content: center; flex-direction: column;
     }
     #lightbox.open { display: flex; }
@@ -314,7 +306,7 @@
       position: absolute; top: 22px; left: 24px; width: 44px; height: 44px;
       background: rgba(255,255,255,0.08); border: 1.5px solid rgba(255,255,255,0.2);
       border-radius: 50%; display: flex; align-items: center; justify-content: center;
-      cursor: pointer; transition: background 0.25s, transform 0.3s; z-index: 9002;
+      cursor: pointer; transition: background 0.25s, transform 0.3s; z-index: 5002;
     }
     #lb-close:hover { background: #c0392b; transform: rotate(90deg); }
     #lb-close svg { width: 18px; height: 18px; stroke: #fff; fill: none; stroke-width: 2.5; stroke-linecap: round; }
@@ -323,7 +315,7 @@
       width: 46px; height: 46px; background: rgba(255,255,255,0.08);
       border: 1px solid rgba(255,255,255,0.15); border-radius: 50%;
       cursor: pointer; display: flex; align-items: center; justify-content: center;
-      transition: background 0.2s; z-index: 9001;
+      transition: background 0.2s; z-index: 5001;
     }
     .lb-arrow:hover { background: rgba(255,255,255,0.18); }
     .lb-arrow svg { width: 20px; height: 20px; stroke: #fff; stroke-width: 2; fill: none; stroke-linecap: round; stroke-linejoin: round; }
@@ -336,21 +328,24 @@
 
     /* ─── FOOTER ──────────────────────────────────────── */
     footer {
-      background: #090f13; padding: 28px 10%;
+      background: #ffffff; padding: 30px 10%;
       display: flex; align-items: center; justify-content: space-between;
-      border-top: 1px solid rgba(255,255,255,0.05);
+      border-top: 1px solid rgba(0,0,0,0.08);
     }
-    footer p { font-size: 0.85rem; color: rgba(255,255,255,0.35); }
-    footer img { height: 32px; opacity: 0.6; }
-    .wa-btn {
-      display: inline-flex; align-items: center; gap: 8px;
-      padding: 7px 18px; border: 1px solid rgba(37,211,102,0.5);
-      border-radius: 999px; text-decoration: none;
-      color: #25d366; font-size: 0.82rem; font-weight: 600;
-      background: transparent; transition: background 0.25s, color 0.25s; margin-top: 6px;
+    footer p { font-size: 0.85rem; color: var(--text-mid); }
+    footer img { height: 32px; opacity: 0.85; }
+    .wa-glass-btn {
+      display: inline-flex; align-items: center; gap: 8px; margin-top: 10px;
+      padding: 8px 20px; border-radius: 999px;
+      text-decoration: none; color: #25d366; font-size: 0.82rem; font-weight: 600;
+      background: rgba(37,211,102,0.08);
+      -webkit-backdrop-filter: blur(12px);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(37,211,102,0.4);
+      font-family: 'Montserrat', sans-serif;
+      transition: background 0.25s ease, color 0.25s ease;
     }
-    .wa-btn:hover { background: #25d366; color: #fff; }
-    .wa-btn svg { width: 15px; height: 15px; fill: currentColor; }
+    .wa-glass-btn:hover { background: #25d366; color: #fff; }
 
     /* ─── RESPONSIVE ──────────────────────────────────── */
     @media (max-width: 900px) {
@@ -361,7 +356,7 @@
       #projects, #projects2 { padding: 60px 5% 60px; }
       .gallery-item { width: min(78vw, 300px); height: min(58vw, 220px); border-radius: 16px; }
       .lb-arrow { width: 38px; height: 38px; }
-      footer { flex-direction: column; gap: 16px; text-align: center; }
+      footer { flex-direction: column; gap: 14px; text-align: center; }
     }
   </style>
 </head>
@@ -373,18 +368,6 @@
     <p class="pre-text">OUR PROJECTS</p>
     <div class="pre-bar"><div class="pre-bar-fill"></div></div>
   </div>
-
-  <!-- DESKTOP NAVBAR -->
-  <nav id="navbar">
-    <a class="nav-icon" href="index.html">N</a>
-    <ul class="nav-links">
-      <li><a href="index.html">الرئيسية</a></li>
-      <li><a href="https://neb-elc.vercel.app/" target="_blank" rel="noopener">إلكتروميكانيك</a></li>
-      <li><a href="projects.html" class="active">مشاريع</a></li>
-      <li><a href="decorations.html">ديكورات</a></li>
-      <li><a href="contact.html">تواصل معنا</a></li>
-    </ul>
-  </nav>
 
   <!-- MOBILE TOP BAR -->
   <div class="mobile-topbar" id="mobileTopbar">
@@ -413,7 +396,7 @@
             <span class="mm-link-label">الرئيسية</span>
             <span class="mm-link-icon"><svg viewBox="0 0 24 24"><path d="M3 12l9-9 9 9"/><path d="M5 10v10h14V10"/></svg></span>
           </a>
-          <a href="https://neb-elc.vercel.app/" target="_blank" rel="noopener" class="mm-link">
+          <a href="electro.html" class="mm-link">
             <span class="mm-link-label">إلكتروميكانيك</span>
             <span class="mm-link-icon"><svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></span>
           </a>
@@ -433,6 +416,20 @@
       </div>
     </div>
   </div>
+
+  <!-- DESKTOP NAVBAR -->
+  <nav id="navbar">
+    <div class="nav-logo">
+      <img src="https://i.postimg.cc/8PShHcVc/nebras-logo.png" alt="Nebras Solutions" />
+    </div>
+    <ul class="nav-links">
+      <li><a href="index.html">الرئيسية</a></li>
+      <li><a href="electro.html">إلكتروميكانيك</a></li>
+      <li><a href="projects.html" class="active">مشاريع</a></li>
+      <li><a href="decorations.html">ديكورات</a></li>
+      <li><a href="contact.html">تواصل معنا</a></li>
+    </ul>
+  </nav>
 
   <!-- HERO -->
   <section id="hero">
@@ -563,9 +560,9 @@
     <img src="https://i.postimg.cc/8PShHcVc/nebras-logo.png" alt="Nebras Solutions" />
     <div style="text-align:center;">
       <p>جميع الحقوق محفوظة &copy; 2026 Nebras Solutions</p>
-      <p style="margin-top:6px; font-size:0.78rem; color:rgba(255,255,255,0.22);">تطوير: اياد محمد عبدالله</p>
-      <a class="wa-btn" href="https://wa.me/2001096724839" target="_blank" rel="noopener">
-        <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      <p style="margin-top:6px; font-size:0.78rem; color:rgba(0,0,0,0.32);">تطوير: اياد محمد عبدالله</p>
+      <a href="https://wa.me/2001096724839" target="_blank" rel="noopener" class="wa-glass-btn">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
         تحدث إلى المطور
       </a>
     </div>
@@ -663,6 +660,7 @@
 
       const closeMenu = () => {
         if (!overlay) return;
+        overlay.classList.remove('overlay', 'open'); // Wait, just remove open class
         overlay.classList.remove('open');
         document.body.style.overflow = '';
       };
