@@ -23,9 +23,11 @@
       --sky-rgb: 59,157,255;
       --violet: #8a5cff;
       --up: #2fd67e;
+      --down: #ff5c5c;
       --glass-bg: rgba(255,255,255,0.55);
       --glass-bg-strong: rgba(255,255,255,0.72);
       --glass-border: rgba(255,255,255,0.65);
+      --glass-dark-border: rgba(255,255,255,0.18);
       --blur-lg: 30px;
       --blur-md: 20px;
       --blur-sm: 12px;
@@ -36,8 +38,10 @@
       --radius-pill: 999px;
       --shadow-glass: 0 20px 60px rgba(15,23,42,0.14), inset 0 1px 0 rgba(255,255,255,0.6);
       --shadow-glass-sm: 0 10px 30px rgba(15,23,42,0.10), inset 0 1px 0 rgba(255,255,255,0.5);
+      --shadow-dark-glass: 0 10px 40px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.08);
       --font-ar: 'Tajawal', sans-serif;
       --font-en: 'Montserrat', sans-serif;
+      --ease-out: cubic-bezier(0.16,1,0.3,1);
     }
 
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
@@ -60,7 +64,7 @@
       display: flex; flex-direction: column;
       align-items: center; justify-content: center;
       gap: 36px;
-      transition: opacity 0.4s ease, visibility 0.4s ease;
+      transition: opacity 0.8s ease, visibility 0.8s ease;
     }
     #preloader.hide { opacity: 0; visibility: hidden; pointer-events: none; }
     .preloader-ring-wrap { position: relative; width: 140px; height: 140px; display: flex; align-items: center; justify-content: center; }
@@ -69,22 +73,33 @@
     .preloader-ring-fill {
       fill: none; stroke: url(#preloaderRingGrad); stroke-width: 3; stroke-linecap: round;
       stroke-dasharray: 389.6; stroke-dashoffset: 389.6;
-      transition: stroke-dashoffset 0.1s linear;
+      transition: stroke-dashoffset 0.25s ease-out;
     }
-    .preloader-logo { position: relative; }
     .preloader-logo img { height: 52px; object-fit: contain; display: block; }
-    .preloader-tagline {
-      position: relative; font-family: var(--font-en); font-size: 0.72rem;
-      letter-spacing: 5px; color: var(--sky-dark); text-transform: uppercase;
-    }
-    .preloader-pct {
-      position: relative; display: flex; align-items: baseline; gap: 2px;
-      font-family: var(--font-en); font-size: 1.6rem; font-weight: 800; color: var(--sky-dark);
-    }
+    .preloader-tagline { font-family: var(--font-en); font-size: 0.72rem; letter-spacing: 5px; color: var(--sky-dark); text-transform: uppercase; }
+    .preloader-pct { font-family: var(--font-en); font-size: 1.6rem; font-weight: 800; color: var(--sky-dark); display: flex; align-items: baseline; gap: 2px; }
     .preloader-pct-sign { font-size: 0.85rem; font-weight: 600; color: rgba(59,157,255,0.55); }
 
-    /* ─── NAVBAR ──────────────────────────────────────── */
-    nav {
+    /* ─── PAGE TRANSITION OVERLAY ─────────────────────── */
+    #page-transition {
+      position: fixed; inset: 0; z-index: 6000;
+      display: flex; align-items: center; justify-content: center;
+      background: rgba(6,10,16,0.6);
+      -webkit-backdrop-filter: blur(22px) saturate(160%);
+      backdrop-filter: blur(22px) saturate(160%);
+      opacity: 0; visibility: hidden; pointer-events: none;
+      transition: opacity 0.55s var(--ease-out), visibility 0.55s;
+    }
+    #page-transition.active { opacity: 1; visibility: visible; pointer-events: all; }
+    .pt-panel { display: flex; flex-direction: column; align-items: center; gap: 20px; }
+    .pt-panel img { height: 46px; object-fit: contain; filter: brightness(0) invert(1); }
+    .pt-bar-wrap { width: 170px; height: 3px; background: rgba(255,255,255,0.16); border-radius: 99px; overflow: hidden; }
+    .pt-bar-fill { height: 100%; width: 0%; background: linear-gradient(90deg, var(--sky-dark), var(--sky)); border-radius: 99px; }
+    #page-transition.active .pt-bar-fill { animation: ptLoad 0.75s var(--ease-out) forwards; }
+    @keyframes ptLoad { from { width: 0%; } to { width: 100%; } }
+
+    /* ─── NAVBAR (PC) ─────────────────────────────────── */
+    #navbar {
       position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
       height: 72px; padding: 0 6%;
       display: flex; align-items: center; justify-content: space-between;
@@ -101,8 +116,38 @@
       color: var(--text-mid); padding: 9px 16px; border-radius: var(--radius-pill);
       transition: color 0.25s ease, background 0.25s ease;
     }
-    .nav-links a:hover { color: var(--sky-dark); background: var(--sky-light); }
+    .nav-links a:hover, .nav-links a.active { color: var(--sky-dark); background: var(--sky-light); }
     @media (max-width: 900px) { nav#navbar { display: none !important; } }
+
+    /* ─── MOBILE TOP BAR & DRAWER ─────────────────────── */
+    .mobile-topbar { display: none; }
+    @media (max-width: 900px) {
+      .mobile-topbar {
+        display: flex; align-items: center; justify-content: space-between;
+        position: fixed; top: 0; left: 0; right: 0; z-index: 1400; height: 62px; padding: 0 16px;
+        background: rgba(255,255,255,0.9); backdrop-filter: blur(15px); border-bottom: 1px solid rgba(255,255,255,0.5);
+      }
+      .mobile-menu-btn { width: 42px; height: 42px; border-radius: 12px; border: none; background: var(--sky); display: flex; align-items: center; justify-content: center; cursor: pointer; }
+      .mobile-menu-btn svg { width: 20px; height: 20px; stroke: #fff; fill: none; stroke-width: 2.5; }
+      .mobile-topbar-logo img { height: 32px; object-fit: contain; }
+    }
+    .mobile-menu-overlay {
+      position: fixed; inset: 0; z-index: 99999; display: flex; align-items: flex-start; justify-content: center;
+      padding: 78px 16px 16px; background: rgba(5,8,14,0.6); backdrop-filter: blur(10px);
+      opacity: 0; visibility: hidden; transition: 0.3s ease;
+    }
+    .mobile-menu-overlay.open { opacity: 1; visibility: visible; }
+    .mm-sheet { width: 100%; max-width: 320px; background: #0a0a0c; border-radius: 20px; overflow: hidden; padding: 20px; box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
+    .mm-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 12px; }
+    .mm-close { background: none; border: none; color: #fff; font-size: 26px; cursor: pointer; }
+    .mm-links { display: flex; flex-direction: column; gap: 10px; list-style: none; }
+    .mm-link {
+      display: flex; align-items: center; justify-content: space-between;
+      color: #fff; text-decoration: none; font-size: 1.05rem; font-weight: 600;
+      padding: 12px 16px; border-radius: 12px; background: rgba(255,255,255,0.04);
+      transition: background 0.2s, color 0.2s;
+    }
+    .mm-link:hover, .mm-link.active { background: var(--sky-light); color: var(--sky); }
 
     /* ─── HERO ───────────────────────────────────────── */
     #hero {
@@ -157,15 +202,9 @@
     }
     
     .slider-container-wrap {
-      position: relative;
-      max-width: 1200px;
-      margin: 0 auto;
-      display: flex;
-      align-items: center;
+      position: relative; max-width: 1200px; margin: 0 auto; display: flex; align-items: center;
     }
-    .slider-container {
-      position: relative; width: 100%; overflow: hidden; border-radius: var(--radius-lg);
-    }
+    .slider-container { position: relative; width: 100%; overflow: hidden; border-radius: var(--radius-lg); }
     .slider-wrapper {
       display: flex; gap: 20px; overflow-x: auto; scroll-snap-type: x mandatory;
       padding: 20px 10px; scrollbar-width: none; scroll-behavior: smooth;
@@ -175,13 +214,9 @@
     .slider-arrow {
       position: absolute; top: 50%; transform: translateY(-50%);
       width: 48px; height: 48px; border-radius: 50%;
-      background: rgba(255, 255, 255, 0.9);
-      border: 1px solid var(--glass-border);
-      color: var(--text-dark); font-size: 20px;
-      display: flex; align-items: center; justify-content: center;
-      cursor: pointer; z-index: 10;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-      transition: all 0.3s ease;
+      background: rgba(255, 255, 255, 0.9); border: 1px solid var(--glass-border);
+      color: var(--text-dark); font-size: 20px; display: flex; align-items: center; justify-content: center;
+      cursor: pointer; z-index: 10; box-shadow: 0 4px 15px rgba(0,0,0,0.15); transition: all 0.3s ease;
     }
     .slider-arrow:hover { background: var(--sky); color: #fff; transform: translateY(-50%) scale(1.1); }
     .slider-arrow.prev { right: -24px; }
@@ -201,15 +236,10 @@
     .project-card:hover, .video-card:hover { transform: translateY(-5px); }
     .project-card img { width: 100%; height: 100%; object-fit: cover; display: block; }
     
-    .video-card {
-      background: linear-gradient(135deg, #111 0%, #222 100%);
-      color: #fff;
-    }
+    .video-card { background: linear-gradient(135deg, #111 0%, #222 100%); color: #fff; }
     .video-card-thumb {
-      width: 100%; height: 100%; min-height: 280px;
-      display: flex; align-items: center; justify-content: center;
-      background: radial-gradient(circle, rgba(59,157,255,0.15) 0%, rgba(0,0,0,0.6) 80%);
-      position: relative;
+      width: 100%; height: 100%; min-height: 280px; display: flex; align-items: center; justify-content: center;
+      background: radial-gradient(circle, rgba(59,157,255,0.15) 0%, rgba(0,0,0,0.6) 80%); position: relative;
     }
     .play-icon {
       width: 65px; height: 65px; background: rgba(59, 157, 255, 0.9);
@@ -273,28 +303,6 @@
     footer p { font-size: 0.85rem; color: var(--text-mid); }
     footer img { height: 32px; }
     @media (max-width: 768px) { footer { flex-direction: column; gap: 15px; text-align: center; } }
-
-    /* Mobile Topbar & Menu */
-    .mobile-topbar { display: none; }
-    @media (max-width: 768px) {
-      .mobile-topbar {
-        display: flex; align-items: center; justify-content: space-between;
-        position: fixed; top: 0; left: 0; right: 0; z-index: 1400; height: 62px; padding: 0 16px;
-        background: rgba(255,255,255,0.9); backdrop-filter: blur(15px); border-bottom: 1px solid rgba(255,255,255,0.5);
-      }
-      .mobile-menu-btn { width: 40px; height: 40px; border-radius: 12px; border: none; background: var(--sky); display: flex; align-items: center; justify-content: center; cursor: pointer; }
-      .mobile-menu-btn svg { width: 20px; height: 20px; stroke: #fff; fill: none; stroke-width: 2.5; }
-      .mobile-topbar-logo img { height: 30px; }
-    }
-    .mobile-menu-overlay {
-      position: fixed; inset: 0; z-index: 99999; display: flex; align-items: flex-start; justify-content: center;
-      padding: 78px 16px 16px; background: rgba(5,8,14,0.6); backdrop-filter: blur(10px);
-      opacity: 0; visibility: hidden; transition: 0.3s ease;
-    }
-    .mobile-menu-overlay.open { opacity: 1; visibility: visible; }
-    .mm-sheet { width: 100%; max-width: 300px; background: #0a0a0c; border-radius: 20px; overflow: hidden; padding: 20px; }
-    .mm-links { display: flex; flex-direction: column; gap: 12px; }
-    .mm-links a { color: #fff; text-decoration: none; font-size: 1.05rem; font-weight: 600; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.08); }
   </style>
 </head>
 <body>
@@ -318,6 +326,14 @@
     </div>
     <div class="preloader-tagline">We Light Your Future</div>
     <div class="preloader-pct" id="preloader-pct"><span id="preloader-pct-num">0</span><span class="preloader-pct-sign">%</span></div>
+  </div>
+
+  <!-- PAGE TRANSITION OVERLAY -->
+  <div id="page-transition">
+    <div class="pt-panel">
+      <img src="https://i.postimg.cc/8PShHcVc/nebras-logo.png" alt="" />
+      <div class="pt-bar-wrap"><div class="pt-bar-fill"></div></div>
+    </div>
   </div>
 
   <!-- LIGHTBOX -->
@@ -347,31 +363,31 @@
   <!-- MOBILE MENU OVERLAY -->
   <div class="mobile-menu-overlay" id="mobileMenuOverlay">
     <div class="mm-sheet">
-      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
+      <div class="mm-header">
         <img src="https://i.postimg.cc/8PShHcVc/nebras-logo.png" style="height:25px; filter: brightness(0) invert(1);" alt="" />
-        <button id="mobileMenuClose" style="background:none; border:none; color:#fff; font-size:24px; cursor:pointer;">×</button>
+        <button class="mm-close" id="mobileMenuClose">×</button>
       </div>
-      <nav class="mm-links">
-        <a href="#hero" class="mm-link">الرئيسية</a>
-        <a href="#ideas" class="mm-link">الفكرة وطبيعة العمل</a>
-        <a href="#projects-foundation" class="mm-link">أعمال التأسيس</a>
-        <a href="#projects-delivery" class="mm-link">أعمال التسليم</a>
-        <a href="#contact" class="mm-link">تواصل معنا</a>
-      </nav>
+      <ul class="mm-links">
+        <li><a href="index.html" class="mm-link active">الرئيسية</a></li>
+        <li><a href="electro.html" class="mm-link">إلكتروميكانيك</a></li>
+        <li><a href="projects.html" class="mm-link">مشاريع</a></li>
+        <li><a href="decorations.html" class="mm-link">ديكورات</a></li>
+        <li><a href="contact.html" class="mm-link">تواصل معنا</a></li>
+      </ul>
     </div>
   </div>
 
-  <!-- NAVBAR -->
+  <!-- NAVBAR (DESKTOP) -->
   <nav id="navbar">
     <div class="nav-logo">
       <img src="https://i.postimg.cc/8PShHcVc/nebras-logo.png" alt="Nebras Solutions" />
     </div>
     <ul class="nav-links">
-      <li><a href="#hero">الرئيسية</a></li>
-      <li><a href="#ideas">الفكرة وطبيعة العمل</a></li>
-      <li><a href="#projects-foundation">أعمال التأسيس</a></li>
-      <li><a href="#projects-delivery">أعمال التسليم</a></li>
-      <li><a href="#contact">تواصل معنا</a></li>
+      <li><a href="index.html" class="active">الرئيسية</a></li>
+      <li><a href="electro.html">إلكتروميكانيك</a></li>
+      <li><a href="projects.html">مشاريع</a></li>
+      <li><a href="decorations.html">ديكورات</a></li>
+      <li><a href="contact.html">تواصل معنا</a></li>
     </ul>
   </nav>
 
@@ -624,7 +640,7 @@
   </footer>
 
   <script>
-    // Fast Lightning Preloader
+    // Preloader Animation
     const pctNumEl = document.getElementById('preloader-pct-num');
     const ringFill = document.getElementById('preloader-ring-fill');
     const RING_CIRC = 389.6;
@@ -645,28 +661,7 @@
       }, 30);
     }
 
-    // Smooth Navigation for all links
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const targetId = this.getAttribute('href');
-        const targetEl = document.querySelector(targetId);
-        if (targetEl) {
-          targetEl.scrollIntoView({ behavior: 'smooth' });
-        }
-        if (mobileMenuOverlay) mobileMenuOverlay.classList.remove('open');
-      });
-    });
-
-    // Slider Navigation Arrows
-    function scrollSlider(btn, direction) {
-      const wrapper = btn.parentElement.querySelector('.slider-wrapper');
-      if (wrapper) {
-        wrapper.scrollBy({ left: direction * 400, behavior: 'smooth' });
-      }
-    }
-
-    // Mobile Menu
+    // Mobile Menu Toggle
     const mobileMenuBtn = document.getElementById('mobileMenuBtn');
     const mobileMenuClose = document.getElementById('mobileMenuClose');
     const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
@@ -677,6 +672,14 @@
       mobileMenuOverlay.addEventListener('click', (e) => {
         if (e.target === mobileMenuOverlay) mobileMenuOverlay.classList.remove('open');
       });
+    }
+
+    // Slider Navigation Arrows
+    function scrollSlider(btn, direction) {
+      const wrapper = btn.parentElement.querySelector('.slider-wrapper');
+      if (wrapper) {
+        wrapper.scrollBy({ left: direction * 400, behavior: 'smooth' });
+      }
     }
 
     // Lightbox for Images
@@ -705,6 +708,21 @@
     }
     videoOverlay.addEventListener('click', (e) => {
       if (e.target === videoOverlay) closeVideoModal();
+    });
+
+    // Page Transition Animation for Navigation Links
+    const pageTransition = document.getElementById('page-transition');
+    document.querySelectorAll('a[href]').forEach(link => {
+      const href = link.getAttribute('href');
+      if (href && !href.startsWith('#') && !link.target && href.endsWith('.html')) {
+        link.addEventListener('click', (e) => {
+          e.preventDefault();
+          if (pageTransition) pageTransition.classList.add('active');
+          setTimeout(() => {
+            window.location.href = href;
+          }, 600);
+        });
+      }
     });
   </script>
 
