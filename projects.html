@@ -18,6 +18,8 @@
       --section-bg: #f7fbfd;
       --font-ar: 'Tajawal', sans-serif;
       --font-en: 'Montserrat', sans-serif;
+      --blur-lg: 30px;
+      --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
     }
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
     html { scroll-behavior: smooth; }
@@ -49,32 +51,141 @@
     .pre-bar-fill { height: 100%; width: 0; background: linear-gradient(90deg, var(--sky-dark), var(--sky)); animation: loadBar 3.8s 0.6s ease forwards; }
     @keyframes loadBar { 0%{width:0} 60%{width:75%} 100%{width:100%} }
 
-    /* ─── NAVBAR ──────────────────────────────────────── */
-    nav {
+    /* ─── DESKTOP NAVBAR ──────────────────────────────── */
+    #navbar {
       position: fixed; top: 0; left: 0; right: 0; z-index: 100;
       display: flex; align-items: center; justify-content: space-between;
-      padding: 18px 6%;
+      height: 72px; padding: 0 6%;
+      background: rgba(255,255,255,0.72);
+      -webkit-backdrop-filter: blur(30px) saturate(180%);
+      backdrop-filter: blur(30px) saturate(180%);
+      border-bottom: 1px solid rgba(255,255,255,0.55);
+      box-shadow: 0 10px 30px rgba(15,23,42,0.10);
       transition: background 0.4s, box-shadow 0.4s, padding 0.3s;
     }
-    nav.scrolled { background: rgba(255,255,255,0.97); box-shadow: 0 2px 20px rgba(0,0,0,0.08); padding: 12px 6%; }
-    .nav-logo { font-family: var(--font-en); font-size: 1.1rem; font-weight: 700; text-decoration: none; color: var(--white); letter-spacing: 1.5px; transition: color 0.3s; }
-    nav.scrolled .nav-logo { color: var(--text-dark); }
-    .nav-links { display: flex; gap: 28px; list-style: none; }
-    .nav-links a { font-family: var(--font-ar); font-size: 0.95rem; color: rgba(255,255,255,0.88); text-decoration: none; font-weight: 500; position: relative; transition: color 0.3s; }
-    nav.scrolled .nav-links a { color: var(--text-mid); }
-    .nav-links a::after { content: ''; position: absolute; bottom: -3px; right: 0; width: 0; height: 2px; background: var(--sky); transition: width 0.3s ease; }
-    .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
-    .nav-links a:hover, .nav-links a.active { color: var(--sky-dark); }
-    nav.scrolled .nav-links a:hover, nav.scrolled .nav-links a.active { color: var(--sky-dark); }
-    .nav-icon { width: 38px; height: 38px; border-radius: 50%; border: 1.5px solid rgba(255,255,255,0.5); display: flex; align-items: center; justify-content: center; font-family: var(--font-en); font-size: 0.95rem; font-weight: 700; color: var(--white); text-decoration: none; transition: all 0.3s; }
-    nav.scrolled .nav-icon { border-color: var(--text-dark); color: var(--text-dark); }
+    #navbar.scrolled {
+      background: rgba(255,255,255,0.90);
+      box-shadow: 0 8px 30px rgba(15,23,42,0.12);
+    }
+    .nav-logo img { height: 32px; max-width: 170px; object-fit: contain; display: block; }
+    .nav-links { display: flex; gap: 6px; list-style: none; }
+    .nav-links a {
+      font-family: var(--font-ar); font-size: 0.95rem; color: var(--text-mid);
+      text-decoration: none; font-weight: 500; padding: 9px 16px; border-radius: 999px;
+      transition: color 0.3s, background 0.3s;
+    }
+    .nav-links a:hover, .nav-links a.active {
+      color: var(--sky-dark);
+      background: rgba(91,191,222,0.14);
+    }
+    .nav-icon {
+      width: 38px; height: 38px; border-radius: 50%;
+      border: 1.5px solid rgba(31,127,160,0.22);
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-en); font-size: 0.95rem; font-weight: 700;
+      color: var(--sky-dark); background: rgba(91,191,222,0.10);
+      text-decoration: none; transition: all 0.3s;
+    }
     .nav-icon:hover { background: var(--sky); border-color: var(--sky); color: #fff; }
+
+    /* ─── MOBILE TOP BAR ─────────────────────────────── */
+    .mobile-topbar { display: none; }
+    @media (max-width: 900px) {
+      .mobile-topbar {
+        display: flex; align-items: center; justify-content: space-between;
+        position: fixed; top: 0; left: 0; right: 0; z-index: 1400;
+        height: 62px; padding: 0 16px;
+        background: rgba(255,255,255,0.72);
+        -webkit-backdrop-filter: blur(var(--blur-lg)) saturate(180%);
+        backdrop-filter: blur(var(--blur-lg)) saturate(180%);
+        border-bottom: 1px solid rgba(255,255,255,0.5);
+        box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+      }
+      .mobile-topbar-logo img { height: 30px; max-width: 150px; object-fit: contain; display: block; }
+      .mobile-menu-btn {
+        width: 40px; height: 40px; border-radius: 12px; border: none; cursor: pointer;
+        display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+        background: var(--sky);
+        box-shadow: 0 4px 14px rgba(91,191,222,0.4);
+        transition: transform 0.3s ease;
+      }
+      .mobile-menu-btn:hover { transform: scale(1.05); }
+      .mobile-menu-btn svg { width: 18px; height: 18px; stroke: #fff; fill: none; stroke-width: 2.5; stroke-linecap: round; }
+    }
+
+    /* ─── MOBILE MENU OVERLAY (DROPDOWN COMPACT) ─── */
+    .mobile-menu-overlay {
+      position: fixed; inset: 0; z-index: 99999;
+      display: flex; align-items: flex-start; justify-content: center;
+      padding: calc(74px + env(safe-area-inset-top)) 12px calc(14px + env(safe-area-inset-bottom));
+      background: rgba(5,8,14,0);
+      -webkit-backdrop-filter: blur(0px); backdrop-filter: blur(0px);
+      opacity: 0; visibility: hidden; pointer-events: none; overflow: hidden;
+      transition: opacity 0.3s ease, background 0.3s ease, backdrop-filter 0.3s ease, visibility 0.3s;
+    }
+    .mobile-menu-overlay.open {
+      opacity: 1; visibility: visible; pointer-events: all;
+      background: rgba(5,8,14,0.55);
+      -webkit-backdrop-filter: blur(12px) saturate(150%);
+      backdrop-filter: blur(12px) saturate(150%);
+    }
+    .mm-sheet {
+      width: min(100%, 360px);
+      max-height: min(560px, calc(100dvh - 96px));
+      display: flex; flex-direction: column; position: relative; margin: 0 auto;
+      background: #0a0a0c; border: 1px solid rgba(255,255,255,0.10);
+      border-radius: 24px; overflow: hidden;
+      box-shadow: 0 25px 60px rgba(0,0,0,0.55), 0 0 0 1px rgba(59,157,255,0.06);
+      transform: scale(0.94) translateY(-12px); transform-origin: top center; opacity: 0;
+      transition: transform 0.35s var(--ease-out), opacity 0.3s ease;
+    }
+    .mobile-menu-overlay.open .mm-sheet { transform: scale(1) translateY(0); opacity: 1; }
+    .mm-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 16px 18px; background: linear-gradient(135deg, var(--sky-dark), #104a60); flex-shrink: 0;
+    }
+    .mm-close {
+      width: 38px; height: 38px; border-radius: 12px; border: none;
+      background: rgba(255,255,255,0.25); color: #fff;
+      display: flex; align-items: center; justify-content: center; cursor: pointer;
+      transition: transform 0.25s ease, background 0.2s;
+    }
+    .mm-close:hover { transform: scale(1.08); background: rgba(255,255,255,0.35); }
+    .mm-close svg { width: 17px; height: 17px; stroke: #fff; fill: none; stroke-width: 2.8; stroke-linecap: round; }
+    .mm-body {
+      display: flex; flex-direction: column; align-items: stretch;
+      padding: 20px 18px 26px; background: #0a0a0c; overflow-y: auto; flex: 1;
+    }
+    .mm-links {
+      position: static; width: 100%; height: auto; padding: 0; margin: 0;
+      display: flex; flex-direction: column; gap: 10px; list-style: none; background: transparent; border: 0;
+    }
+    .mm-link {
+      display: flex; align-items: center; justify-content: flex-end; gap: 14px;
+      padding: 16px; background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.09); border-radius: 14px;
+      text-decoration: none; color: #fff; transition: background 0.2s ease, border-color 0.2s ease;
+    }
+    .mm-link:hover { background: rgba(255,255,255,0.09); }
+    .mm-link:hover .mm-link-label { color: var(--sky); }
+    .mm-link-label { font-size: 1rem; font-weight: 600; color: #fff; letter-spacing: 0.2px; }
+    .mm-link-icon {
+      width: 34px; height: 34px; border-radius: 10px;
+      background: rgba(255,255,255,0.08);
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .mm-link-icon svg { width: 16px; height: 16px; stroke: #fff; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .mm-link.active { background: rgba(91,191,222,0.16); border-color: rgba(91,191,222,0.4); }
+    .mm-link.active .mm-link-label { color: var(--sky) !important; }
+    .mm-link.active .mm-link-icon { background: rgba(91,191,222,0.28) !important; }
+    .mm-link.active .mm-link-icon svg { stroke: var(--sky) !important; }
 
     /* ─── HERO ────────────────────────────────────────── */
     #hero {
-      position: relative; width: 100%; height: 100vh;
+      position: relative; width: 100%; height: 100vh; min-height: 640px;
       display: flex; align-items: center; justify-content: center; overflow: hidden;
     }
+    @supports (height: 100dvh) { #hero { height: 100dvh; min-height: 560px; } }
     .hero-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; }
     .hero-overlay {
       position: absolute; inset: 0; z-index: 1;
@@ -90,14 +201,12 @@
       letter-spacing: 7px; color: var(--sky); margin-bottom: 18px; display: block;
     }
     .hero-title {
-      font-size: clamp(2.2rem, 5.5vw, 5rem); font-weight: 900; line-height: 1.1;
-      margin-bottom: 14px;
+      font-size: clamp(2.2rem, 5.5vw, 5rem); font-weight: 900; line-height: 1.1; margin-bottom: 14px;
     }
     .hero-title em { font-style: normal; color: var(--sky); }
     .hero-sub {
       font-family: var(--font-en); font-size: clamp(0.75rem, 1.8vw, 1rem);
       font-weight: 300; letter-spacing: 5px; color: rgba(255,255,255,0.6);
-      margin-bottom: 0;
     }
     .hero-divider { width: 50px; height: 2px; background: var(--sky); margin: 24px auto; opacity: 0.8; }
     .scroll-hint {
@@ -109,8 +218,8 @@
     .scroll-arrow { width: 18px; height: 18px; border-right: 1.5px solid rgba(255,255,255,0.4); border-bottom: 1.5px solid rgba(255,255,255,0.4); transform: rotate(45deg); animation: bounce 1.6s infinite; }
     @keyframes bounce { 0%,100%{transform:rotate(45deg) translateY(0)} 50%{transform:rotate(45deg) translateY(6px)} }
 
-    /* ─── PROJECTS SECTION ────────────────────────────── */
-    #projects {
+    /* ─── PROJECTS SECTIONS ───────────────────────────── */
+    #projects, #projects2 {
       background: var(--white);
       padding: 90px 6% 80px;
     }
@@ -121,26 +230,9 @@
     }
     .proj-title {
       font-size: clamp(2rem, 4vw, 3rem); font-weight: 900; color: var(--text-dark);
-      line-height: 1.2; margin-bottom: 8px; word-spacing: 0.18em;
+      line-height: 1.2; margin-bottom: 8px;
     }
     .proj-title em { font-style: normal; color: var(--sky-dark); display: inline-block; }
-
-    /* ─── SECTION DIVIDER ─────────────────────────────── */
-    .section-sep {
-      max-width: 900px; margin: 80px auto 0;
-      display: flex; align-items: center; gap: 20px;
-    }
-    .section-sep::before, .section-sep::after {
-      content: ''; flex: 1; height: 1px;
-      background: linear-gradient(to left, transparent, rgba(91,191,222,0.35));
-    }
-    .section-sep::after {
-      background: linear-gradient(to right, transparent, rgba(91,191,222,0.35));
-    }
-    .section-sep span {
-      font-family: var(--font-en); font-size: 0.6rem; font-weight: 700;
-      letter-spacing: 6px; color: var(--sky); white-space: nowrap;
-    }
     .proj-tagline {
       font-family: var(--font-en); font-size: clamp(0.7rem, 1.5vw, 0.85rem);
       font-weight: 300; letter-spacing: 4px; color: var(--text-mid); margin-top: 10px;
@@ -148,151 +240,98 @@
 
     /* ─── GALLERY HORIZONTAL ──────────────────────────── */
     .gallery-track-wrap {
-      position: relative;
-      max-width: 1200px;
-      margin: 0 auto;
+      position: relative; max-width: 1200px; margin: 0 auto;
     }
-
     .gallery-track {
-      display: flex;
-      direction: ltr;
-      gap: 14px;
-      overflow-x: auto;
-      scroll-behavior: smooth;
-      scrollbar-width: none;
+      display: flex; direction: ltr; gap: 14px;
+      overflow-x: auto; scroll-behavior: smooth; scrollbar-width: none;
       padding: 8px 2px 24px;
+      -webkit-overflow-scrolling: touch; overscroll-behavior-x: contain; touch-action: pan-x;
     }
     .gallery-track::-webkit-scrollbar { display: none; }
-
     .gallery-item {
-      flex: 0 0 auto;
-      width: 300px;
-      height: 220px;
-      border-radius: 14px;
-      overflow: hidden;
-      cursor: pointer;
-      position: relative;
-      background: var(--section-bg);
-      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+      flex: 0 0 auto; width: 300px; height: 220px;
+      border-radius: 14px; overflow: hidden; cursor: pointer; position: relative;
+      background: var(--section-bg); box-shadow: 0 4px 20px rgba(0,0,0,0.08);
       transition: box-shadow 0.35s ease, transform 0.35s ease;
     }
-    .gallery-item:hover {
-      box-shadow: 0 12px 36px rgba(31,127,160,0.18);
-      transform: translateY(-4px);
-    }
-
+    .gallery-item:hover { box-shadow: 0 12px 36px rgba(31,127,160,0.18); transform: translateY(-4px); }
     .gallery-item img {
-      width: 100%; height: 100%;
-      object-fit: cover;
-      transition: transform 0.55s cubic-bezier(0.25,0.46,0.45,0.94);
-      display: block;
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform 0.55s cubic-bezier(0.25,0.46,0.45,0.94); display: block;
     }
     .gallery-item:hover img { transform: scale(1.07); }
-
     .gallery-overlay {
       position: absolute; inset: 0;
       background: linear-gradient(to top, rgba(5,14,20,0.65) 0%, transparent 60%);
-      opacity: 0;
-      transition: opacity 0.35s ease;
-      display: flex; align-items: flex-end; justify-content: flex-end;
-      padding: 14px 16px;
+      opacity: 0; transition: opacity 0.35s ease;
+      display: flex; align-items: flex-end; justify-content: flex-end; padding: 14px 16px;
     }
     .gallery-item:hover .gallery-overlay { opacity: 1; }
     .gallery-overlay-icon {
-      width: 34px; height: 34px;
-      border: 1.5px solid rgba(255,255,255,0.7);
-      border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      transform: scale(0.6) rotate(-15deg);
-      transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1);
+      width: 34px; height: 34px; border: 1.5px solid rgba(255,255,255,0.7);
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
     }
-    .gallery-item:hover .gallery-overlay-icon { transform: scale(1) rotate(0deg); }
-    .gallery-overlay-icon svg { width: 15px; height: 15px; stroke: #fff; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .gallery-overlay-icon svg { width: 14px; height: 14px; stroke: #fff; stroke-width: 1.8; fill: none; stroke-linecap: round; stroke-linejoin: round; }
 
     /* Scroll Arrows */
     .scroll-arrow-btn {
       position: absolute; top: 50%; transform: translateY(-60%);
-      width: 46px; height: 46px;
-      background: var(--white);
-      border: 1.5px solid rgba(91,191,222,0.35);
-      border-radius: 50%;
-      box-shadow: 0 4px 18px rgba(0,0,0,0.12);
-      display: flex; align-items: center; justify-content: center;
-      cursor: pointer; z-index: 10;
-      transition: background 0.25s, border-color 0.25s, box-shadow 0.25s;
+      width: 44px; height: 44px; border-radius: 50%;
+      background: rgba(255,255,255,0.95); border: 1.5px solid var(--sky-light);
+      cursor: pointer; z-index: 5; display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.1); transition: all 0.25s ease;
     }
-    .scroll-arrow-btn:hover { background: var(--sky-dark); border-color: var(--sky-dark); box-shadow: 0 6px 24px rgba(31,127,160,0.3); }
-    .scroll-arrow-btn svg { width: 18px; height: 18px; stroke: var(--sky-dark); fill: none; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; transition: stroke 0.25s; }
+    .scroll-arrow-btn:hover { background: var(--sky); border-color: var(--sky); }
     .scroll-arrow-btn:hover svg { stroke: #fff; }
+    .scroll-arrow-btn svg { width: 18px; height: 18px; stroke: var(--sky-dark); stroke-width: 2; fill: none; stroke-linecap: round; stroke-linejoin: round; }
     #arrow-right, #arrow-right2 { right: -22px; }
-    #arrow-left,  #arrow-left2  { left:  -22px; }
+    #arrow-left,  #arrow-left2  { left: -22px; }
+
+    /* Section Separator */
+    .section-sep {
+      max-width: 900px; margin: 40px auto 0; display: flex; align-items: center; gap: 20px;
+    }
+    .section-sep::before, .section-sep::after {
+      content: ''; flex: 1; height: 1px;
+      background: linear-gradient(to left, transparent, rgba(91,191,222,0.35));
+    }
+    .section-sep::after { background: linear-gradient(to right, transparent, rgba(91,191,222,0.35)); }
+    .section-sep span {
+      font-family: var(--font-en); font-size: 0.6rem; font-weight: 700; letter-spacing: 6px; color: var(--sky); white-space: nowrap;
+    }
 
     /* ─── LIGHTBOX ────────────────────────────────────── */
     #lightbox {
-      position: fixed; inset: 0; z-index: 9000;
-      background: rgba(5,14,20,0.96);
-      display: flex; align-items: center; justify-content: center;
-      opacity: 0; visibility: hidden;
-      transition: opacity 0.3s ease, visibility 0.3s ease;
+      display: none; position: fixed; inset: 0; z-index: 9000;
+      background: rgba(5,14,20,0.96); align-items: center; justify-content: center; flex-direction: column;
     }
-    #lightbox.open { opacity: 1; visibility: visible; }
-
-    .lb-img-wrap {
-      display: flex; align-items: center; justify-content: center;
-    }
-    #lb-img {
-      max-width: 88vw; max-height: 84vh;
-      border-radius: 10px;
-      object-fit: contain;
-      box-shadow: 0 32px 90px rgba(0,0,0,0.7);
-      opacity: 0;
-      transform: scale(0.93);
-      transition: none;
-    }
-    #lightbox.open #lb-img {
-      animation: lbOpen 0.38s cubic-bezier(0.2,0.8,0.2,1) forwards;
-    }
-    #lightbox.closing #lb-img {
-      animation: lbClose 0.28s ease-in forwards;
-    }
-    @keyframes lbOpen  { from { opacity:0; transform:scale(0.88); } to { opacity:1; transform:scale(1); } }
-    @keyframes lbClose { from { opacity:1; transform:scale(1);    } to { opacity:0; transform:scale(0.88); } }
-
-    /* Nav arrows */
-    .lb-arrow {
-      position: fixed; top: 50%; transform: translateY(-50%);
-      width: 48px; height: 48px;
-      background: rgba(255,255,255,0.08);
-      border: 1.5px solid rgba(255,255,255,0.18);
-      border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      cursor: pointer; z-index: 9001;
-      transition: background 0.25s;
-    }
-    .lb-arrow:hover { background: var(--sky-dark); border-color: var(--sky-dark); }
-    .lb-arrow svg { width: 20px; height: 20px; stroke: #fff; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-    #lb-prev { right: 24px; }
-    #lb-next { left: 24px; }
-
-    /* Close */
+    #lightbox.open { display: flex; }
+    #lightbox.closing { animation: lbFadeOut 0.4s ease forwards; }
+    @keyframes lbFadeOut { to { opacity: 0; } }
+    #lb-img { max-width: 90vw; max-height: 80vh; border-radius: 10px; object-fit: contain; }
     #lb-close {
-      position: fixed; top: 20px; left: 20px; z-index: 9002;
-      width: 44px; height: 44px;
-      background: rgba(255,255,255,0.08);
-      border: 1.5px solid rgba(255,255,255,0.2);
-      border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      cursor: pointer;
-      transition: background 0.25s, transform 0.3s;
+      position: absolute; top: 22px; left: 24px; width: 44px; height: 44px;
+      background: rgba(255,255,255,0.08); border: 1.5px solid rgba(255,255,255,0.2);
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      cursor: pointer; transition: background 0.25s, transform 0.3s; z-index: 9002;
     }
     #lb-close:hover { background: #c0392b; transform: rotate(90deg); }
     #lb-close svg { width: 18px; height: 18px; stroke: #fff; fill: none; stroke-width: 2.5; stroke-linecap: round; }
-
-    /* Counter */
+    .lb-arrow {
+      position: absolute; top: 50%; transform: translateY(-50%);
+      width: 46px; height: 46px; background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.15); border-radius: 50%;
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      transition: background 0.2s; z-index: 9001;
+    }
+    .lb-arrow:hover { background: rgba(255,255,255,0.18); }
+    .lb-arrow svg { width: 20px; height: 20px; stroke: #fff; stroke-width: 2; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+    #lb-prev { right: 24px; }
+    #lb-next { left: 24px; }
     #lb-counter {
-      position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
-      font-family: var(--font-en); font-size: 0.75rem; letter-spacing: 3px;
-      color: rgba(255,255,255,0.45); z-index: 9001;
+      position: absolute; bottom: 24px;
+      font-family: var(--font-en); font-size: 0.8rem; color: rgba(255,255,255,0.45); letter-spacing: 2px;
     }
 
     /* ─── FOOTER ──────────────────────────────────────── */
@@ -314,44 +353,15 @@
     .wa-btn svg { width: 15px; height: 15px; fill: currentColor; }
 
     /* ─── RESPONSIVE ──────────────────────────────────── */
-    @media (max-width: 600px) {
-      .gallery-item { width: 220px; height: 165px; }
-      #projects { padding: 70px 4% 60px; }
-      #lb-prev { right: 8px; } #lb-next { left: 8px; }
-      .lb-arrow { width: 38px; height: 38px; }
-      .scroll-arrow-btn { display: none; }
+    @media (max-width: 900px) {
+      #navbar { display: none !important; }
+      #arrow-right, #arrow-left, #arrow-right2, #arrow-left2 { display: none !important; }
     }
-
-    /* ─── MOBILE NAV BUTTONS ──────────────────────────── */
-    .mob-nav-row { display: none; }
     @media (max-width: 768px) {
-      nav { display: none !important; }
-      .mob-nav-row {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 10px;
-        padding: 18px 14px;
-        background: var(--white);
-      }
-      .mob-nav-btn { display: block; text-decoration: none; }
-      .mob-nav-btn:last-child { grid-column: 1 / -1; margin-top: 20px; }
-      .mob-nav-rect {
-        width: 100%; height: 130px;
-        border-radius: 14px;
-        background-size: cover; background-position: center;
-        position: relative; overflow: hidden;
-        box-shadow: 0 4px 18px rgba(0,0,0,0.18);
-        transition: transform 0.22s ease;
-      }
-      .mob-nav-btn:last-child .mob-nav-rect { height: 110px; }
-      .mob-nav-btn:active .mob-nav-rect { transform: scale(0.93); }
-      .mob-nav-rect::after {
-        content: ''; position: absolute; inset: 0;
-        background: linear-gradient(to top, rgba(5,14,20,0.85) 0%, rgba(5,14,20,0.1) 65%);
-      }
-            .mob-nav-label { position: absolute; bottom: 10px; right: 0; left: 0; text-align: center; z-index: 1; display: flex; flex-direction: column; align-items: center; gap: 1px; }
-      .mob-nav-label .ar { font-family: var(--font-ar); font-size: 0.9rem; font-weight: 700; color: #fff; text-shadow: 0 1px 6px rgba(0,0,0,0.7); white-space: nowrap; }
-      .mob-nav-label .en { font-family: var(--font-en); font-size: 0.62rem; font-weight: 400; color: rgba(255,255,255,0.75); text-shadow: 0 1px 4px rgba(0,0,0,0.6); white-space: nowrap; letter-spacing: 1px; text-transform: uppercase; }
+      #projects, #projects2 { padding: 60px 5% 60px; }
+      .gallery-item { width: min(78vw, 300px); height: min(58vw, 220px); border-radius: 16px; }
+      .lb-arrow { width: 38px; height: 38px; }
+      footer { flex-direction: column; gap: 16px; text-align: center; }
     }
   </style>
 </head>
@@ -364,7 +374,7 @@
     <div class="pre-bar"><div class="pre-bar-fill"></div></div>
   </div>
 
-  <!-- NAVBAR -->
+  <!-- DESKTOP NAVBAR -->
   <nav id="navbar">
     <a class="nav-icon" href="index.html">N</a>
     <ul class="nav-links">
@@ -375,6 +385,54 @@
       <li><a href="contact.html">تواصل معنا</a></li>
     </ul>
   </nav>
+
+  <!-- MOBILE TOP BAR -->
+  <div class="mobile-topbar" id="mobileTopbar">
+    <div class="mobile-topbar-logo">
+      <img src="https://i.postimg.cc/8PShHcVc/nebras-logo.png" alt="Nebras Solutions" />
+    </div>
+    <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="فتح القائمة">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+  </div>
+
+  <!-- MOBILE MENU OVERLAY -->
+  <div class="mobile-menu-overlay" id="mobileMenuOverlay">
+    <div class="mm-sheet">
+      <div class="mm-header">
+        <button class="mm-close" id="mobileMenuClose" aria-label="إغلاق القائمة">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+        <div class="mm-header-logo">
+          <img src="https://i.postimg.cc/8PShHcVc/nebras-logo.png" style="height:28px; filter: brightness(0) invert(1);" alt="Nebras Solutions" />
+        </div>
+      </div>
+      <div class="mm-body">
+        <nav class="mm-links">
+          <a href="index.html" class="mm-link">
+            <span class="mm-link-label">الرئيسية</span>
+            <span class="mm-link-icon"><svg viewBox="0 0 24 24"><path d="M3 12l9-9 9 9"/><path d="M5 10v10h14V10"/></svg></span>
+          </a>
+          <a href="https://neb-elc.vercel.app/" target="_blank" rel="noopener" class="mm-link">
+            <span class="mm-link-label">إلكتروميكانيك</span>
+            <span class="mm-link-icon"><svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></span>
+          </a>
+          <a href="projects.html" class="mm-link active">
+            <span class="mm-link-label">مشاريع</span>
+            <span class="mm-link-icon"><svg viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg></span>
+          </a>
+          <a href="decorations.html" class="mm-link">
+            <span class="mm-link-label">ديكورات</span>
+            <span class="mm-link-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></span>
+          </a>
+          <a href="contact.html" class="mm-link">
+            <span class="mm-link-label">تواصل معنا</span>
+            <span class="mm-link-icon"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.43 2 2 0 0 1 3.58 1H6.6a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 8.5a16 16 0 0 0 5.55 5.55l.95-.95a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span>
+          </a>
+        </nav>
+      </div>
+    </div>
+  </div>
 
   <!-- HERO -->
   <section id="hero">
@@ -394,36 +452,7 @@
     </div>
   </section>
 
-  <!-- MOBILE NAV BUTTONS -->
-  <div class="mob-nav-row">
-    <a class="mob-nav-btn" href="index.html">
-      <div class="mob-nav-rect" style="background-image:url('https://i.postimg.cc/90b7pjfL/alryysyt.png')">
-        <span class="mob-nav-label"><span class="ar">الرئيسية</span><span class="en">Home</span></span>
-      </div>
-    </a>
-    <a class="mob-nav-btn" href="https://neb-elc.vercel.app/" target="_blank" rel="noopener">
-      <div class="mob-nav-rect" style="background-image:url('https://i.postimg.cc/1XBqHZzL/alktrwmykank.jpg')">
-        <span class="mob-nav-label"><span class="ar">إلكتروميكانيك</span><span class="en">Electromechanical</span></span>
-      </div>
-    </a>
-    <a class="mob-nav-btn" href="projects.html">
-      <div class="mob-nav-rect" style="background-image:url('https://i.postimg.cc/FFw605Sv/Whats-App-Image-2026-05-08-at-21-48-41.jpg')">
-        <span class="mob-nav-label"><span class="ar">مشاريع</span><span class="en">Projects</span></span>
-      </div>
-    </a>
-    <a class="mob-nav-btn" href="decorations.html">
-      <div class="mob-nav-rect" style="background-image:url('https://i.postimg.cc/59D0h0hK/Whats-App-Image-2026-05-08-at-21-26-52.jpg')">
-        <span class="mob-nav-label"><span class="ar">ديكورات</span><span class="en">Decorations</span></span>
-      </div>
-    </a>
-    <a class="mob-nav-btn" href="contact.html">
-      <div class="mob-nav-rect" style="background-image:url('https://i.postimg.cc/gkPwwjgX/Whats-App-Image-2026-05-08-at-21-39-02.jpg')">
-        <span class="mob-nav-label"><span class="ar">تواصل معنا</span><span class="en">Contact Us</span></span>
-      </div>
-    </a>
-  </div>
-
-  <!-- PROJECTS GALLERY -->
+  <!-- PROJECTS GALLERY 1 -->
   <section id="projects">
     <div class="proj-header">
       <span class="proj-eyebrow">PROJECTS GALLERY</span>
@@ -442,20 +471,20 @@
       <div class="gallery-track" id="gallery">
         <div class="gallery-item" data-index="0"><img src="https://i.postimg.cc/pXKdZvTd/1747860326102.jpg" alt="مشروع 1" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
         <div class="gallery-item" data-index="1"><img src="https://i.postimg.cc/dVvVNfk3/IMG-20260505-104608.jpg" alt="مشروع 2" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
-        <div class="gallery-item" data-index="3"><img src="https://i.postimg.cc/jdyjXT5s/IMG-20260505-104700.jpg" alt="مشروع 4" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
-        <div class="gallery-item" data-index="4"><img src="https://i.postimg.cc/L6jsTSXF/IMG-20260505-104714.jpg" alt="مشروع 5" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
-        <div class="gallery-item" data-index="5"><img src="https://i.postimg.cc/KvtYNbYw/IMG-20260505-104728.jpg" alt="مشروع 6" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
-        <div class="gallery-item" data-index="6"><img src="https://i.postimg.cc/L6jsTSs7/IMG-20260505-104740.jpg" alt="مشروع 7" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
-        <div class="gallery-item" data-index="7"><img src="https://i.postimg.cc/X79v8WvR/IMG-20260505-104803.jpg" alt="مشروع 8" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
-        <div class="gallery-item" data-index="8"><img src="https://i.postimg.cc/c1pHwCd2/IMG-20260505-104820.jpg" alt="مشروع 9" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
-        <div class="gallery-item" data-index="9"><img src="https://i.postimg.cc/xjwCM89F/IMG-20260505-104850.jpg" alt="مشروع 10" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
-        <div class="gallery-item" data-index="10"><img src="https://i.postimg.cc/bY7JkrqC/IMG-20260505-104907.jpg" alt="مشروع 11" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
-        <div class="gallery-item" data-index="11"><img src="https://i.postimg.cc/sfkX7x3K/IMG-20260505-104924.jpg" alt="مشروع 12" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
-        <div class="gallery-item" data-index="12"><img src="https://i.postimg.cc/sfkX7x3w/IMG-20260505-104937.jpg" alt="مشروع 13" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
-        <div class="gallery-item" data-index="13"><img src="https://i.postimg.cc/kM04KG7v/IMG-20260505-104953.jpg" alt="مشروع 14" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
-        <div class="gallery-item" data-index="14"><img src="https://i.postimg.cc/zDsBKvqT/IMG-20260505-105006.jpg" alt="مشروع 15" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
-        <div class="gallery-item" data-index="15"><img src="https://i.postimg.cc/sfkX7x3p/IMG-20260505-105416.jpg" alt="مشروع 16" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
-        <div class="gallery-item" data-index="16"><img src="https://i.postimg.cc/SQBsCRmC/IMG-20260505-105441.jpg" alt="مشروع 17" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
+        <div class="gallery-item" data-index="2"><img src="https://i.postimg.cc/jdyjXT5s/IMG-20260505-104700.jpg" alt="مشروع 3" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
+        <div class="gallery-item" data-index="3"><img src="https://i.postimg.cc/L6jsTSXF/IMG-20260505-104714.jpg" alt="مشروع 4" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
+        <div class="gallery-item" data-index="4"><img src="https://i.postimg.cc/KvtYNbYw/IMG-20260505-104728.jpg" alt="مشروع 5" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
+        <div class="gallery-item" data-index="5"><img src="https://i.postimg.cc/L6jsTSs7/IMG-20260505-104740.jpg" alt="مشروع 6" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
+        <div class="gallery-item" data-index="6"><img src="https://i.postimg.cc/X79v8WvR/IMG-20260505-104803.jpg" alt="مشروع 7" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
+        <div class="gallery-item" data-index="7"><img src="https://i.postimg.cc/c1pHwCd2/IMG-20260505-104820.jpg" alt="مشروع 8" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
+        <div class="gallery-item" data-index="8"><img src="https://i.postimg.cc/xjwCM89F/IMG-20260505-104850.jpg" alt="مشروع 9" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
+        <div class="gallery-item" data-index="9"><img src="https://i.postimg.cc/bY7JkrqC/IMG-20260505-104907.jpg" alt="مشروع 10" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
+        <div class="gallery-item" data-index="10"><img src="https://i.postimg.cc/sfkX7x3K/IMG-20260505-104924.jpg" alt="مشروع 11" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
+        <div class="gallery-item" data-index="11"><img src="https://i.postimg.cc/sfkX7x3w/IMG-20260505-104937.jpg" alt="مشروع 12" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
+        <div class="gallery-item" data-index="12"><img src="https://i.postimg.cc/kM04KG7v/IMG-20260505-104953.jpg" alt="مشروع 13" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
+        <div class="gallery-item" data-index="13"><img src="https://i.postimg.cc/zDsBKvqT/IMG-20260505-105006.jpg" alt="مشروع 14" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
+        <div class="gallery-item" data-index="14"><img src="https://i.postimg.cc/sfkX7x3p/IMG-20260505-105416.jpg" alt="مشروع 15" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
+        <div class="gallery-item" data-index="15"><img src="https://i.postimg.cc/SQBsCRmC/IMG-20260505-105441.jpg" alt="مشروع 16" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
       </div>
     </div>
   </section>
@@ -464,7 +493,7 @@
   <div class="section-sep"><span>★ &nbsp; ★ &nbsp; ★</span></div>
 
   <!-- PROJECTS GALLERY 2 -->
-  <section id="projects2" style="padding: 70px 6% 100px;">
+  <section id="projects2">
     <div class="proj-header">
       <span class="proj-eyebrow">COMPLETED PROJECTS</span>
       <h2 class="proj-title">مشاريع <em>منجزة</em></h2>
@@ -478,37 +507,38 @@
       <button class="scroll-arrow-btn" id="arrow-left2" aria-label="التالي">
         <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
       </button>
+
       <div class="gallery-track" id="gallery2">
-        <div class="gallery-item" data-index="19"><img src="https://i.postimg.cc/NFx2d28p/IMG-20251205-WA0086.jpg" alt="منجز 1" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
-        <div class="gallery-item" data-index="20"><img src="https://i.postimg.cc/7hNJKJ1s/IMG-20251205-WA0088.jpg" alt="منجز 2" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
-        <div class="gallery-item" data-index="21"><img src="https://i.postimg.cc/3NhDjFGP/IMG-20251205-WA0089.jpg" alt="منجز 3" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
-        <div class="gallery-item" data-index="22"><img src="https://i.postimg.cc/qMjCnnvK/IMG-20260502-201003.jpg" alt="منجز 4" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
-        <div class="gallery-item" data-index="23"><img src="https://i.postimg.cc/qMjCnnvC/IMG-20260502-201046.jpg" alt="منجز 5" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
-        <div class="gallery-item" data-index="24"><img src="https://i.postimg.cc/gkN6RR20/IMG-20260502-201211.jpg" alt="منجز 6" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
-        <div class="gallery-item" data-index="25"><img src="https://i.postimg.cc/L6NZff8g/IMG-20260502-201529.jpg" alt="منجز 7" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
-        <div class="gallery-item" data-index="26"><img src="https://i.postimg.cc/SNyMJVkj/IMG-20260502-201651.jpg" alt="منجز 8" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
-        <div class="gallery-item" data-index="27"><img src="https://i.postimg.cc/9FW7r1Cq/IMG-20260502-201901.jpg" alt="منجز 9" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
-        <div class="gallery-item" data-index="28"><img src="https://i.postimg.cc/fTw9J5Dt/IMG-20260502-202047.jpg" alt="منجز 10" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
-        <div class="gallery-item" data-index="29"><img src="https://i.postimg.cc/wT6m7Fgj/IMG-20260502-202554.jpg" alt="منجز 11" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
-        <div class="gallery-item" data-index="30"><img src="https://i.postimg.cc/28zZVTr8/IMG-20260502-202629.jpg" alt="منجز 12" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
-        <div class="gallery-item" data-index="31"><img src="https://i.postimg.cc/bNztsLpy/IMG-20260502-202957.jpg" alt="منجز 13" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
-        <div class="gallery-item" data-index="32"><img src="https://i.postimg.cc/Dy2X85nn/IMG-20260502-203013.jpg" alt="منجز 14" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
-        <div class="gallery-item" data-index="33"><img src="https://i.postimg.cc/CLFqzJSV/IMG-20260502-203314.jpg" alt="منجز 15" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
-        <div class="gallery-item" data-index="34"><img src="https://i.postimg.cc/vHQVcXMk/IMG-20260502-203619.jpg" alt="منجز 16" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
-        <div class="gallery-item" data-index="35"><img src="https://i.postimg.cc/659vyzwP/IMG-20260502-203749.jpg" alt="منجز 17" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
-        <div class="gallery-item" data-index="36"><img src="https://i.postimg.cc/HW0MYFDH/IMG-20260502-203950.jpg" alt="منجز 18" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
-        <div class="gallery-item" data-index="37"><img src="https://i.postimg.cc/SQL9SH05/IMG-20260502-204136.jpg" alt="منجز 19" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
-        <div class="gallery-item" data-index="38"><img src="https://i.postimg.cc/wx5NqnKS/IMG-20260502-204648.jpg" alt="منجز 20" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
-        <div class="gallery-item" data-index="39"><img src="https://i.postimg.cc/wx5NqnK2/IMG-20260502-204925.jpg" alt="منجز 21" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
-        <div class="gallery-item" data-index="40"><img src="https://i.postimg.cc/CMC8h9y4/IMG-20260502-205335.jpg" alt="منجز 22" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
-        <div class="gallery-item" data-index="41"><img src="https://i.postimg.cc/Y2NFrTc1/IMG-20260502-205512.jpg" alt="منجز 23" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
-        <div class="gallery-item" data-index="42"><img src="https://i.postimg.cc/xjGmfBrL/IMG-20260502-205934.jpg" alt="منجز 24" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
-        <div class="gallery-item" data-index="43"><img src="https://i.postimg.cc/MHYf9fbp/IMG-20260502-210020.jpg" alt="منجز 25" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
-        <div class="gallery-item" data-index="44"><img src="https://i.postimg.cc/qqG616X7/IMG-20260502-210607.jpg" alt="منجز 26" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
-        <div class="gallery-item" data-index="45"><img src="https://i.postimg.cc/7hNJKJM4/IMG-20260502-211327.jpg" alt="منجز 27" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
-        <div class="gallery-item" data-index="46"><img src="https://i.postimg.cc/prB5s5Yx/IMG-20260502-212202.jpg" alt="منجز 28" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
-        <div class="gallery-item" data-index="47"><img src="https://i.postimg.cc/Wz7q5qmf/IMG-20260502-212619.jpg" alt="منجز 29" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
-        <div class="gallery-item" data-index="48"><img src="https://i.postimg.cc/1XKVvV0T/IMG-20260502-212647.jpg" alt="منجز 30" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
+        <div class="gallery-item" data-index="16"><img src="https://i.postimg.cc/NFx2d28p/IMG-20251205-WA0086.jpg" alt="منجز 1" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
+        <div class="gallery-item" data-index="17"><img src="https://i.postimg.cc/7hNJKJ1s/IMG-20251205-WA0088.jpg" alt="منجز 2" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
+        <div class="gallery-item" data-index="18"><img src="https://i.postimg.cc/3NhDjFGP/IMG-20251205-WA0089.jpg" alt="منجز 3" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
+        <div class="gallery-item" data-index="19"><img src="https://i.postimg.cc/qMjCnnvK/IMG-20260502-201003.jpg" alt="منجز 4" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
+        <div class="gallery-item" data-index="20"><img src="https://i.postimg.cc/qMjCnnvC/IMG-20260502-201046.jpg" alt="منجز 5" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
+        <div class="gallery-item" data-index="21"><img src="https://i.postimg.cc/gkN6RR20/IMG-20260502-201211.jpg" alt="منجز 6" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
+        <div class="gallery-item" data-index="22"><img src="https://i.postimg.cc/L6NZff8g/IMG-20260502-201529.jpg" alt="منجز 7" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
+        <div class="gallery-item" data-index="23"><img src="https://i.postimg.cc/SNyMJVkj/IMG-20260502-201651.jpg" alt="منجز 8" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
+        <div class="gallery-item" data-index="24"><img src="https://i.postimg.cc/9FW7r1Cq/IMG-20260502-201901.jpg" alt="منجز 9" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
+        <div class="gallery-item" data-index="25"><img src="https://i.postimg.cc/fTw9J5Dt/IMG-20260502-202047.jpg" alt="منجز 10" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
+        <div class="gallery-item" data-index="26"><img src="https://i.postimg.cc/wT6m7Fgj/IMG-20260502-202554.jpg" alt="منجز 11" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
+        <div class="gallery-item" data-index="27"><img src="https://i.postimg.cc/28zZVTr8/IMG-20260502-202629.jpg" alt="منجز 12" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
+        <div class="gallery-item" data-index="28"><img src="https://i.postimg.cc/bNztsLpy/IMG-20260502-202957.jpg" alt="منجز 13" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
+        <div class="gallery-item" data-index="29"><img src="https://i.postimg.cc/Dy2X85nn/IMG-20260502-203013.jpg" alt="منجز 14" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
+        <div class="gallery-item" data-index="30"><img src="https://i.postimg.cc/CLFqzJSV/IMG-20260502-203314.jpg" alt="منجز 15" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
+        <div class="gallery-item" data-index="31"><img src="https://i.postimg.cc/vHQVcXMk/IMG-20260502-203619.jpg" alt="منجز 16" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
+        <div class="gallery-item" data-index="32"><img src="https://i.postimg.cc/659vyzwP/IMG-20260502-203749.jpg" alt="منجز 17" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
+        <div class="gallery-item" data-index="33"><img src="https://i.postimg.cc/HW0MYFDH/IMG-20260502-203950.jpg" alt="منجز 18" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
+        <div class="gallery-item" data-index="34"><img src="https://i.postimg.cc/SQL9SH05/IMG-20260502-204136.jpg" alt="منجز 19" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
+        <div class="gallery-item" data-index="35"><img src="https://i.postimg.cc/wx5NqnKS/IMG-20260502-204648.jpg" alt="منجز 20" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
+        <div class="gallery-item" data-index="36"><img src="https://i.postimg.cc/wx5NqnK2/IMG-20260502-204925.jpg" alt="منجز 21" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
+        <div class="gallery-item" data-index="37"><img src="https://i.postimg.cc/CMC8h9y4/IMG-20260502-205335.jpg" alt="منجز 22" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
+        <div class="gallery-item" data-index="38"><img src="https://i.postimg.cc/Y2NFrTc1/IMG-20260502-205512.jpg" alt="منجز 23" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
+        <div class="gallery-item" data-index="39"><img src="https://i.postimg.cc/xjGmfBrL/IMG-20260502-205934.jpg" alt="منجز 24" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
+        <div class="gallery-item" data-index="40"><img src="https://i.postimg.cc/MHYf9fbp/IMG-20260502-210020.jpg" alt="منجز 25" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
+        <div class="gallery-item" data-index="41"><img src="https://i.postimg.cc/qqG616X7/IMG-20260502-210607.jpg" alt="منجز 26" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
+        <div class="gallery-item" data-index="42"><img src="https://i.postimg.cc/7hNJKJM4/IMG-20260502-211327.jpg" alt="منجز 27" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
+        <div class="gallery-item" data-index="43"><img src="https://i.postimg.cc/prB5s5Yx/IMG-20260502-212202.jpg" alt="منجز 28" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
+        <div class="gallery-item" data-index="44"><img src="https://i.postimg.cc/Wz7q5qmf/IMG-20260502-212619.jpg" alt="منجز 29" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
+        <div class="gallery-item" data-index="45"><img src="https://i.postimg.cc/1XKVvV0T/IMG-20260502-212647.jpg" alt="منجز 30" loading="lazy" /><div class="gallery-overlay"><div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
       </div>
     </div>
   </section>
@@ -518,14 +548,12 @@
     <button id="lb-close" aria-label="إغلاق">
       <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
     </button>
-    <div class="lb-img-wrap">
-      <img id="lb-img" src="" alt="عرض المشروع" />
-    </div>
+    <img id="lb-img" src="" alt="عرض المشروع" />
     <button class="lb-arrow" id="lb-prev" aria-label="السابق">
-      <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+      <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
     </button>
     <button class="lb-arrow" id="lb-next" aria-label="التالي">
-      <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+      <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
     </button>
     <div id="lb-counter"></div>
   </div>
@@ -534,9 +562,9 @@
   <footer>
     <img src="https://i.postimg.cc/8PShHcVc/nebras-logo.png" alt="Nebras Solutions" />
     <div style="text-align:center;">
-      <p>جميع الحقوق محفوظة &copy; 2025 Nebras Solutions</p>
+      <p>جميع الحقوق محفوظة &copy; 2026 Nebras Solutions</p>
       <p style="margin-top:6px; font-size:0.78rem; color:rgba(255,255,255,0.22);">تطوير: اياد محمد عبدالله</p>
-      <a class="wa-btn" href="https://wa.me/2001096724839" target="_blank" rel="noopener" style="margin-top:10px;">
+      <a class="wa-btn" href="https://wa.me/2001096724839" target="_blank" rel="noopener">
         <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
         تحدث إلى المطور
       </a>
@@ -545,28 +573,28 @@
   </footer>
 
   <script>
-    // Navbar
+    // Navbar scroll effect
     const navbar = document.getElementById('navbar');
     window.addEventListener('scroll', () => navbar.classList.toggle('scrolled', window.scrollY > 40));
 
-    // Preloader
+    // Preloader hide
     setTimeout(() => { const p = document.getElementById('preloader'); if(p) p.classList.add('hide'); }, 4600);
 
-    // Gallery scroll arrows
+    // Gallery track 1 scroll arrows
     const track = document.getElementById('gallery');
-    document.getElementById('arrow-right').addEventListener('click', () => track.scrollBy({ left:  320, behavior: 'smooth' }));
-    document.getElementById('arrow-left').addEventListener('click',  () => track.scrollBy({ left: -320, behavior: 'smooth' }));
+    document.getElementById('arrow-right').addEventListener('click', () => track.scrollBy({ left: 320, behavior: 'smooth' }));
+    document.getElementById('arrow-left').addEventListener('click', () => track.scrollBy({ left: -320, behavior: 'smooth' }));
 
+    // Gallery track 2 scroll arrows
     const track2 = document.getElementById('gallery2');
-    document.getElementById('arrow-right2').addEventListener('click', () => track2.scrollBy({ left:  320, behavior: 'smooth' }));
-    document.getElementById('arrow-left2').addEventListener('click',  () => track2.scrollBy({ left: -320, behavior: 'smooth' }));
+    document.getElementById('arrow-right2').addEventListener('click', () => track2.scrollBy({ left: 320, behavior: 'smooth' }));
+    document.getElementById('arrow-left2').addEventListener('click', () => track2.scrollBy({ left: -320, behavior: 'smooth' }));
 
-
-    // Lightbox
+    // Lightbox Functionality
     const images = Array.from(document.querySelectorAll('.gallery-item img')).map(i => i.src);
-    const lb       = document.getElementById('lightbox');
-    const lbImg    = document.getElementById('lb-img');
-    const lbCounter= document.getElementById('lb-counter');
+    const lb = document.getElementById('lightbox');
+    const lbImg = document.getElementById('lb-img');
+    const lbCounter = document.getElementById('lb-counter');
     let current = 0;
 
     function openLB(idx) {
@@ -609,17 +637,53 @@
     });
 
     document.getElementById('lb-close').addEventListener('click', closeLB);
-    document.getElementById('lb-prev').addEventListener('click', () => navigate(1));
-    document.getElementById('lb-next').addEventListener('click', () => navigate(-1));
+    document.getElementById('lb-prev').addEventListener('click', () => navigate(-1));
+    document.getElementById('lb-next').addEventListener('click', () => navigate(1));
 
     lb.addEventListener('click', e => { if (e.target === lb) closeLB(); });
 
     document.addEventListener('keydown', e => {
       if (!lb.classList.contains('open')) return;
       if (e.key === 'Escape') closeLB();
-      if (e.key === 'ArrowLeft')  navigate(-1);
-      if (e.key === 'ArrowRight') navigate(1);
+      if (e.key === 'ArrowRight') navigate(-1);
+      if (e.key === 'ArrowLeft') navigate(1);
     });
+
+    /* ─── MOBILE MENU SCRIPT ────────────────────────────── */
+    (() => {
+      const menuBtn = document.getElementById('mobileMenuBtn');
+      const menuClose = document.getElementById('mobileMenuClose');
+      const overlay = document.getElementById('mobileMenuOverlay');
+
+      const openMenu = () => {
+        if (!overlay) return;
+        overlay.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      };
+
+      const closeMenu = () => {
+        if (!overlay) return;
+        overlay.classList.remove('open');
+        document.body.style.overflow = '';
+      };
+
+      menuBtn?.addEventListener('click', openMenu);
+      menuClose?.addEventListener('click', closeMenu);
+
+      overlay?.addEventListener('click', (e) => {
+        if (e.target === overlay) closeMenu();
+      });
+
+      overlay?.querySelectorAll('.mm-link').forEach((link) => {
+        link.addEventListener('click', () => {
+          if (link.target !== '_blank') closeMenu();
+        });
+      });
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeMenu();
+      });
+    })();
   </script>
 
 </body>
