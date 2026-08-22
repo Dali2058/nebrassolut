@@ -64,52 +64,35 @@
 
     /* ─── NAVBAR ──────────────────────────────────────── */
     #navbar {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      height: 72px; padding: 0 6%;
       display: flex; align-items: center; justify-content: space-between;
-      padding: 18px 6%;
-      transition: background 0.4s, box-shadow 0.4s, padding 0.3s;
+      background: rgba(255,255,255,0.72);
+      -webkit-backdrop-filter: blur(30px) saturate(180%);
+      backdrop-filter: blur(30px) saturate(180%);
+      border-bottom: 1px solid rgba(255,255,255,0.55);
+      box-shadow: 0 10px 30px rgba(15,23,42,0.10);
+      transition: box-shadow 0.35s ease, background 0.35s ease;
     }
-    #navbar.scrolled {
-      background: rgba(255,255,255,0.97);
-      box-shadow: 0 2px 20px rgba(0,0,0,0.08);
-      padding: 12px 6%;
-    }
-    .nav-logo {
-      font-family: var(--font-en); font-size: 1.1rem; font-weight: 700;
-      text-decoration: none; color: var(--white);
-      letter-spacing: 1.5px; transition: color 0.3s;
-    }
-    #navbar.scrolled .nav-logo { color: var(--text-dark); }
-    .nav-links { display: flex; gap: 32px; list-style: none; }
+    #navbar.scrolled { box-shadow: 0 8px 30px rgba(15,23,42,0.12); background: rgba(255,255,255,0.90); }
+    .nav-logo img { height: 42px; object-fit: contain; }
+    .nav-links { display: flex; gap: 6px; list-style: none; }
     .nav-links a {
-      font-family: var(--font-ar); font-size: 0.95rem; color: rgba(255,255,255,0.88);
-      text-decoration: none; font-weight: 500; position: relative; transition: color 0.3s;
+      text-decoration: none; font-weight: 600; font-size: 0.92rem;
+      color: var(--text-mid); letter-spacing: 0.1px;
+      padding: 9px 16px; border-radius: 999px;
+      transition: color 0.25s ease, background 0.25s ease;
     }
-    #navbar.scrolled .nav-links a { color: var(--text-mid); }
-    .nav-links a::after {
-      content: ''; position: absolute; bottom: -3px; right: 0;
-      width: 0; height: 2px; background: var(--sky);
-      transition: width 0.3s ease;
-    }
-    .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
-    .nav-links a:hover, .nav-links a.active { color: var(--sky-dark); }
-    #navbar.scrolled .nav-links a:hover, nav.scrolled .nav-links a.active { color: var(--sky-dark); }
-    .nav-icon {
-      width: 38px; height: 38px; border-radius: 50%;
-      border: 1.5px solid rgba(255,255,255,0.5);
-      display: flex; align-items: center; justify-content: center;
-      font-family: var(--font-en); font-size: 0.95rem; font-weight: 700;
-      color: var(--white); text-decoration: none; transition: all 0.3s;
-    }
-    #navbar.scrolled .nav-icon { border-color: var(--text-dark); color: var(--text-dark); }
-    .nav-icon:hover { background: var(--sky); border-color: var(--sky); color: #fff; }
+    .nav-links a:hover, .nav-links a.active { color: var(--sky-dark); background: rgba(91,191,222,0.14); }
+    @media (max-width: 900px) { #navbar { display: none !important; } }
 
     /* ─── HERO ────────────────────────────────────────── */
     #hero {
-      position: relative; width: 100%; height: 100vh;
+      position: relative; width: 100%; height: 100vh; min-height: 640px;
       display: flex; align-items: center; justify-content: center;
       overflow: hidden;
     }
+    @supports (height: 100dvh) { #hero { height: 100dvh; min-height: 560px; } }
     .hero-video {
       position: absolute; inset: 0; width: 100%; height: 100%;
       object-fit: cover; z-index: 0;
@@ -136,13 +119,12 @@
       letter-spacing: 6px; color: var(--sky); margin-bottom: 16px;
     }
     .hero-brand {
-      font-family: var(--font-en);
-      font-size: clamp(2.5rem, 6vw, 6rem);
-      font-weight: 900; letter-spacing: 4px; line-height: 1;
+      font-family: var(--font-ar);
+      font-size: clamp(2.5rem, 6vw, 5rem);
+      font-weight: 900; line-height: 1.2;
     }
     .hero-brand span {
-      display: block; font-weight: 300; color: var(--sky);
-      font-size: 0.55em; letter-spacing: 14px; margin-top: 12px;
+      display: inline-block; color: var(--sky); margin-right: 12px;
     }
     .hero-divider { width: 60px; height: 2px; background: var(--sky); margin: 28px auto; opacity: 0.8; }
     .hero-tagline {
@@ -187,7 +169,6 @@
       max-width: 480px; margin-inline: auto; line-height: 1.75;
     }
 
-    /* Grid layout */
     .contact-grid {
       display: grid;
       grid-template-columns: 1fr 1.3fr;
@@ -231,9 +212,7 @@
       color: var(--text-dark); letter-spacing: 0.5px;
     }
 
-    .num-actions {
-      display: flex; gap: 8px;
-    }
+    .num-actions { display: flex; gap: 8px; }
     .num-btn {
       flex: 1; display: inline-flex; align-items: center; justify-content: center; gap: 7px;
       padding: 9px 10px;
@@ -258,16 +237,6 @@
     .num-btn svg { width: 15px; height: 15px; flex-shrink: 0; }
     .num-btn.call svg { stroke: currentColor; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
     .num-btn.whatsapp svg { fill: currentColor; stroke: none; }
-
-    /* location card */
-    .contact-card {
-      display: flex; align-items: center; gap: 18px;
-      padding: 18px 20px;
-      border: 1px solid rgba(91,191,222,0.18);
-      border-radius: 16px;
-      background: var(--section-bg);
-      color: inherit;
-    }
 
     /* ─── EMAIL FORM ──────────────────────────────────── */
     .email-form-wrap {
@@ -329,33 +298,24 @@
 
     /* ─── FOOTER ──────────────────────────────────────── */
     footer {
-      background: #090f13; padding: 28px 10%;
+      background: #ffffff; padding: 30px 10%;
       display: flex; align-items: center; justify-content: space-between;
-      border-top: 1px solid rgba(255,255,255,0.05);
+      border-top: 1px solid rgba(0,0,0,0.08);
     }
-    footer p { font-size: 0.85rem; color: rgba(255,255,255,0.35); }
-    footer img { height: 32px; opacity: 0.6; }
-    .wa-btn {
-      display: inline-flex; align-items: center; gap: 8px;
-      padding: 7px 18px;
-      border: 1px solid rgba(37,211,102,0.5);
-      border-radius: 999px;
-      text-decoration: none;
-      color: #25d366;
-      font-size: 0.82rem; font-weight: 600;
-      background: transparent;
-      transition: background 0.25s, color 0.25s;
-      margin-top: 6px;
+    footer p { font-size: 0.85rem; color: var(--text-mid); }
+    footer img { height: 32px; opacity: 0.85; }
+    .wa-glass-btn {
+      display: inline-flex; align-items: center; gap: 8px; margin-top: 10px;
+      padding: 8px 20px; border-radius: 999px;
+      text-decoration: none; color: #25d366; font-size: 0.82rem; font-weight: 600;
+      background: rgba(37,211,102,0.08);
+      -webkit-backdrop-filter: blur(12px);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(37,211,102,0.4);
+      font-family: 'Montserrat', sans-serif;
+      transition: background 0.25s ease, color 0.25s ease;
     }
-    .wa-btn:hover { background: #25d366; color: #fff; }
-    .wa-btn svg { width: 15px; height: 15px; fill: currentColor; }
-
-    /* ─── RESPONSIVE ─────────────────────────────────── */
-    @media (max-width: 760px) {
-      .contact-grid { grid-template-columns: 1fr; gap: 36px; }
-      #contact-section { padding: 64px 6% 60px; }
-      .email-form-wrap { padding: 26px 22px; }
-    }
+    .wa-glass-btn:hover { background: #25d366; color: #fff; }
 
     /* ─── MOBILE TOP BAR ─────────────────────────────── */
     .mobile-topbar { display: none; }
@@ -365,10 +325,10 @@
         position: fixed; top: 0; left: 0; right: 0; z-index: 1400;
         height: 62px; padding: 0 16px;
         background: rgba(255,255,255,0.72);
-        -webkit-backdrop-filter: blur(var(--blur-lg)) saturate(180%);
-        backdrop-filter: blur(var(--blur-lg)) saturate(180%);
+        -webkit-backdrop-filter: blur(30px) saturate(180%);
+        backdrop-filter: blur(30px) saturate(180%);
         border-bottom: 1px solid rgba(255,255,255,0.5);
-        box-shadow: var(--shadow-glass-sm);
+        box-shadow: 0 10px 30px rgba(15,23,42,0.10);
       }
       .mobile-topbar.scrolled { box-shadow: 0 8px 30px rgba(15,23,42,0.12); background: rgba(255,255,255,0.9); }
       
@@ -376,7 +336,7 @@
         width: 44px; height: 44px; border-radius: 14px; border: none; cursor: pointer;
         display: flex; align-items: center; justify-content: center; flex-shrink: 0;
         background: var(--sky);
-        box-shadow: 0 6px 18px rgba(var(--sky-rgb), 0.4);
+        box-shadow: 0 6px 18px rgba(91,191,222, 0.4);
         transition: transform 0.3s ease, background 0.3s ease;
       }
       .mobile-menu-btn:hover { transform: scale(1.05); }
@@ -386,15 +346,6 @@
         max-width: 170px;
         object-fit: contain;
         display: block;
-      }
-
-      .mm-link {
-        min-height: 58px;
-        padding: 12px 14px;
-      }
-
-      .mm-link-label {
-        font-size: 0.96rem;
       }
     }
 
@@ -431,13 +382,11 @@
       border: 1px solid rgba(255,255,255,0.10);
       border-radius: 24px;
       overflow: hidden;
-      box-shadow:
-        0 25px 60px rgba(0,0,0,0.55),
-        0 0 0 1px rgba(59,157,255,0.06);
+      box-shadow: 0 25px 60px rgba(0,0,0,0.55), 0 0 0 1px rgba(59,157,255,0.06);
       transform: scale(0.94) translateY(-12px);
       transform-origin: top center;
       opacity: 0;
-      transition: transform 0.35s var(--ease-out), opacity 0.3s ease;
+      transition: transform 0.35s cubic-bezier(0.16,1,0.3,1), opacity 0.3s ease;
     }
     .mobile-menu-overlay.open .mm-sheet {
       transform: scale(1) translateY(0);
@@ -447,7 +396,7 @@
     .mm-header {
       display: flex; align-items: center; justify-content: space-between;
       padding: 16px 18px;
-      background: linear-gradient(135deg, var(--sky-dark), var(--violet));
+      background: linear-gradient(135deg, var(--sky-dark), #8a5cff);
       flex-shrink: 0;
     }
     .mm-close {
@@ -471,11 +420,6 @@
     }
 
     .mm-links {
-      /* Important: this element is a <nav>, but it must NOT inherit the
-         desktop navbar layout. Keep it a normal in-sheet flex container. */
-      position: static;
-      inset: auto;
-      z-index: auto;
       width: 100%;
       height: auto;
       min-height: 0;
@@ -487,9 +431,6 @@
       list-style: none;
       background: transparent;
       border: 0;
-      box-shadow: none;
-      backdrop-filter: none;
-      -webkit-backdrop-filter: none;
     }
 
     .mm-link {
@@ -499,12 +440,9 @@
       border: 1px solid rgba(255,255,255,0.09);
       border-radius: 14px;
       text-decoration: none; color: #fff;
-      opacity: 1;
-      transform: none;
       transition: background 0.2s ease, border-color 0.2s ease;
     }
     .mm-link:hover { background: rgba(255,255,255,0.09); }
-
     .mm-link:hover .mm-link-label { color: var(--sky); }
     .mm-link-label { font-size: 1rem; font-weight: 600; color: #fff; letter-spacing: 0.2px; }
     .mm-link-icon {
@@ -512,7 +450,6 @@
       background: rgba(255, 255, 255, 0.08);
       display: flex; align-items: center; justify-content: center;
       flex-shrink: 0;
-      transition: background 0.3s ease;
     }
     .mm-link-icon svg { width: 16px; height: 16px; stroke: #fff; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 
@@ -521,85 +458,17 @@
     .mm-link.active .mm-link-icon { background: rgba(59, 157, 255, 0.28) !important; }
     .mm-link.active .mm-link-icon svg { stroke: var(--sky) !important; }
 
-    @media (max-width: 380px) {
-      .mobile-menu-overlay {
-        padding-left: 10px;
-        padding-right: 10px;
-      }
-
-      .mm-sheet {
-        width: 100%;
-        max-width: 340px;
-        border-radius: 20px;
-      }
-
-      .mm-header {
-        padding: 14px 15px;
-      }
-
-      .mm-body {
-        padding: 16px 14px 20px;
-      }
-
-      .mm-link {
-        min-height: 54px;
-        padding: 10px 12px;
-        gap: 10px;
-      }
-
-      .mm-link-icon {
-        width: 32px;
-        height: 32px;
-      }
-    }
-
-
-
-    /* ─── INDEX-STYLE DESKTOP + SAFE MOBILE OVERRIDES ─── */
-    #navbar {
-      height: 72px; padding: 0 6%;
-      background: rgba(255,255,255,0.72);
-      -webkit-backdrop-filter: blur(30px) saturate(180%);
-      backdrop-filter: blur(30px) saturate(180%);
-      border-bottom: 1px solid rgba(255,255,255,0.55);
-      box-shadow: 0 10px 30px rgba(15,23,42,0.10);
-    }
-    #navbar.scrolled { padding: 0 6%; background: rgba(255,255,255,0.90); box-shadow: 0 8px 30px rgba(15,23,42,0.12); }
-    .nav-links { gap: 6px; }
-    .nav-links a { color: var(--text-mid); padding: 9px 16px; border-radius: 999px; }
-    .nav-links a::after { display:none; }
-    .nav-links a:hover, .nav-links a.active { color: var(--sky-dark); background: rgba(91,191,222,0.14); }
-    .nav-icon { border-color: rgba(31,127,160,0.22); color: var(--sky-dark); background: rgba(91,191,222,0.10); }
-    #navbar.scrolled .nav-icon { border-color: rgba(31,127,160,0.25); color: var(--sky-dark); }
-
-    #hero { height: 100vh; min-height: 640px; }
-    @supports (height: 100dvh) { #hero { height: 100dvh; min-height: 560px; } }
-
     @media (max-width: 900px) {
-      #navbar { display:none !important; }
-      #hero { min-height:560px; padding-top:env(safe-area-inset-top); }
-      .hero-content { width:min(100%,680px); padding:0 24px; }
-      .hero-brand { font-size:clamp(2.35rem,12vw,4.6rem); }
-      .hero-tagline { font-size:1rem; }
-      #contact-section { padding-left:18px; padding-right:18px; }
-      footer { padding:28px 18px calc(28px + env(safe-area-inset-bottom)); gap:20px; }
+      #contact-section { padding: 64px 6% 60px; }
     }
-    @media (max-width:560px) {
-      #hero { min-height:100svh; height:100dvh; }
-      .hero-content { padding:0 18px; }
-      .hero-label { letter-spacing:4px; font-size:.65rem; }
-      .hero-brand span { letter-spacing:8px; }
-      .hero-scroll-hint { bottom:calc(20px + env(safe-area-inset-bottom)); }
-      .contact-grid { gap:24px; }
-      .email-form-wrap { padding:22px 16px; border-radius:18px; }
-      .num-card { padding:16px; }
-      .num-actions { flex-wrap:wrap; }
-      .num-btn { min-height:44px; }
-      footer { flex-direction:column; text-align:center; }
-      footer > div:last-child { display:none; }
-      footer img { height:28px; }
+    @media (max-width: 560px) {
+      .contact-grid { gap: 24px; }
+      .email-form-wrap { padding: 22px 16px; border-radius: 18px; }
+      .num-card { padding: 16px; }
+      .num-actions { flex-wrap: wrap; }
+      .num-btn { min-height: 44px; }
+      footer { flex-direction: column; gap: 14px; text-align: center; }
     }
-
   </style>
 </head>
 
@@ -611,36 +480,6 @@
     <p class="pre-text">CONTACT US</p>
     <div class="pre-bar"><div class="pre-bar-fill"></div></div>
   </div>
-
-  <!-- NAVBAR -->
-  <nav id="navbar">
-    <a class="nav-icon" href="index.html">N</a>
-    <ul class="nav-links">
-      <li><a href="index.html">الرئيسية</a></li>
-      <li><a href="https://neb-elc.vercel.app/" target="_blank" rel="noopener">إلكتروميكانيك</a></li>
-      <li><a href="projects.html">مشاريع</a></li>
-      <li><a href="decorations.html">ديكورات</a></li>
-      <li><a href="contact.html" class="active">تواصل معنا</a></li>
-    </ul>
-  </nav>
-
-  <!-- HERO -->
-  <section id="hero">
-    <video class="hero-video" autoplay muted loop playsinline preload="auto">
-      <source src="nebras-bg.mp4" type="video/mp4" />
-    </video>
-    <div class="hero-overlay"></div>
-    <div class="hero-content">
-      <p class="hero-label">CONTACT US</p>
-      <h1 class="hero-brand">تواصل<span>معنا</span></h1>
-      <div class="hero-divider"></div>
-      <p class="hero-tagline">نسعد بالتواصل معك في أي وقت</p>
-    </div>
-    <div class="hero-scroll-hint">
-      <span>SCROLL</span>
-      <div class="scroll-arrow"></div>
-    </div>
-  </section>
 
   <!-- MOBILE TOP BAR -->
   <div class="mobile-topbar" id="mobileTopbar">
@@ -669,7 +508,7 @@
             <span class="mm-link-label">الرئيسية</span>
             <span class="mm-link-icon"><svg viewBox="0 0 24 24"><path d="M3 12l9-9 9 9"/><path d="M5 10v10h14V10"/></svg></span>
           </a>
-          <a href="https://neb-elc.vercel.app/" target="_blank" rel="noopener" class="mm-link">
+          <a href="electro.html" class="mm-link">
             <span class="mm-link-label">إلكتروميكانيك</span>
             <span class="mm-link-icon"><svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></span>
           </a>
@@ -697,12 +536,30 @@
     </div>
     <ul class="nav-links">
       <li><a href="index.html">الرئيسية</a></li>
-      <li><a href="https://neb-elc.vercel.app/" target="_blank" rel="noopener">إلكتروميكانيك</a></li>
+      <li><a href="electro.html">إلكتروميكانيك</a></li>
       <li><a href="projects.html">مشاريع</a></li>
       <li><a href="decorations.html">ديكورات</a></li>
-      <li><a href="contact.html">تواصل معنا</a></li>
+      <li><a href="contact.html" class="active">تواصل معنا</a></li>
     </ul>
   </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <video class="hero-video" autoplay muted loop playsinline preload="auto">
+      <source src="nebras-bg.mp4" type="video/mp4" />
+    </video>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <p class="hero-label">CONTACT US</p>
+      <h1 class="hero-brand"><span>تواصل</span> معنا</h1>
+      <div class="hero-divider"></div>
+      <p class="hero-tagline">نسعد بالتواصل معك في أي وقت</p>
+    </div>
+    <div class="hero-scroll-hint">
+      <span>SCROLL</span>
+      <div class="scroll-arrow"></div>
+    </div>
+  </section>
 
   <!-- CONTACT SECTION -->
   <section id="contact-section">
@@ -836,9 +693,9 @@
     <img src="https://i.postimg.cc/8PShHcVc/nebras-logo.png" alt="Nebras Solutions" />
     <div style="text-align:center;">
       <p>جميع الحقوق محفوظة &copy; 2025 Nebras Solutions</p>
-      <p style="margin-top:6px; font-size:0.78rem; color:rgba(255,255,255,0.22);">تطوير: اياد محمد عبدالله</p>
-      <a class="wa-btn" href="https://wa.me/2001096724839" target="_blank" rel="noopener" style="margin-top:10px;">
-        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      <p style="margin-top:6px; font-size:0.78rem; color:rgba(0,0,0,0.32);">تطوير: اياد محمد عبدالله</p>
+      <a href="https://wa.me/2001096724839" target="_blank" rel="noopener" class="wa-glass-btn">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
         تحدث إلى المطور
       </a>
     </div>
@@ -848,8 +705,10 @@
   <script>
     // Navbar shadow on scroll
     const navbar = document.getElementById('navbar');
+    const mobileTopbar = document.getElementById('mobileTopbar');
     window.addEventListener('scroll', () => {
       navbar.classList.toggle('scrolled', window.scrollY > 40);
+      if (mobileTopbar) mobileTopbar.classList.toggle('scrolled', window.scrollY > 40);
     });
 
     // Preloader
@@ -874,14 +733,13 @@
       const subject = encodeURIComponent(subj || 'رسالة من موقع Nebras Solutions');
       const bodyEnc = encodeURIComponent(body);
 
-      // Open Gmail compose — Google will ask the user to sign in if not already
       window.open(
         `https://mail.google.com/mail/?view=cm&fs=1&to=${to}&su=${subject}&body=${bodyEnc}`,
         '_blank'
       );
     });
 
-    // Mobile menu — same behavior as the fixed index page
+    // Mobile menu handling
     (() => {
       const mobileMenuBtn = document.getElementById('mobileMenuBtn');
       const mobileMenuClose = document.getElementById('mobileMenuClose');
@@ -912,7 +770,6 @@
         if (e.key === 'Escape') closeMobileMenu();
       });
     })();
-
   </script>
 
 </body>
