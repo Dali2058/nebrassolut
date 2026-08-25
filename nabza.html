@@ -24,20 +24,14 @@
       --violet: #8a5cff;
       --up: #2fd67e;
       --glass-bg: rgba(255,255,255,0.55);
-      --glass-bg-strong: rgba(255,255,255,0.72);
       --glass-border: rgba(255,255,255,0.65);
-      --glass-dark-border: rgba(255,255,255,0.18);
       --blur-lg: 30px;
       --blur-md: 20px;
-      --blur-sm: 12px;
-      --radius-xl: 32px;
       --radius-lg: 26px;
       --radius-md: 18px;
-      --radius-sm: 12px;
       --radius-pill: 999px;
       --shadow-glass: 0 20px 60px rgba(15,23,42,0.14), inset 0 1px 0 rgba(255,255,255,0.6);
       --shadow-glass-sm: 0 10px 30px rgba(15,23,42,0.10), inset 0 1px 0 rgba(255,255,255,0.5);
-      --shadow-dark-glass: 0 10px 40px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.08);
       --font-ar: 'Tajawal', sans-serif;
       --font-en: 'Montserrat', sans-serif;
       --ease-out: cubic-bezier(0.16,1,0.3,1);
@@ -54,10 +48,6 @@
       line-height: 1.7;
       overflow-x: hidden;
     }
-    @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; scroll-behavior: auto !important; }
-    }
-    a:focus-visible, button:focus-visible { outline: 2px solid var(--sky); outline-offset: 3px; }
 
     /* ─── PRELOADER ───────────────────────────────────── */
     #preloader {
@@ -120,9 +110,7 @@
       z-index: 1;
     }
     .hero-grid { position: relative; z-index: 2; width: 100%; padding: 0 6%; display: flex; }
-    .hero-content {
-      max-width: 620px; color: #fff; text-align: right; padding: 0 6px;
-    }
+    .hero-content { max-width: 620px; color: #fff; text-align: right; padding: 0 6px; }
     .hero-eyebrow {
       font-family: var(--font-en); font-size: 0.75rem; font-weight: 700;
       letter-spacing: 5px; color: var(--sky); text-transform: uppercase; margin-bottom: 20px;
@@ -152,10 +140,7 @@
     .btn-glass-ghost:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.6); transform: translateY(-2px); }
 
     /* ─── MAJOR PROJECTS SECTION ──────────────────────── */
-    #major-projects {
-      padding: 110px 6%;
-      background: var(--bg-soft);
-    }
+    #major-projects { padding: 110px 6%; background: var(--bg-soft); }
     .projects-header { text-align: center; margin-bottom: 70px; }
     .section-label {
       font-family: var(--font-en); font-size: 0.75rem; font-weight: 700;
@@ -202,7 +187,7 @@
       display: inline-flex; align-items: center; gap: 8px;
       padding: 12px 28px; background: var(--text-dark); color: #fff;
       border-radius: var(--radius-pill); font-weight: 700; font-size: 0.9rem;
-      text-decoration: none; transition: background 0.3s, transform 0.3s;
+      text-decoration: none; transition: background 0.3s, transform 0.3s; cursor: pointer; border: none;
     }
     .btn-details:hover { background: var(--sky); transform: translateY(-2px); box-shadow: 0 8px 22px rgba(59,157,255,0.3); }
 
@@ -219,7 +204,7 @@
     #project-modal.open { opacity: 1; visibility: visible; pointer-events: all; }
     .modal-card {
       width: min(92vw, 980px); max-height: 90vh;
-      background: #ffffff; border-radius: var(--radius-xl);
+      background: #ffffff; border-radius: var(--radius-lg);
       box-shadow: 0 30px 90px rgba(0,0,0,0.4);
       display: flex; flex-direction: column; overflow: hidden;
       transform: scale(0.92) translateY(20px);
@@ -259,7 +244,6 @@
     .stat-row-item span:first-child { color: var(--text-mid); font-weight: 500; }
     .stat-row-item span:last-child { color: var(--text-dark); font-weight: 800; font-family: var(--font-en); }
 
-    /* Performance Chart inside Modal */
     .modal-chart-card {
       background: #0f172a; border-radius: var(--radius-md); padding: 24px; color: #fff;
     }
@@ -420,7 +404,7 @@
   <!-- HERO -->
   <section id="hero">
     <video class="hero-video" id="hero-video" autoplay muted loop playsinline preload="auto">
-      <source src="nabza-bg.mp4" type="video/mp4" />
+      <source src="nebras-bg.mp4" type="video/mp4" />
     </video>
     <div class="hero-overlay"></div>
     <div class="hero-grid">
@@ -446,7 +430,7 @@
     <!-- PROJECT 1: QIDDIYA -->
     <div class="project-row">
       <div class="project-img-box">
-        <img src="https://i.postimg.cc/wBY5ZzDG/2b423955-79e8-4557-88f8-5ebcf298b9ef.jpg" alt="مشروع القدية" loading="lazy" />
+        <img src="https://i.postimg.cc/wBY5ZzDG/2b423955-79e8-4557-88f8-5ebcf298b9ef.jpg" alt="مشروع القدية" loading="lazy" decoding="async" />
       </div>
       <div class="project-info">
         <span class="project-sub">QIDDIYA TRANSPORT HUB PROJECT</span>
@@ -468,7 +452,7 @@
     <!-- PROJECT 2: CARE HOSPITALS -->
     <div class="project-row reverse">
       <div class="project-img-box">
-        <img src="https://i.postimg.cc/Wp0dYZ5V/002247a9-a55e-4786-a83f-91ad623b5978.jpg" alt="مستشفيات رعاية" loading="lazy" />
+        <img src="https://i.postimg.cc/Wp0dYZ5V/002247a9-a55e-4786-a83f-91ad623b5978.jpg" alt="مستشفيات رعاية" loading="lazy" decoding="async" />
       </div>
       <div class="project-info">
         <span class="project-sub">CARE MEDICAL HOSPITALS PROJECT</span>
@@ -488,7 +472,7 @@
     </div>
   </section>
 
-  <!-- DETAILED PROJECT MODAL / PAGE-IN-PAGE -->
+  <!-- DETAILED PROJECT MODAL (PAGE-IN-PAGE VIEW) -->
   <div id="project-modal">
     <div class="modal-card">
       <div class="modal-header">
@@ -519,7 +503,7 @@
   </footer>
 
   <script>
-    // Video autoplay fix
+    // Video autoplay robustness fix
     document.addEventListener("DOMContentLoaded", () => {
       const v = document.getElementById('hero-video');
       if (v) {
@@ -573,7 +557,7 @@
       if (nb) nb.classList.toggle('scrolled', window.scrollY > 40);
     });
 
-    // Project Data definitions for Modal
+    // Complete Project Data with all images
     const projectData = {
       qiddiya: {
         title: "مشروع القدية - مركز النقل الجنوبي الغربي",
@@ -595,7 +579,11 @@
           "https://i.postimg.cc/Wp0dYZ5V/002247a9-a55e-4786-a83f-91ad623b5978.jpg",
           "https://i.postimg.cc/Kct1pT0m/52592e14-862d-4545-beba-a6fba44bcc82.jpg",
           "https://i.postimg.cc/VsXJZtK6/9d43837e-3364-4977-9c3e-2736bd7a0418.jpg",
-          "https://i.postimg.cc/Wp0dYZ5b/b9e286f9-f2a2-4e6c-a7b8-2ee3ae4a2f8d.jpg"
+          "https://i.postimg.cc/Wp0dYZ5b/b9e286f9-f2a2-4e6c-a7b8-2ee3ae4a2f8d.jpg",
+          "https://i.postimg.cc/9XyDg9L0/b9f2e6bf-09a6-42fd-91d1-9cb306f51d87.jpg",
+          "https://i.postimg.cc/Y2QvDFdM/bac11ebb-b702-4dfa-a80d-58f465581644.jpg",
+          "https://i.postimg.cc/v8542n3J/e3ce6013-4d04-4fa1-80b1-fada4e68c9e0.jpg",
+          "https://i.postimg.cc/fWYVqd8Q/f02db125-0fde-4dc3-b3ea-2ce52869c4af.jpg"
         ],
         chartPath: "M2,100 C60,85 110,65 170,75 C230,85 280,40 330,25 C390,10 430,15 456,8"
       }
@@ -610,10 +598,10 @@
       let imagesHtml = proj.images.map((img, idx) => `
         <div class="modal-section-grid" style="${idx % 2 === 1 ? 'direction: ltr;' : ''}">
           <div class="modal-img-slider" style="${idx % 2 === 1 ? 'direction: rtl;' : ''}">
-            <img src="${img}" alt="${proj.title}" loading="lazy" />
+            <img src="${img}" alt="${proj.title}" loading="lazy" decoding="async" />
           </div>
           <div style="${idx % 2 === 1 ? 'direction: rtl;' : ''}">
-            <h4 style="font-size: 1.2rem; font-weight: 800; color: var(--text-dark); margin-bottom: 10px;">المرحلة الإنشائية رقم ${idx + 1}</h4>
+            <h4 style="font-size: 1.2rem; font-weight: 800; color: var(--text-dark); margin-bottom: 10px;">لقطة ميدانية رقم ${idx + 1}</h4>
             <p style="color: var(--text-mid); font-size: 0.98rem; line-height: 1.8;">${proj.desc}</p>
           </div>
         </div>
