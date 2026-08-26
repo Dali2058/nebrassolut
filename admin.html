@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>لوحة إدارة نبراس</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#0b0d10;color:#f5f5f5;font-family:Tajawal,Arial,sans-serif}
+button,input{font:inherit}.hidden{display:none!important}
+.login{min-height:100vh;display:grid;place-items:center;padding:24px;background:radial-gradient(circle at 50% 0,#24201a 0,#0b0d10 45%)}
+.card{width:min(440px,100%);background:#11151a;border:1px solid #282d34;border-radius:24px;padding:34px;box-shadow:0 30px 80px #0008}
+h1,h2{margin:0 0 12px}.muted{color:#9299a3}.field{display:flex;flex-direction:column;gap:8px;margin:18px 0}.field input{background:#0b0d10;border:1px solid #303740;color:#fff;border-radius:12px;padding:13px;outline:none}.btn{border:0;border-radius:12px;padding:12px 18px;cursor:pointer;background:#b68a51;color:#111;font-weight:800}.btn.secondary{background:#20252c;color:#fff}.btn.danger{background:#9b3333;color:#fff}.top{height:72px;border-bottom:1px solid #242a31;display:flex;align-items:center;justify-content:space-between;padding:0 22px;background:#0d1014;position:sticky;top:0;z-index:20}.brand{font-weight:900;font-size:20px}.layout{display:grid;grid-template-columns:270px 1fr;min-height:calc(100vh - 72px)}.sidebar{border-left:1px solid #242a31;padding:18px;background:#0e1115}.pages button{width:100%;text-align:right;margin:5px 0;background:#161b21;color:#dfe3e7;border:1px solid #242a31;padding:12px;border-radius:11px;cursor:pointer}.pages button.active{border-color:#b68a51;background:#211b14}.main{padding:22px;min-width:0}.toolbar{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0}.editor-wrap{background:#080a0d;border:1px solid #292f37;border-radius:18px;padding:10px;height:calc(100vh - 190px);min-height:520px}.editor{width:100%;height:100%;border:0;border-radius:12px;background:#fff}.hint{font-size:13px;color:#8e96a0}.media{margin-top:20px;background:#11151a;border:1px solid #292f37;border-radius:18px;padding:16px}.media-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px;margin-top:12px}.media-item{background:#0b0d10;border:1px solid #252b32;border-radius:12px;padding:7px}.media-item img,.media-item video{width:100%;height:90px;object-fit:cover;border-radius:8px}.media-item small{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#aeb5bd}.media-item .btn{padding:6px 8px;font-size:12px;margin-top:5px}.status{margin-right:8px;color:#aab1ba}
+@media(max-width:850px){.layout{grid-template-columns:1fr}.sidebar{border-left:0;border-bottom:1px solid #242a31}.editor-wrap{height:65vh}}
+.pv-overlay{position:fixed;inset:0;background:#000c;z-index:100;display:flex;flex-direction:column;padding:18px}
+.pv-head{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px}
+.pv-tabs{display:flex;gap:8px}
+.pv-tabs button{background:#161b21;color:#dfe3e7;border:1px solid #242a31;padding:9px 16px;border-radius:10px;cursor:pointer}
+.pv-tabs button.active{border-color:#b68a51;background:#211b14;color:#fff}
+.pv-body{flex:1;min-height:0;background:#080a0d;border:1px solid #292f37;border-radius:16px;padding:10px}
+.pv-body iframe{width:100%;height:100%;border:0;border-radius:10px;background:#fff}
+.pv-split{display:none;gap:10px;height:100%}
+.pv-split.active{display:grid;grid-template-columns:1fr 1fr}
+.pv-single{display:none;height:100%}
+.pv-single.active{display:block}
+.pv-col{display:flex;flex-direction:column;min-width:0}
+.pv-col h4{margin:0 0 6px;color:#aab1ba;font-size:13px;font-weight:700}
+.pv-col iframe{flex:1;width:100%;border:0;border-radius:10px;background:#fff}
+.pv-note{color:#e2c08d;font-size:13px}
+@media(max-width:850px){.pv-split.active{grid-template-columns:1fr;grid-auto-rows:1fr}}
+</style>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body>
+<section id="login" class="login">
+<div class="card">
+<h1>دخول لوحة الإدارة</h1><p class="muted">ضع كود الدخول للوصول إلى محرر الموقع.</p>
+<div class="field"><label>كود الدخول</label><input id="code" type="password" placeholder="كود الدخول"></div>
+<button class="btn" id="loginBtn">دخول</button><p id="loginMsg" class="muted"></p>
+</div></section>
+
+<section id="app" class="hidden">
+<header class="top"><div class="brand">Nebras CMS</div><div><span id="status" class="status"></span><button class="btn secondary" onclick="logout()">خروج</button></div></header>
+<div class="layout">
+<aside class="sidebar"><h3>صفحات الموقع</h3><div id="pages" class="pages"></div><hr style="border-color:#242a31"><button class="btn" style="width:100%;margin-top:10px" onclick="openSite()">فتح الموقع</button></aside>
+<main class="main">
+<div><h2 id="pageTitle">اختر صفحة</h2><div class="hint">المحرر يعمل على الصفحة نفسها. اضغط على أي عنصر داخل المعاينة لتحديده، ثم استخدم الأدوات.</div></div>
+<div class="toolbar">
+<button class="btn" onclick="openPreview()">معاينة قبل الحفظ</button>
+<button class="btn" onclick="savePage()">Save / حفظ</button>
+<button class="btn secondary" onclick="addText()">إضافة نص</button>
+<button class="btn secondary" onclick="addImage()">إضافة صورة</button>
+<button class="btn secondary" onclick="addVideo()">إضافة فيديو</button>
+<button class="btn secondary" onclick="moveSelected(-1)">تحريك لأعلى</button>
+<button class="btn secondary" onclick="moveSelected(1)">تحريك لأسفل</button>
+<button class="btn danger" onclick="deleteSelected()">حذف المحدد</button>
+<label class="btn secondary" style="cursor:pointer">رفع صورة/فيديو<input id="upload" type="file" accept="image/*,video/*" hidden></label>
+</div>
+<div class="editor-wrap"><iframe id="editor" class="editor" title="محرر الصفحة"></iframe></div>
+<section class="media"><h3>مكتبة الصور والفيديوهات</h3><div class="hint">كل الملفات هنا محفوظة داخل مجلد uploads ولن تختفي بعد إعادة التشغيل.</div><div id="mediaGrid" class="media-grid"></div></section>
+</main></div></section>
+
+<div id="pvOverlay" class="pv-overlay hidden">
+ <div class="pv-head">
+  <div class="pv-tabs">
+   <button id="pvTabAfter" class="active" onclick="pvSwitch('after')">بعد التعديل</button>
+   <button id="pvTabBefore" onclick="pvSwitch('before')">قبل التعديل (الأصل)</button>
+   <button id="pvTabSplit" onclick="pvSwitch('split')">مقارنة جنباً إلى جنب</button>
+  </div>
+  <div class="pv-note">هذه معاينة فقط — لم يتم حفظ أي شيء على الموقع بعد.</div>
+  <div>
+   <button class="btn secondary" onclick="closePreview()">العودة للتحرير</button>
+   <button class="btn" onclick="closePreview();savePage()">تأكيد وحفظ</button>
+  </div>
+ </div>
+ <div class="pv-body">
+  <div id="pvSingle" class="pv-single active"><iframe id="pvFrame" title="معاينة"></iframe></div>
+  <div id="pvSplitWrap" class="pv-split">
+   <div class="pv-col"><h4>قبل التعديل</h4><iframe id="pvFrameBefore" title="قبل"></iframe></div>
+   <div class="pv-col"><h4>بعد التعديل</h4><iframe id="pvFrameAfter" title="بعد"></iframe></div>
+  </div>
+ </div>
+</div>
+
+<script>
+let CODE=sessionStorage.getItem("neb_code")||"", current="", selected=null, dirty=false, originalHtml="";
+const $=id=>document.getElementById(id);
+async function api(url,opt={}){opt.headers={...(opt.headers||{}),"x-admin-code":CODE};let r=await fetch(url,opt);if(r.status===401)throw Error("unauthorized");return r.json();}
+async function login(){
+  const c=$("code").value.trim(); if(!c)return;
+  try{CODE=c; await api("/api/pages");sessionStorage.setItem("neb_code",CODE);showApp();}catch(e){CODE="";$("loginMsg").textContent="الكود غير صحيح";}
+}
+$("loginBtn").onclick=login;$("code").addEventListener("keydown",e=>e.key==="Enter"&&login());
+function showApp(){$("login").classList.add("hidden");$("app").classList.remove("hidden");loadPages();loadMedia();}
+function logout(){sessionStorage.removeItem("neb_code");location.reload();}
+async function loadPages(){let data=await api("/api/pages");$("pages").innerHTML=data.map(p=>`<button data-file="${p.file}" onclick="loadPage('${p.file}')">${escapeHtml(p.title)}</button>`).join("");if(!current&&data[0])loadPage(data[0].file);}
+async function loadPage(file){
+ current=file; selected=null; dirty=false; document.querySelectorAll(".pages button").forEach(b=>b.classList.toggle("active",b.dataset.file===file));
+ let d=await api("/api/page/"+encodeURIComponent(file));$("pageTitle").textContent=d.title;
+ originalHtml=d.html;
+ const iframe=$("editor"); iframe.srcdoc=d.html; iframe.onload=()=>{
+   const doc=iframe.contentDocument;
+   doc.querySelectorAll("body *").forEach(el=>{
+     if(["SCRIPT","STYLE","LINK","META"].includes(el.tagName))return;
+     el.addEventListener("click",selectElement,true);
+   });
+ };
+}
+function selectElement(e){e.preventDefault();e.stopPropagation(); if(selected)selected.style.outline="";selected=e.currentTarget;selected.style.outline="3px solid #b68a51";$("status").textContent="تم تحديد: "+selected.tagName;}
+function editorDoc(){return $("editor").contentDocument}
+function cleanBeforeSave(doc){doc.querySelectorAll("*").forEach(x=>{x.style.outline="";if(x.hasAttribute("contenteditable")){x.removeAttribute("contenteditable");x.contentEditable="false"}});}
+function snapshotHtml(){let doc=editorDoc();let clone=doc.documentElement.cloneNode(true);let tmp=document.implementation.createHTMLDocument("");tmp.replaceChild(clone,tmp.documentElement);cleanBeforeSave(tmp);return "<!DOCTYPE html>\n"+tmp.documentElement.outerHTML;}
+async function savePage(){
+ if(!current)return alert("اختر صفحة أولاً"); let doc=editorDoc();cleanBeforeSave(doc);
+ let html="<!DOCTYPE html>\n"+doc.documentElement.outerHTML;
+ let d=await api("/api/page/"+encodeURIComponent(current),{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({html})});
+ $("status").textContent=d.message||"تم الحفظ";dirty=false;loadPage(current);
+}
+function addText(){let doc=editorDoc();let el=doc.createElement("div");el.textContent="اكتب النص هنا";el.contentEditable="true";el.style.cssText="padding:24px;margin:20px auto;max-width:900px;font-size:24px;text-align:center";el.addEventListener("click",selectElement,true);doc.body.appendChild(el);selectDirect(el);dirty=true}
+function addImage(){const url=prompt("ضع رابط الصورة أو ارفعها من زر الرفع:");if(url)insertMedia("img",url)}
+function addVideo(){const url=prompt("ضع رابط الفيديو أو ارفع ملف فيديو:");if(url)insertMedia("video",url)}
+function insertMedia(type,url){let doc=editorDoc(),el=doc.createElement(type);el.src=url;el.controls=type==="video";el.style.cssText="display:block;max-width:100%;margin:25px auto;border-radius:12px";el.addEventListener("click",selectElement,true);doc.body.appendChild(el);selectDirect(el);dirty=true}
+function selectDirect(el){if(selected)selected.style.outline="";selected=el;el.style.outline="3px solid #b68a51"}
+function deleteSelected(){if(!selected)return alert("حدد عنصراً أولاً");if(!confirm("حذف العنصر المحدد؟"))return;selected.remove();selected=null;dirty=true}
+function moveSelected(dir){if(!selected)return alert("حدد عنصراً أولاً");let p=selected.parentElement;if(dir<0&&selected.previousElementSibling)p.insertBefore(selected,selected.previousElementSibling);if(dir>0&&selected.nextElementSibling)p.insertBefore(selected,selected.nextElementSibling.nextSibling);dirty=true}
+$("upload").onchange=async e=>{const file=e.target.files[0];if(!file)return;let fd=new FormData();fd.append("file",file);let d=await api("/api/upload",{method:"POST",body:fd});$("status").textContent="تم رفع "+d.name;if(selected&&selected.tagName==="IMG"&&file.type.startsWith("image/"))selected.src=d.url;else if(selected&&selected.tagName==="VIDEO"&&file.type.startsWith("video/")){selected.src=d.url;selected.load()}else insertMedia(file.type.startsWith("video/")?"video":"img",d.url);await loadMedia();e.target.value="";}
+async function loadMedia(){try{let list=await api("/api/media");$("mediaGrid").innerHTML=list.map(x=>{let media=/\.(mp4|webm|mov|ogg)$/i.test(x.name)?`<video src="${x.url}" controls></video>`:`<img src="${x.url}">`;return `<div class="media-item">${media}<small title="${escapeHtml(x.name)}">${escapeHtml(x.name)}</small><button class="btn danger" onclick="deleteMedia('${encodeURIComponent(x.name)}')">حذف</button><button class="btn secondary" onclick="useMedia('${x.url}')">استخدام</button></div>`}).join("")||'<p class="muted">لا توجد ملفات.</p>'}catch{}}
+function useMedia(url){if(selected&&(selected.tagName==="IMG"||selected.tagName==="VIDEO")){selected.src=url;if(selected.tagName==="VIDEO")selected.load();}else insertMedia(url.match(/\.(mp4|webm|mov|ogg)(\?|$)/i)?"video":"img",url)}
+async function deleteMedia(name){if(!confirm("حذف الملف من المكتبة؟"))return;await api("/api/media/"+name,{method:"DELETE"});loadMedia()}
+function openPreview(){
+ if(!current)return alert("اختر صفحة أولاً");
+ const afterHtml=snapshotHtml();
+ $("pvFrame").srcdoc=afterHtml;
+ $("pvFrameAfter").srcdoc=afterHtml;
+ $("pvFrameBefore").srcdoc=originalHtml;
+ pvSwitch("after");
+ $("pvOverlay").classList.remove("hidden");
+}
+function closePreview(){$("pvOverlay").classList.add("hidden")}
+function pvSwitch(mode){
+ document.querySelectorAll(".pv-tabs button").forEach(b=>b.classList.remove("active"));
+ $("pvSingle").classList.remove("active"); $("pvSplitWrap").classList.remove("active");
+ if(mode==="split"){$("pvTabSplit").classList.add("active");$("pvSplitWrap").classList.add("active");}
+ else{$("pvSingle").classList.add("active");
+  if(mode==="before"){$("pvTabBefore").classList.add("active");$("pvFrame").srcdoc=originalHtml;}
+  else{$("pvTabAfter").classList.add("active");$("pvFrame").srcdoc=snapshotHtml();}
+ }
+}
+function openSite(){window.open("/","_blank")}
+function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]))}
+if(CODE){api("/api/pages").then(showApp).catch(()=>sessionStorage.removeItem("neb_code"))}
+</script>
+</body></html>
