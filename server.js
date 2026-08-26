@@ -48,7 +48,7 @@ app.get("/", (_req, res) => res.sendFile(path.join(PAGES, "index.html")));
 app.get("/admin", (_req, res) => res.sendFile(path.join(ROOT, "admin.html")));
 
 app.get("/api/pages", auth, (_req, res) => {
-  const files = fs.readdirSync(PAGES).filter(x => x.endsWith(".html"));
+  const files = fs.readdirSync(PAGES).filter(x => x.endsWith(".html") && x !== "admin.html");
   res.json(files.map(file => ({
     file,
     slug: file.replace(/\.html$/,""),
