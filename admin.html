@@ -83,26 +83,63 @@ h1,h2{margin:0 0 12px}.muted{color:#9299a3}.field{display:flex;flex-direction:co
 <script>
 let CODE=sessionStorage.getItem("neb_code")||"", current="", selected=null, dirty=false, originalHtml="";
 const $=id=>document.getElementById(id);
-async function api(url,opt={}){opt.headers={...(opt.headers||{}),"x-admin-code":CODE};let r=await fetch(url,opt);if(r.status===401)throw Error("unauthorized");return r.json();}
+async function api(url,opt={}){
+  opt.headers={...(opt.headers||{}),"x-admin-code":CODE};
+  let r;
+  try{ r=await fetch(url,opt); }
+  catch(e){ throw new Error("تعذر الاتصال بالسيرفر: "+e.message); }
+  if(r.status===401) throw Error("unauthorized");
+  let data;
+  try{ data=await r.json(); }
+  catch(e){ throw new Error("رد غير متوقع من السيرفر (كود "+r.status+")"); }
+  if(!r.ok) throw new Error((data&&data.error)?data.error:("خطأ من السيرفر (كود "+r.status+")"));
+  return data;
+}
 async function login(){
   const c=$("code").value.trim(); if(!c)return;
-  try{CODE=c; await api("/api/pages");sessionStorage.setItem("neb_code",CODE);showApp();}catch(e){CODE="";$("loginMsg").textContent="الكود غير صحيح";}
+  $("loginMsg").textContent="";
+  try{CODE=c; await api("/api/pages");sessionStorage.setItem("neb_code",CODE);showApp();}
+  catch(e){
+    CODE="";
+    $("loginMsg").textContent = e.message==="unauthorized" ? "الكود غير صحيح" : ("تعذر الدخول: "+e.message);
+  }
 }
 $("loginBtn").onclick=login;$("code").addEventListener("keydown",e=>e.key==="Enter"&&login());
 function showApp(){$("login").classList.add("hidden");$("app").classList.remove("hidden");loadPages();loadMedia();}
 function logout(){sessionStorage.removeItem("neb_code");location.reload();}
-async function loadPages(){let data=await api("/api/pages");$("pages").innerHTML=data.map(p=>`<button data-file="${p.file}" onclick="loadPage('${p.file}')">${escapeHtml(p.title)}</button>`).join("");if(!current&&data[0])loadPage(data[0].file);}
+async function loadPages(){
+  try{
+    let data=await api("/api/pages");
+    if(!Array.isArray(data)||!data.length){
+      $("pages").innerHTML='<p class="muted" style="font-size:13px">لا توجد صفحات HTML ظاهرة حاليًا. تأكد من أن الصفحات موجودة في نفس الـ repo/الفرع (branch) اللي متظبط في إعدادات Vercel.</p>';
+      return;
+    }
+    $("pages").innerHTML=data.map(p=>`<button data-file="${p.file}" onclick="loadPage('${p.file}')">${escapeHtml(p.title)}</button>`).join("");
+    if(!current&&data[0])loadPage(data[0].file);
+  }catch(e){
+    $("pages").innerHTML='<p class="muted" style="font-size:13px;color:#e2908d">تعذر تحميل قائمة الصفحات:<br>'+escapeHtml(e.message)+'<br><br>غالبًا السبب: متغيرات GITHUB_OWNER / GITHUB_REPO / GITHUB_BRANCH / GITHUB_TOKEN ناقصة أو غلط في إعدادات المشروع على Vercel (Settings → Environment Variables).</p>';
+    $("status").textContent="خطأ: "+e.message;
+    console.error("loadPages failed:",e);
+  }
+}
 async function loadPage(file){
  current=file; selected=null; dirty=false; document.querySelectorAll(".pages button").forEach(b=>b.classList.toggle("active",b.dataset.file===file));
- let d=await api("/api/page/"+encodeURIComponent(file));$("pageTitle").textContent=d.title;
- originalHtml=d.html;
- const iframe=$("editor"); iframe.srcdoc=d.html; iframe.onload=()=>{
-   const doc=iframe.contentDocument;
-   doc.querySelectorAll("body *").forEach(el=>{
-     if(["SCRIPT","STYLE","LINK","META"].includes(el.tagName))return;
-     el.addEventListener("click",selectElement,true);
-   });
- };
+ try{
+   let d=await api("/api/page/"+encodeURIComponent(file));$("pageTitle").textContent=d.title;
+   originalHtml=d.html;
+   const iframe=$("editor"); iframe.srcdoc=d.html; iframe.onload=()=>{
+     const doc=iframe.contentDocument;
+     doc.querySelectorAll("body *").forEach(el=>{
+       if(["SCRIPT","STYLE","LINK","META"].includes(el.tagName))return;
+       el.addEventListener("click",selectElement,true);
+     });
+   };
+ }catch(e){
+   $("pageTitle").textContent="تعذر تحميل الصفحة";
+   $("status").textContent="خطأ: "+e.message;
+   $("editor").srcdoc="<p style='font-family:sans-serif;padding:20px'>تعذر تحميل محتوى الصفحة: "+escapeHtml(e.message)+"</p>";
+   console.error("loadPage failed:",e);
+ }
 }
 function selectElement(e){e.preventDefault();e.stopPropagation(); if(selected)selected.style.outline="";selected=e.currentTarget;selected.style.outline="3px solid #b68a51";$("status").textContent="تم تحديد: "+selected.tagName;}
 function editorDoc(){return $("editor").contentDocument}
@@ -122,7 +159,7 @@ function selectDirect(el){if(selected)selected.style.outline="";selected=el;el.s
 function deleteSelected(){if(!selected)return alert("حدد عنصراً أولاً");if(!confirm("حذف العنصر المحدد؟"))return;selected.remove();selected=null;dirty=true}
 function moveSelected(dir){if(!selected)return alert("حدد عنصراً أولاً");let p=selected.parentElement;if(dir<0&&selected.previousElementSibling)p.insertBefore(selected,selected.previousElementSibling);if(dir>0&&selected.nextElementSibling)p.insertBefore(selected,selected.nextElementSibling.nextSibling);dirty=true}
 $("upload").onchange=async e=>{const file=e.target.files[0];if(!file)return;let fd=new FormData();fd.append("file",file);let d=await api("/api/upload",{method:"POST",body:fd});$("status").textContent="تم رفع "+d.name;if(selected&&selected.tagName==="IMG"&&file.type.startsWith("image/"))selected.src=d.url;else if(selected&&selected.tagName==="VIDEO"&&file.type.startsWith("video/")){selected.src=d.url;selected.load()}else insertMedia(file.type.startsWith("video/")?"video":"img",d.url);await loadMedia();e.target.value="";}
-async function loadMedia(){try{let list=await api("/api/media");$("mediaGrid").innerHTML=list.map(x=>{let media=/\.(mp4|webm|mov|ogg)$/i.test(x.name)?`<video src="${x.url}" controls></video>`:`<img src="${x.url}">`;return `<div class="media-item">${media}<small title="${escapeHtml(x.name)}">${escapeHtml(x.name)}</small><button class="btn danger" onclick="deleteMedia('${encodeURIComponent(x.name)}')">حذف</button><button class="btn secondary" onclick="useMedia('${x.url}')">استخدام</button></div>`}).join("")||'<p class="muted">لا توجد ملفات.</p>'}catch{}}
+async function loadMedia(){try{let list=await api("/api/media");$("mediaGrid").innerHTML=list.map(x=>{let media=/\.(mp4|webm|mov|ogg)$/i.test(x.name)?`<video src="${x.url}" controls></video>`:`<img src="${x.url}">`;return `<div class="media-item">${media}<small title="${escapeHtml(x.name)}">${escapeHtml(x.name)}</small><button class="btn danger" onclick="deleteMedia('${encodeURIComponent(x.name)}')">حذف</button><button class="btn secondary" onclick="useMedia('${x.url}')">استخدام</button></div>`}).join("")||'<p class="muted">لا توجد ملفات.</p>'}catch(e){$("mediaGrid").innerHTML='<p class="muted" style="color:#e2908d">تعذر تحميل مكتبة الوسائط: '+escapeHtml(e.message)+'</p>';console.error("loadMedia failed:",e);}}
 function useMedia(url){if(selected&&(selected.tagName==="IMG"||selected.tagName==="VIDEO")){selected.src=url;if(selected.tagName==="VIDEO")selected.load();}else insertMedia(url.match(/\.(mp4|webm|mov|ogg)(\?|$)/i)?"video":"img",url)}
 async function deleteMedia(name){if(!confirm("حذف الملف من المكتبة؟"))return;await api("/api/media/"+name,{method:"DELETE"});loadMedia()}
 function openPreview(){
