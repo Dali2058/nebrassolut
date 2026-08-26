@@ -26,6 +26,34 @@ h1,h2{margin:0 0 12px}.muted{color:#9299a3}.field{display:flex;flex-direction:co
 .pv-col iframe{flex:1;width:100%;border:0;border-radius:10px;background:#fff}
 .pv-note{color:#e2c08d;font-size:13px}
 @media(max-width:850px){.pv-split.active{grid-template-columns:1fr;grid-auto-rows:1fr}}
+
+/* === Visual Gallery Editor === */
+#cmsSelectionBar{position:fixed;z-index:9999;display:none;gap:8px;align-items:center;padding:7px;background:rgba(8,14,21,.96);border:1px solid #2d9bf0;border-radius:13px;box-shadow:0 12px 40px #0009}
+#cmsSelectionBar button{border:0;border-radius:9px;padding:8px 15px;cursor:pointer;font-weight:900}
+#cmsSelectionBar .cms-edit{background:#2196f3;color:#fff}
+#cmsSelectionBar .cms-cancel{background:#202831;color:#fff}
+.cms-selected{outline:3px solid #2196f3!important;outline-offset:3px!important;box-shadow:0 0 0 5px rgba(33,150,243,.15)!important}
+#cmsGalleryModal{position:fixed;inset:0;z-index:10000;background:rgba(3,7,12,.78);backdrop-filter:blur(14px);display:none;align-items:center;justify-content:center;padding:22px}
+#cmsGalleryModal.open{display:flex}
+.cms-gallery-box{width:min(1100px,100%);max-height:88vh;background:#10151b;border:1px solid #2b3540;border-radius:24px;box-shadow:0 30px 100px #000b;display:flex;flex-direction:column;overflow:hidden}
+.cms-gallery-head{padding:18px 20px;border-bottom:1px solid #29313a;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.cms-gallery-head h3{margin:0;font-size:20px}.cms-gallery-head p{margin:4px 0 0;color:#8e98a4;font-size:12px}
+.cms-gallery-close{border:0;background:#202831;color:#fff;width:40px;height:40px;border-radius:12px;cursor:pointer;font-size:20px}
+.cms-gallery-body{padding:18px;overflow:auto}
+.cms-gallery-list{display:flex;flex-direction:column;gap:10px;direction:rtl}
+.cms-gallery-item{display:grid;grid-template-columns:100px 1fr auto;align-items:center;gap:12px;background:#0b1015;border:1px solid #26303a;border-radius:16px;padding:9px;direction:ltr}
+.cms-gallery-item.dragging{opacity:.45;border-color:#2196f3}
+.cms-gallery-thumb{width:100px;height:72px;border-radius:11px;overflow:hidden;background:#070a0e;border:1px solid #28313a;display:grid;place-items:center}
+.cms-gallery-thumb img,.cms-gallery-thumb video,.cms-gallery-thumb iframe{width:100%;height:100%;object-fit:cover;border:0}
+.cms-gallery-meta{min-width:0;direction:rtl;text-align:right}.cms-gallery-meta strong{display:block;font-size:13px;margin-bottom:5px}.cms-gallery-url{display:block;color:#7f8a96;font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;direction:ltr;text-align:left}
+.cms-gallery-actions{display:flex;gap:6px;align-items:center;direction:rtl}.cms-gallery-actions button{border:1px solid #303b46;background:#1a2129;color:#fff;border-radius:9px;padding:7px 9px;cursor:pointer}.cms-gallery-actions .remove{background:#642d31;border-color:#7f3b40}.cms-drag{cursor:grab;font-size:18px;color:#8b97a4;padding:4px}
+.cms-gallery-empty{padding:35px;text-align:center;color:#7f8a96;border:1px dashed #34404c;border-radius:15px}
+.cms-gallery-foot{padding:14px 18px;border-top:1px solid #29313a;display:flex;gap:10px;justify-content:space-between;align-items:center;flex-wrap:wrap}
+.cms-adds{display:flex;gap:8px;flex-wrap:wrap}.cms-adds button,.cms-upload-label{border:0;border-radius:11px;padding:10px 14px;cursor:pointer;font-weight:800}
+.cms-add-image{background:#2196f3;color:#fff}.cms-add-video{background:#7c5cff;color:#fff}.cms-upload-label{background:#202831;color:#fff;display:inline-flex}
+.cms-gallery-save{background:#b68a51;color:#111;border:0;border-radius:11px;padding:10px 18px;font-weight:900;cursor:pointer}
+.cms-gallery-note{color:#8e98a4;font-size:12px;margin-top:6px}
+@media(max-width:700px){.cms-gallery-item{grid-template-columns:72px 1fr}.cms-gallery-thumb{width:72px;height:60px}.cms-gallery-actions{grid-column:1/-1;justify-content:flex-end}.cms-gallery-foot{align-items:stretch}.cms-adds{width:100%}.cms-gallery-save{width:100%}}
 </style>
 <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
 </head>
@@ -57,6 +85,33 @@ h1,h2{margin:0 0 12px}.muted{color:#9299a3}.field{display:flex;flex-direction:co
 <div class="editor-wrap"><iframe id="editor" class="editor" title="محرر الصفحة"></iframe></div>
 <section class="media"><h3>مكتبة الصور والفيديوهات</h3><div class="hint">كل الملفات هنا محفوظة داخل مجلد uploads ولن تختفي بعد إعادة التشغيل.</div><div id="mediaGrid" class="media-grid"></div></section>
 </main></div></section>
+
+
+<div id="cmsSelectionBar">
+  <button class="cms-edit" onclick="cmsOpenSelectedGallery()">Edit</button>
+  <button class="cms-cancel" onclick="cmsClearSelection()">Cancel</button>
+</div>
+
+<div id="cmsGalleryModal">
+  <div class="cms-gallery-box">
+    <div class="cms-gallery-head">
+      <div><h3 id="cmsGalleryTitle">تعديل المعرض</h3><p id="cmsGallerySubtitle">إدارة الصور والفيديوهات</p></div>
+      <button class="cms-gallery-close" onclick="cmsCloseGallery()">×</button>
+    </div>
+    <div class="cms-gallery-body"><div id="cmsGalleryList" class="cms-gallery-list"></div></div>
+    <div class="cms-gallery-foot">
+      <div>
+        <div class="cms-adds">
+          <button class="cms-add-image" onclick="cmsAddUrls('image')">＋ إضافة صورة</button>
+          <button class="cms-add-video" onclick="cmsAddUrls('video')">＋ إضافة فيديو</button>
+          <label class="cms-upload-label">رفع صورة/فيديو<input id="cmsGalleryUpload" type="file" accept="image/*,video/*" hidden></label>
+        </div>
+        <div class="cms-gallery-note">الصورة أو الفيديو: الصق أكثر من رابط مرة واحدة، رابط واحد في كل سطر. اسحب العناصر أو استخدم ↑ ↓ لترتيبها.</div>
+      </div>
+      <button class="cms-gallery-save" onclick="cmsFinishGallery()">تم — حفظ تعديلات المعرض</button>
+    </div>
+  </div>
+</div>
 
 <div id="pvOverlay" class="pv-overlay hidden">
  <div class="pv-head">
@@ -183,6 +238,222 @@ function pvSwitch(mode){
 }
 function openSite(){window.open("/","_blank")}
 function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]))}
+function cleanBeforeSave(doc){doc.querySelectorAll("*").forEach(x=>{x.classList.remove("cms-selected");x.style.outline="";x.style.outlineOffset="";x.style.boxShadow="";if(x.hasAttribute("contenteditable")){x.removeAttribute("contenteditable");x.contentEditable="false";}});}
+
+const cmsOriginalInstallEditorHooks=installEditorHooks;
+installEditorHooks=function(){
+  const doc=editorDoc();if(!doc)return;
+  const win=doc.defaultView;
+  if(win && win.openProjectModal && !win.openProjectModal.__cmsWrapped){
+    const originalOpen=win.openProjectModal;
+    const wrapped=function(key){cmsActiveProjectKey=String(key||"");return originalOpen.apply(this,arguments)};
+    wrapped.__cmsWrapped=true;win.openProjectModal=wrapped;
+  }
+  doc.querySelectorAll("img,video,iframe,.gallery-item,.project-card,.video-card,.modal-img-slider").forEach(el=>{
+    el.addEventListener("click",selectElement,true);
+  });
+};
+
+async function savePage(){
+  if(!current)return alert("اختر صفحة أولاً");
+  cmsClearSelection();
+  let html=snapshotHtml();
+  if(current==="nabza.html" && cmsActiveProjectKey){
+    html=cmsPatchNabzaProjectImages(html,cmsActiveProjectKey);
+  }
+  try{
+    const d=await api("/api/page/"+encodeURIComponent(current),{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({html})});
+    $("status").textContent=d.message||"تم الحفظ";dirty=false;loadPage(current);
+  }catch(e){alert("فشل الحفظ: "+e.message);}
+}
+function cmsPatchNabzaProjectImages(html,key){
+  const frame=editorDoc(), modal=frame?.querySelector?.("#project-modal");
+  if(!modal)return html;
+  const urls=Array.from(modal.querySelectorAll(".modal-section-grid img, .modal-section-grid video, .modal-section-grid iframe"))
+    .map(x=>x.currentSrc||x.src||x.getAttribute("src")||"").filter(Boolean);
+  if(!urls.length)return html;
+  const escapedKey=String(key).replace(/[.*+?^${}()|[\]\\]/g,"\\$&");
+  const re=new RegExp("("+escapedKey+"\\s*:\\s*\\{[\\\\s\\\\S]*?\\\\bimages\\\\s*:\\s*\\[)([\\\\s\\\\S]*?)(\\]\\s*,\\s*chartPath)","m");
+  if(!re.test(html))return html;
+  const body=urls.map(u=>JSON.stringify(u)).join(",\\n          ");
+  return html.replace(re,"$1\\n          "+body+"\\n        $3");
+}
+
+/* ===== CMS visual gallery editor ===== */
+let cmsSelected=null,cmsGalleryContext=null,cmsDragIndex=null,cmsActiveProjectKey="";
+
+function cmsClearSelection(){
+  if(cmsSelected){cmsSelected.classList.remove("cms-selected");cmsSelected.style.outline="";cmsSelected.style.outlineOffset="";cmsSelected.style.boxShadow="";}
+  cmsSelected=null;
+  const bar=$("cmsSelectionBar");if(bar)bar.style.display="none";
+}
+function cmsShowSelection(el){
+  const bar=$("cmsSelectionBar");if(!bar)return;
+  bar.style.display="flex";bar.style.left="50%";bar.style.top="82px";bar.style.transform="translateX(-50%)";
+}
+function selectElement(e){
+  if(e.target.closest?.("#cms-admin-ignore"))return;
+  const candidate=e.currentTarget;
+  if(candidate.matches?.(".btn-details") || (candidate.getAttribute?.("onclick")||"").includes("openProjectModal")) return;
+  e.preventDefault();e.stopPropagation();
+  cmsClearSelection();cmsSelected=e.currentTarget;cmsSelected.classList.add("cms-selected");cmsSelected.style.outline="3px solid #2196f3";cmsSelected.style.outlineOffset="3px";cmsSelected.style.boxShadow="0 0 0 5px rgba(33,150,243,.15)";
+  $("status").textContent="تم تحديد: "+cmsSelected.tagName;
+  cmsShowSelection(cmsSelected);
+}
+function selectDirect(el){cmsClearSelection();cmsSelected=el;el.classList.add("cms-selected");el.style.outline="3px solid #2196f3";el.style.outlineOffset="3px";el.style.boxShadow="0 0 0 5px rgba(33,150,243,.15)";cmsShowSelection(el);}
+function cmsMediaFromItem(item){
+  if(!item)return null;
+  const media=item.matches?.("img,video,iframe")?item:item.querySelector?.("img,video,iframe");
+  if(media){
+    const tag=media.tagName.toLowerCase();
+    return {item,media,type:tag==="video"?"video":tag==="iframe"?"iframe":"image",url:media.currentSrc||media.src||media.getAttribute("src")||""};
+  }
+  if(item.classList?.contains("video-card")){
+    const click=item.getAttribute("onclick")||"";
+    const m=click.match(/openVideoModal\(\s*['"]([^'"]+)['"]\s*\)/);
+    if(m)return {item,media:null,type:"video",url:m[1]};
+  }
+  return null;
+}
+function cmsFindContext(el){
+  const item=el?.closest?.(".gallery-item,.project-card,.video-card,.modal-img-slider");
+  const track=el?.closest?.(".gallery-track,.slider-wrapper");
+  if(track){
+    return {collection:track,item:item&&track.contains(item)?item:null,standalone:false};
+  }
+  if(item){
+    const parent=item.parentElement;
+    if(parent)return {collection:parent,item,standalone:false};
+  }
+  if(["IMG","VIDEO","IFRAME"].includes(el?.tagName)){
+    return {collection:el.parentElement,item:el,standalone:true};
+  }
+  return null;
+}
+function cmsOpenSelectedGallery(){
+  if(!cmsSelected)return alert("حدد صورة أو فيديو أولاً.");
+  const ctx=cmsFindContext(cmsSelected);
+  if(!ctx)return alert("حدد صورة أو فيديو داخل معرض أو سلايدر أولاً.");
+  cmsGalleryContext=ctx;cmsClearSelection();cmsRenderGallery();$("cmsGalleryModal").classList.add("open");
+}
+function cmsCloseGallery(){cmsGalleryContext=null;$("cmsGalleryModal").classList.remove("open");}
+function cmsCurrentItems(){
+  if(!cmsGalleryContext)return[];
+  if(cmsGalleryContext.standalone)return[cmsMediaFromItem(cmsGalleryContext.item)].filter(Boolean);
+  return Array.from(cmsGalleryContext.collection.children).map(cmsMediaFromItem).filter(Boolean);
+}
+function cmsRenderGallery(){
+  const items=cmsCurrentItems();
+  $("cmsGalleryTitle").textContent=cmsGalleryContext?.standalone?"تعديل الوسائط":"تعديل المعرض";
+  $("cmsGallerySubtitle").textContent=`${items.length} عنصر — اسحب لتغيير الترتيب`;
+  $("cmsGalleryList").innerHTML=items.length?items.map(cmsRow).join(""):'<div class="cms-gallery-empty">لا توجد صور أو فيديوهات في هذا المعرض.</div>';
+  $("cmsGalleryList").querySelectorAll(".cms-gallery-item").forEach(row=>{
+    row.addEventListener("dragstart",()=>{cmsDragIndex=+row.dataset.index;row.classList.add("dragging")});
+    row.addEventListener("dragend",()=>row.classList.remove("dragging"));
+    row.addEventListener("dragover",e=>e.preventDefault());
+    row.addEventListener("drop",e=>{e.preventDefault();const to=+row.dataset.index;if(cmsDragIndex!==null)cmsMoveItem(cmsDragIndex,to);cmsDragIndex=null});
+  });
+}
+function cmsRow(m,i){
+  const u=escapeHtml(m.url);
+  const thumb=m.type==="video"?`<video src="${u}" muted playsinline preload="metadata"></video>`:m.type==="iframe"?`<iframe src="${u}" loading="lazy"></iframe>`:`<img src="${u}" loading="lazy">`;
+  const n=cmsCurrentItems().length;
+  return `<div class="cms-gallery-item" draggable="true" data-index="${i}">
+    <div class="cms-gallery-thumb">${thumb}</div>
+    <div class="cms-gallery-meta"><strong>${m.type==="video"?"🎬 فيديو":m.type==="iframe"?"🔗 فيديو/تضمين":"🖼️ صورة"} #${i+1}</strong><span class="cms-gallery-url">${u}</span></div>
+    <div class="cms-gallery-actions"><span class="cms-drag">↕</span>
+      <button onclick="cmsMoveItem(${i},${i-1})" ${i===0?"disabled":""}>↑</button>
+      <button onclick="cmsMoveItem(${i},${i+1})" ${i===n-1?"disabled":""}>↓</button>
+      <button class="remove" onclick="cmsRemoveItem(${i})">حذف</button>
+    </div>
+  </div>`;
+}
+function cmsMoveItem(from,to){
+  if(cmsGalleryContext?.standalone)return;
+  const items=cmsCurrentItems();if(from<0||to<0||from>=items.length||to>=items.length)return;
+  const a=items[from].item,b=items[to].item;
+  if(from<to)cmsGalleryContext.collection.insertBefore(a,b.nextSibling);else cmsGalleryContext.collection.insertBefore(a,b);
+  dirty=true;cmsRenderGallery();
+}
+function cmsRemoveItem(i){
+  const items=cmsCurrentItems();if(!items[i])return;
+  if(items.length===1&&!confirm("هذا آخر عنصر، هل تريد حذفه؟"))return;
+  items[i].item.remove();dirty=true;cmsRenderGallery();
+}
+function cmsAddUrls(kind){
+  const title=kind==="video"?"الفيديو":"الصورة";
+  const raw=prompt(`ضع روابط ${title} — رابط واحد في كل سطر.\nيمكنك لصق عدد كبير من الروابط مرة واحدة:`);
+  if(!raw)return;
+  const urls=raw.split(/\r?\n|,|\s+(?=https?:\/\/)/).map(x=>x.trim()).filter(x=>/^https?:\/\//i.test(x));
+  if(!urls.length)return alert("لم يتم العثور على روابط صحيحة.");
+  urls.forEach(u=>cmsAppendMedia(kind,u));dirty=true;cmsRenderGallery();
+}
+function cmsAppendMedia(kind,url){
+  const ctx=cmsGalleryContext;if(!ctx)return;
+  if(ctx.standalone){
+    const clone=ctx.item.cloneNode(true);clone.innerHTML="";clone.appendChild(cmsCreateMedia(kind,url));ctx.collection.appendChild(clone);return;
+  }
+  let template;
+  if(kind==="image") template=Array.from(ctx.collection.children).find(x=>x.classList?.contains("project-card"))||Array.from(ctx.collection.children).find(cmsMediaFromItem)||ctx.item;
+  else template=Array.from(ctx.collection.children).find(x=>x.classList?.contains("video-card"))||Array.from(ctx.collection.children).find(cmsMediaFromItem)||ctx.item;
+  if(!template)return;
+  const clone=template.cloneNode(true);clone.innerHTML="";
+  const media=cmsCreateMedia(kind,url);
+  if(template.classList.contains("gallery-item")){
+    clone.appendChild(media);cmsAddOverlay(clone);
+  }else if(kind==="image"){
+    clone.classList.remove("video-card");clone.classList.add("project-card");
+    clone.appendChild(media);clone.setAttribute("onclick","openLightboxImg(this)");
+  }else{
+    clone.classList.remove("project-card");clone.classList.add("video-card");
+    clone.appendChild(media);clone.setAttribute("onclick",`openVideoModal('${escapeJs(url)}')`);
+  }
+  ctx.collection.appendChild(clone);
+}
+function cmsCreateMedia(kind,url){
+  const doc=editorDoc(),isEmbed=kind==="video"&&!/\.(mp4|webm|mov|ogg)(\?|#|$)/i.test(url)&&/(drive\.google\.com|youtube\.com|youtu\.be|vimeo\.com)/i.test(url);
+  let el;
+  if(kind==="video"&&isEmbed){
+    el=doc.createElement("iframe");el.src=url;el.setAttribute("allowfullscreen","");el.loading="lazy";el.style.cssText="width:100%;height:100%;border:0;display:block;";
+  }else if(kind==="video"){
+    el=doc.createElement("video");el.src=url;el.controls=true;el.playsInline=true;el.preload="metadata";el.style.cssText="width:100%;height:100%;object-fit:cover;display:block;";el.setAttribute("onclick","event.stopPropagation()");
+  }else{
+    el=doc.createElement("img");el.src=url;el.alt="";el.loading="lazy";el.style.cssText="width:100%;height:100%;object-fit:cover;display:block;";
+  }
+  return el;
+}
+function cmsAddOverlay(item){
+  const doc=editorDoc();const o=doc.createElement("div");o.className="gallery-overlay";o.innerHTML='<div class="gallery-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l7-7M3 21l7-7"/></svg></div>';item.appendChild(o);
+}
+function cmsFinishGallery(){
+  const doc=editorDoc();
+  doc.querySelectorAll(".gallery-track").forEach(t=>Array.from(t.children).filter(c=>cmsMediaFromItem(c)).forEach((x,i)=>x.setAttribute("data-index",i)));
+  cmsCloseGallery();dirty=true;$("status").textContent="تم تعديل المعرض — اضغط Save / حفظ لتثبيت التغييرات.";
+}
+$("cmsGalleryUpload").addEventListener("change",async e=>{
+  const f=e.target.files[0];if(!f)return;
+  try{
+    const fd=new FormData();fd.append("file",f);const d=await api("/api/upload",{method:"POST",body:fd});
+    if(cmsGalleryContext){cmsAppendMedia(f.type.startsWith("video/")?"video":"image",d.url);dirty=true;cmsRenderGallery();}
+    $("status").textContent="تم رفع "+d.name;await loadMedia();
+  }catch(err){alert("فشل الرفع: "+err.message)}
+  e.target.value="";
+});
+$("cmsGalleryModal").addEventListener("click",e=>{if(e.target===$("cmsGalleryModal"))cmsCloseGallery()});
+/* Keep the original upload button working, while adding to the open gallery when applicable. */
+$("upload").onchange=async function(e){
+  const f=e.target.files[0];if(!f)return;
+  try{
+    const fd=new FormData();fd.append("file",f);const d=await api("/api/upload",{method:"POST",body:fd});
+    if(cmsGalleryContext){cmsAppendMedia(f.type.startsWith("video/")?"video":"image",d.url);dirty=true;cmsRenderGallery();}
+    else if(selected&&selected.tagName==="IMG"&&f.type.startsWith("image/"))selected.src=d.url;
+    else if(selected&&selected.tagName==="VIDEO"&&f.type.startsWith("video/")){selected.src=d.url;selected.load();}
+    else insertMedia(f.type.startsWith("video/")?"video":"img",d.url);
+    $("status").textContent="تم رفع "+d.name;await loadMedia();
+  }catch(err){alert("فشل الرفع: "+err.message)}
+  e.target.value="";
+};
+
 if(CODE){api("/api/pages").then(showApp).catch(()=>sessionStorage.removeItem("neb_code"))}
 </script>
 </body></html>
