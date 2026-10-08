@@ -404,6 +404,214 @@
       footer { flex-direction: column; gap: 14px; text-align: center; }
     }
   </style>
+
+<style id="nebras-development-footer">
+  .dev-footer {
+    position: relative !important;
+    overflow: hidden;
+    isolation: isolate;
+    min-height: 350px;
+    margin-top: 0;
+    padding: 70px 6% 24px;
+    color: #fff !important;
+    background:
+      radial-gradient(circle at 12% 20%, rgba(255,255,255,.17), transparent 27%),
+      radial-gradient(circle at 84% 78%, rgba(0,72,90,.18), transparent 32%),
+      linear-gradient(135deg, #04b9d5 0%, #08a9c8 48%, #078faa 100%) !important;
+    border-top: 1px solid rgba(255,255,255,.25);
+    box-shadow: 0 -22px 60px rgba(0, 163, 190, .12);
+    display: block !important;
+  }
+  .dev-footer * { box-sizing: border-box; }
+  .dev-footer__inner {
+    position: relative;
+    z-index: 3;
+    max-width: 1220px;
+    margin: 0 auto;
+    min-height: 230px;
+    display: grid;
+    grid-template-columns: minmax(220px, .72fr) minmax(320px, 1.28fr);
+    align-items: center;
+    gap: 60px;
+  }
+  .dev-footer__brand {
+    order: 2;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+  }
+  .dev-footer__logo {
+    display: block;
+    width: min(310px, 72vw);
+    max-height: 150px;
+    height: auto;
+    object-fit: contain;
+    object-position: right center;
+    filter: drop-shadow(0 16px 28px rgba(0,0,0,.14));
+  }
+  .dev-footer__content {
+    order: 1;
+    text-align: right;
+    max-width: 650px;
+  }
+  .dev-footer__eyebrow {
+    display: inline-block;
+    margin-bottom: 12px;
+    font-family: Montserrat, Arial, sans-serif;
+    font-size: .68rem;
+    font-weight: 800;
+    letter-spacing: 3px;
+    color: rgba(255,255,255,.78);
+  }
+  .dev-footer__content h2 {
+    margin: 0 0 13px !important;
+    color: #fff !important;
+    font-size: clamp(1.45rem, 3vw, 2.35rem) !important;
+    line-height: 1.25;
+    font-weight: 900;
+  }
+  .dev-footer__content p {
+    max-width: 590px;
+    margin: 0 0 20px !important;
+    color: rgba(255,255,255,.88) !important;
+    font-size: .96rem;
+    line-height: 1.9;
+  }
+  .dev-footer__meta {
+    display: flex;
+    align-items: baseline;
+    justify-content: flex-start;
+    gap: 10px;
+    margin-bottom: 22px;
+    color: rgba(255,255,255,.76);
+    font-size: .86rem;
+  }
+  .dev-footer__meta strong {
+    color: #fff;
+    font-family: Montserrat, Arial, sans-serif;
+    font-size: 1.02rem;
+    letter-spacing: 1.5px;
+  }
+  .dev-footer__contact {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    min-height: 46px;
+    padding: 0 20px;
+    border: 1px solid rgba(255,255,255,.95);
+    border-radius: 999px;
+    color: #fff !important;
+    background: rgba(255,255,255,.04);
+    text-decoration: none !important;
+    font-weight: 700;
+    transition: transform .3s ease, background .3s ease, box-shadow .3s ease;
+  }
+  .dev-footer__contact:hover {
+    transform: translateY(-3px);
+    background: rgba(255,255,255,.14);
+    box-shadow: 0 12px 30px rgba(0,0,0,.12);
+  }
+  .dev-footer__arrow {
+    font-family: Arial, sans-serif;
+    font-size: 1.15rem;
+    transition: transform .3s ease;
+  }
+  .dev-footer__contact:hover .dev-footer__arrow { transform: translateX(-4px); }
+  .dev-footer__bottom {
+    position: relative;
+    z-index: 3;
+    max-width: 1220px;
+    margin: 35px auto 0;
+    padding-top: 16px;
+    border-top: 1px solid rgba(255,255,255,.2);
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 12px;
+    color: rgba(255,255,255,.66);
+    font-family: Montserrat, Arial, sans-serif;
+    font-size: .62rem;
+    letter-spacing: 1.6px;
+    direction: ltr;
+  }
+  .dev-footer__dot {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: rgba(255,255,255,.8);
+  }
+  .dev-footer__fx { position: absolute; inset: 0; z-index: 1; pointer-events: none; }
+  .dev-grid {
+    position: absolute;
+    inset: 0;
+    opacity: .13;
+    background-image: linear-gradient(rgba(255,255,255,.32) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.32) 1px, transparent 1px);
+    background-size: 54px 54px;
+    mask-image: linear-gradient(to bottom, transparent, #000 25%, #000 72%, transparent);
+  }
+  .dev-orb {
+    position: absolute;
+    border-radius: 50%;
+    border: 1px solid rgba(255,255,255,.18);
+    background: rgba(255,255,255,.07);
+    filter: blur(.2px);
+    animation: nebrasOrb 9s ease-in-out infinite;
+  }
+  .dev-orb--1 { width: 180px; height: 180px; top: -80px; left: 9%; }
+  .dev-orb--2 { width: 100px; height: 100px; bottom: 30px; right: 19%; animation-delay: -3s; animation-duration: 11s; }
+  .dev-orb--3 { width: 54px; height: 54px; top: 35%; right: 7%; animation-delay: -6s; animation-duration: 7s; }
+  .dev-line {
+    position: absolute;
+    height: 1px;
+    width: 42%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,.45), transparent);
+    transform: rotate(-10deg);
+    animation: nebrasLine 8s linear infinite;
+  }
+  .dev-line--1 { top: 22%; left: -15%; }
+  .dev-line--2 { bottom: 17%; right: -15%; animation-delay: -4s; transform: rotate(10deg); }
+  .dev-spark {
+    position: absolute;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 0 14px rgba(255,255,255,.9);
+    animation: nebrasSpark 5s ease-in-out infinite;
+  }
+  .dev-spark--1 { left: 18%; top: 67%; }
+  .dev-spark--2 { left: 34%; top: 18%; animation-delay: -1.3s; }
+  .dev-spark--3 { right: 26%; top: 72%; animation-delay: -2.4s; }
+  .dev-spark--4 { right: 9%; top: 30%; animation-delay: -3.7s; }
+  @keyframes nebrasOrb {
+    0%,100% { transform: translate3d(0,0,0) scale(1); opacity: .55; }
+    50% { transform: translate3d(0,-18px,0) scale(1.08); opacity: .9; }
+  }
+  @keyframes nebrasLine {
+    0% { transform: translateX(-30%) rotate(-10deg); opacity: 0; }
+    15%,75% { opacity: .7; }
+    100% { transform: translateX(150%) rotate(-10deg); opacity: 0; }
+  }
+  @keyframes nebrasSpark {
+    0%,100% { transform: translateY(0) scale(.75); opacity: .35; }
+    50% { transform: translateY(-18px) scale(1.25); opacity: 1; }
+  }
+  @media (max-width: 760px) {
+    .dev-footer { padding: 54px 6% 22px; }
+    .dev-footer__inner { grid-template-columns: 1fr; gap: 28px; text-align: center; }
+    .dev-footer__brand { order: 1; justify-content: center; }
+    .dev-footer__content { order: 2; text-align: center; max-width: none; }
+    .dev-footer__logo { width: min(250px, 65vw); object-position: center; }
+    .dev-footer__content p { margin-left: auto !important; margin-right: auto !important; }
+    .dev-footer__meta { justify-content: center; }
+    .dev-footer__bottom { justify-content: center; flex-wrap: wrap; text-align: center; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .dev-footer .dev-orb, .dev-footer .dev-line, .dev-footer .dev-spark { animation: none; }
+  }
+</style>
+
 </head>
 <body>
 
@@ -604,18 +812,47 @@
   </div>
 
   <!-- FOOTER -->
-  <footer>
-    <img src="https://i.postimg.cc/8PShHcVc/nebras-logo.png" alt="Nebras Solutions" />
-    <div style="text-align:center;">
-      <p>جميع الحقوق محفوظة &copy; 2026 Nebras Solutions</p>
-      <p style="margin-top:6px; font-size:0.78rem; color:rgba(0,0,0,0.32);">تطوير: اياد محمد عبدالله</p>
-      <a href="https://wa.me/2001096724839" target="_blank" rel="noopener" class="wa-glass-btn">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-        تحدث إلى المطور
+  <!-- DEVELOPMENT FOOTER -->
+<footer class="dev-footer" dir="rtl">
+  <div class="dev-footer__fx" aria-hidden="true">
+    <span class="dev-orb dev-orb--1"></span>
+    <span class="dev-orb dev-orb--2"></span>
+    <span class="dev-orb dev-orb--3"></span>
+    <span class="dev-grid"></span>
+    <span class="dev-line dev-line--1"></span>
+    <span class="dev-line dev-line--2"></span>
+    <span class="dev-spark dev-spark--1"></span>
+    <span class="dev-spark dev-spark--2"></span>
+    <span class="dev-spark dev-spark--3"></span>
+    <span class="dev-spark dev-spark--4"></span>
+  </div>
+  <div class="dev-footer__inner">
+    <div class="dev-footer__brand">
+      <img src="Asset 6@2x.png" alt="Nebras Solutions" class="dev-footer__logo" />
+    </div>
+
+    <div class="dev-footer__content">
+      <span class="dev-footer__eyebrow">DEVELOPMENT TEAM</span>
+      <h2>نطوّر التفاصيل، ونصنع تجربة أفضل.</h2>
+      <p>
+        نعمل على تطوير المنصة وتحسين التجربة الرقمية باستمرار، مع الاهتمام بالتفاصيل والأداء والجودة.
+      </p>
+      <div class="dev-footer__meta">
+        <span>مسؤول فريق التطوير</span>
+        <strong>EYAD</strong>
+      </div>
+      <a class="dev-footer__contact" href="mailto:project@nebras.com.sa">
+        <span>تواصل مع فريق التطوير</span>
+        <span class="dev-footer__arrow" aria-hidden="true">←</span>
       </a>
     </div>
-    <div style="width:80px;"></div>
-  </footer>
+  </div>
+  <div class="dev-footer__bottom">
+    <span>NEBRAS SOLUTIONS</span>
+    <span class="dev-footer__dot"></span>
+    <span>EST. 2019</span><span class="dev-footer__dot"></span><span>PROJECT@NEBRAS.COM.SA</span>
+  </div>
+</footer>
 
   <script>
     const navbar = document.getElementById('navbar');
