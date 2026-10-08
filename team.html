@@ -92,6 +92,50 @@ a { color:inherit; text-decoration:none; }
   .team-photo.from-left { transform:translate3d(-55px,38px,0) scale(.96); } .team-photo.from-right { transform:translate3d(55px,38px,0) scale(.96); }
 }
 @media (prefers-reduced-motion:reduce) { *,*::before,*::after { scroll-behavior:auto !important; animation:none !important; transition:none !important; } }
+
+/* Nebras standard white-site skin */
+html,body{background:#f6f9fc!important;color:#16171a!important}
+body{line-height:1.7}
+#navbar{top:0!important;left:0!important;right:0!important;transform:none!important;width:100%!important;height:72px!important;padding:0 6%!important;border:0!important;border-radius:0!important;background:rgba(255,255,255,.72)!important;border-bottom:1px solid rgba(255,255,255,.5)!important;box-shadow:0 10px 30px rgba(15,23,42,.10)!important;backdrop-filter:blur(30px) saturate(180%)!important;-webkit-backdrop-filter:blur(30px) saturate(180%)!important}
+.nav-logo img{height:42px!important;filter:none!important}
+.nav-links a{color:#6b6b72!important;border-radius:999px!important;font-size:.92rem!important;padding:9px 16px!important}
+.nav-links a:hover,.nav-links a.active{color:#2f7fd6!important;background:rgba(91,191,222,.14)!important;box-shadow:none!important}
+.mobile-topbar{display:none!important;height:68px!important;background:rgba(255,255,255,.88)!important;color:#16171a!important;border-bottom:1px solid rgba(15,23,42,.08)!important;box-shadow:0 10px 30px rgba(15,23,42,.08)!important}
+.mobile-topbar-logo img{filter:none!important;height:42px!important}
+.mobile-menu-btn{border:1px solid rgba(15,23,42,.10)!important;background:rgba(255,255,255,.75)!important;color:#16171a!important;border-radius:999px!important}
+.mobile-menu-overlay{background:rgba(255,255,255,.55)!important;backdrop-filter:blur(14px)!important;-webkit-backdrop-filter:blur(14px)!important}
+.mm-sheet{background:rgba(255,255,255,.97)!important;border:1px solid rgba(15,23,42,.08)!important;border-radius:22px!important;box-shadow:0 28px 80px rgba(15,23,42,.16)!important}
+.mm-header-logo img{filter:none!important}
+.mm-close{background:#fff!important;border:1px solid rgba(15,23,42,.10)!important;color:#16171a!important;border-radius:999px!important}
+.mm-link{color:#6b6b72!important;background:rgba(15,23,42,.025)!important;border-color:transparent!important}
+.mm-link:hover,.mm-link.active{color:#2f7fd6!important;background:rgba(91,191,222,.12)!important;border-color:rgba(91,191,222,.18)!important}
+.hero{min-height:100vh!important}
+.team-wrap{background:#fff!important;padding-top:100px!important}
+.team-wrap::before{background:linear-gradient(to bottom,transparent,rgba(59,157,255,.12) 12%,rgba(15,23,42,.06) 50%,transparent 92%)!important}
+.team-block{margin-bottom:125px!important}
+.team-block-head h2{color:#16171a!important}
+.team-kicker,.note-label{color:#2f7fd6!important}
+.team-rule{background:linear-gradient(90deg,rgba(15,23,42,.16),transparent)!important}
+.team-photo{border:1px solid rgba(15,23,42,.08)!important;background:#fff!important;box-shadow:0 15px 45px rgba(15,23,42,.10)!important;border-radius:18px!important}
+.team-photo:hover{border-color:rgba(59,157,255,.35)!important;box-shadow:0 25px 60px rgba(15,23,42,.14),0 0 35px rgba(59,157,255,.08)!important}
+.photo-index{background:rgba(255,255,255,.88)!important;border:1px solid rgba(15,23,42,.10)!important;color:#16171a!important}
+.team-note{border-color:rgba(15,23,42,.08)!important;background:rgba(255,255,255,.85)!important;box-shadow:0 12px 35px rgba(15,23,42,.06)!important}
+.team-note p{color:#6b6b72!important}
+.note-number{color:#2f7fd6!important}
+/* Image lightbox */
+.team-lightbox{position:fixed;inset:0;z-index:7000;display:flex;align-items:center;justify-content:center;padding:30px;background:rgba(6,10,16,.78);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);opacity:0;visibility:hidden;pointer-events:none;transition:.3s ease}
+.team-lightbox.open{opacity:1;visibility:visible;pointer-events:auto}
+.team-lightbox img{max-width:min(94vw,1200px);max-height:88vh;width:auto;height:auto;object-fit:contain;border-radius:12px;box-shadow:0 30px 100px rgba(0,0,0,.45);transform:scale(.94);transition:.35s cubic-bezier(.16,1,.3,1)}
+.team-lightbox.open img{transform:scale(1)}
+.team-lightbox-close{position:absolute;top:22px;right:22px;width:46px;height:46px;border:1px solid rgba(255,255,255,.45);border-radius:50%;background:rgba(255,255,255,.12);color:#fff;display:grid;place-items:center;cursor:pointer;font-size:25px;line-height:1;z-index:2;transition:.2s ease}
+.team-lightbox-close:hover{background:#fff;color:#16171a;transform:rotate(90deg)}
+.team-photo img{cursor:zoom-in}
+@media (max-width:900px){
+ #navbar{display:none!important}
+ .mobile-topbar{display:flex!important}
+ .hero-content{padding-top:80px!important}
+ .team-wrap{padding-top:75px!important}
+}
 </style>
 <style id="nebras-development-footer">
   .dev-footer {
@@ -405,5 +449,21 @@ const photos=[...document.querySelectorAll('.team-photo')];
 let ticking=false;
 function depth(){ if(ticking)return; ticking=true; requestAnimationFrame(()=>{photos.forEach((el,i)=>{const r=el.getBoundingClientRect(); if(r.bottom>0&&r.top<innerHeight){const shift=(innerHeight/2-(r.top+r.height/2))*0.025*((i%3)+1); el.style.setProperty('--depth',shift.toFixed(1)+'px');}}); ticking=false;});}
 window.addEventListener('scroll',depth,{passive:true}); depth();
+</script>
+
+<div class="team-lightbox" id="teamLightbox" aria-hidden="true">
+  <button class="team-lightbox-close" id="teamLightboxClose" aria-label="إغلاق">×</button>
+  <img id="teamLightboxImage" src="" alt="عرض الصورة">
+</div>
+<script>
+// Team image lightbox and reliable mobile-menu close behavior.
+const teamLightbox=document.getElementById('teamLightbox');
+const teamLightboxImage=document.getElementById('teamLightboxImage');
+const teamLightboxClose=document.getElementById('teamLightboxClose');
+function closeTeamLightbox(){if(!teamLightbox)return;teamLightbox.classList.remove('open');teamLightbox.setAttribute('aria-hidden','true');teamLightboxImage.src='';document.body.style.overflow='';}
+document.querySelectorAll('.team-photo img').forEach(img=>{img.addEventListener('click',e=>{e.stopPropagation();teamLightboxImage.src=img.currentSrc||img.src;teamLightboxImage.alt=img.alt||'فريق العمل';teamLightbox.classList.add('open');teamLightbox.setAttribute('aria-hidden','false');document.body.style.overflow='hidden';});});
+teamLightboxClose?.addEventListener('click',closeTeamLightbox);
+teamLightbox?.addEventListener('click',e=>{if(e.target===teamLightbox)closeTeamLightbox();});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeTeamLightbox();const menu=document.getElementById('mobileMenuOverlay');if(menu)menu.classList.remove('open');}});
 </script>
 </body></html>
