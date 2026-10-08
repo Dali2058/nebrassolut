@@ -4,7 +4,24 @@
       "includeFiles": "**/*.html"
     }
   },
+  "redirects": [
+    { "source": "/index.html", "destination": "/", "permanent": true },
+    { "source": "/nabza.html", "destination": "/nabza", "permanent": true },
+    { "source": "/electro.html", "destination": "/electro", "permanent": true },
+    { "source": "/projects.html", "destination": "/projects", "permanent": true },
+    { "source": "/decorations.html", "destination": "/decorations", "permanent": true },
+    { "source": "/team.html", "destination": "/team", "permanent": true },
+    { "source": "/contact.html", "destination": "/contact", "permanent": true },
+    { "source": "/admin.html", "destination": "/admin", "permanent": true }
+  ],
   "rewrites": [
-    { "source": "/(.*)", "destination": "/api/index" }
+    { "source": "/nabza", "destination": "/nabza.html" },
+    { "source": "/electro", "destination": "/electro.html" },
+    { "source": "/projects", "destination": "/projects.html" },
+    { "source": "/decorations", "destination": "/decorations.html" },
+    { "source": "/team", "destination": "/team.html" },
+    { "source": "/team.work", "destination": "/team.html" },
+    { "source": "/contact", "destination": "/contact.html" },
+    { "source": "/admin", "destination": "/admin.html" }
   ]
 }

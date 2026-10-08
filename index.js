@@ -59,10 +59,42 @@ function mimeFromExt(name) {
 }
 
 
-app.get("/works", (_req, res) => res.sendFile(path.join(process.cwd(), "team.html")));
-app.get("/team.work", (_req, res) => res.sendFile(path.join(process.cwd(), "team.html")));
+// Clean public URLs (no .html)
+const CLEAN_ROUTES = {
+  "/": "index.html",
+  "/nabza": "nabza.html",
+  "/electro": "electro.html",
+  "/projects": "projects.html",
+  "/decorations": "decorations.html",
+  "/team": "team.html",
+  "/team.work": "team.html",
+  "/contact": "contact.html",
+  "/admin": "admin.html"
+};
 
-app.get("/admin", (_req, res) => res.sendFile(path.join(process.cwd(), "admin.html")));
+for (const [route, file] of Object.entries(CLEAN_ROUTES)) {
+  if (route === "/") continue;
+  app.get(route, (_req, res) =>
+    res.sendFile(path.join(process.cwd(), file), (err) =>
+      err ? res.status(404).send("Page not found") : undefined
+    )
+  );
+}
+
+// Redirect old .html addresses to the clean URLs.
+const OLD_ROUTES = {
+  "/index.html": "/",
+  "/nabza.html": "/nabza",
+  "/electro.html": "/electro",
+  "/projects.html": "/projects",
+  "/decorations.html": "/decorations",
+  "/team.html": "/team",
+  "/contact.html": "/contact",
+  "/admin.html": "/admin"
+};
+for (const [oldRoute, cleanRoute] of Object.entries(OLD_ROUTES)) {
+  app.get(oldRoute, (_req, res) => res.redirect(301, cleanRoute));
+}
 
 app.get("/api/pages", auth, async (_req, res, next) => {
   try {
