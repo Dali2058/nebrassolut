@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#07131a">
+<title>فريق العمل | Nebras Solutions</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600;700;800&display=swap');
+:root { --sky:#3b9dff; --cyan:#06b8d4; --ink:#07131a; --ink2:#0c202a; --line:rgba(255,255,255,.10); --muted:rgba(255,255,255,.62); --white:#fff; --ease:cubic-bezier(.16,1,.3,1); }
+* { box-sizing:border-box; margin:0; padding:0; }
+html { scroll-behavior:smooth; background:#061118; }
+body { font-family:'IBM Plex Sans Arabic',Arial,sans-serif; background:linear-gradient(180deg,#061118 0%,#07151d 55%,#061118 100%); color:#fff; overflow-x:hidden; }
+a { color:inherit; text-decoration:none; }
+::selection { background:rgba(59,157,255,.35); color:#fff; }
+#scroll-progress { position:fixed; top:0; right:0; height:3px; width:0; z-index:4000; background:linear-gradient(90deg,#06b8d4,#3b9dff); box-shadow:0 0 18px rgba(59,157,255,.7); }
+#page-transition { position:fixed; inset:0; z-index:5000; background:#061118; display:flex; align-items:center; justify-content:center; pointer-events:none; opacity:1; transition:opacity .55s ease; }
+#page-transition.hide { opacity:0; }
+.pt-panel { text-align:center; width:min(280px,70vw); }
+.pt-panel img { width:150px; max-width:70%; margin-bottom:24px; filter:brightness(0) invert(1); opacity:.9; }
+.pt-bar-wrap { height:2px; background:rgba(255,255,255,.1); overflow:hidden; border-radius:99px; }
+.pt-bar-fill { height:100%; width:100%; transform-origin:right; background:linear-gradient(90deg,#06b8d4,#3b9dff); animation:loadbar .8s var(--ease) forwards; }
+@keyframes loadbar { from{transform:scaleX(0)} to{transform:scaleX(1)} }
+.mobile-topbar { display:none; position:fixed; top:0; left:0; right:0; height:68px; z-index:2200; padding:0 20px; align-items:center; justify-content:space-between; background:rgba(4,13,18,.76); backdrop-filter:blur(18px); border-bottom:1px solid rgba(255,255,255,.08); }
+.mobile-topbar-logo img { height:29px; filter:brightness(0) invert(1); }
+.mobile-menu-btn { width:42px; height:42px; border:1px solid rgba(255,255,255,.14); border-radius:12px; background:rgba(255,255,255,.05); color:#fff; display:grid; place-items:center; cursor:pointer; }
+.mobile-menu-btn svg { width:20px; }
+.mobile-menu-overlay { position:fixed; inset:0; z-index:2100; background:rgba(2,9,13,.62); backdrop-filter:blur(14px); opacity:0; visibility:hidden; transition:.35s ease; }
+.mobile-menu-overlay.open { opacity:1; visibility:visible; }
+.mm-sheet { position:absolute; top:14px; left:14px; right:14px; background:rgba(8,24,32,.96); border:1px solid rgba(255,255,255,.11); border-radius:22px; padding:16px; transform:translateY(-18px); transition:.4s var(--ease); box-shadow:0 28px 80px rgba(0,0,0,.4); }
+.mobile-menu-overlay.open .mm-sheet { transform:none; }
+.mm-header { display:flex; align-items:center; justify-content:space-between; padding:4px 4px 18px; }
+.mm-header-logo img { height:27px; filter:brightness(0) invert(1); }
+.mm-close { width:38px;height:38px;border-radius:11px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.04);color:#fff;display:grid;place-items:center;cursor:pointer; }
+.mm-close svg { width:18px; }
+.mm-links { display:flex; flex-direction:column; gap:7px; }
+.mm-link { display:flex; align-items:center; justify-content:space-between; padding:15px 15px; border-radius:14px; color:rgba(255,255,255,.74); background:rgba(255,255,255,.025); border:1px solid transparent; transition:.25s ease; }
+.mm-link:hover,.mm-link.active { color:#fff; background:rgba(59,157,255,.09); border-color:rgba(59,157,255,.22); }
+.mm-link-icon svg { width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round; }
+#navbar { position:fixed; top:18px; left:50%; transform:translateX(-50%); width:min(1180px,calc(100% - 48px)); z-index:2000; display:flex; align-items:center; justify-content:space-between; padding:12px 17px; border:1px solid rgba(255,255,255,.11); border-radius:18px; background:rgba(4,15,21,.62); backdrop-filter:blur(20px) saturate(140%); box-shadow:0 15px 50px rgba(0,0,0,.16); }
+.nav-logo img { height:30px; filter:brightness(0) invert(1); }
+.nav-links { list-style:none; display:flex; gap:4px; align-items:center; }
+.nav-links a { display:block; padding:10px 12px; border-radius:10px; color:rgba(255,255,255,.68); font-size:.83rem; white-space:nowrap; transition:.25s ease; }
+.nav-links a:hover,.nav-links a.active { color:#fff; background:rgba(255,255,255,.07); }
+.nav-links a.active { box-shadow:inset 0 0 0 1px rgba(59,157,255,.2); }
+.hero { min-height:100vh; position:relative; display:grid; place-items:center; overflow:hidden; isolation:isolate; }
+.hero-video { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:-3; filter:brightness(.45) saturate(.8); }
+.hero::before { content:''; position:absolute; inset:0; z-index:-2; background:radial-gradient(circle at 50% 45%,rgba(10,176,207,.17),transparent 34%),linear-gradient(180deg,rgba(3,10,14,.52),rgba(4,15,21,.93)); }
+.hero::after { content:''; position:absolute; inset:0; z-index:-1; opacity:.13; background-image:linear-gradient(rgba(255,255,255,.25) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.25) 1px,transparent 1px); background-size:65px 65px; mask-image:linear-gradient(to bottom,transparent,#000 30%,#000 75%,transparent); }
+.hero-content { width:min(1100px,88%); text-align:center; padding-top:80px; }
+.eyebrow { font-family:Montserrat,Arial,sans-serif; font-size:.68rem; font-weight:700; letter-spacing:5px; color:rgba(255,255,255,.62); }
+.hero h1 { margin-top:18px; font-size:clamp(3rem,8vw,7.5rem); line-height:1.03; font-weight:800; letter-spacing:-.04em; }
+.hero h1 em { font-style:normal; background:linear-gradient(90deg,#fff,#7ddfff 60%,#3b9dff); -webkit-background-clip:text; color:transparent; }
+.hero-sub { max-width:650px; margin:24px auto 0; color:rgba(255,255,255,.65); line-height:2; font-size:1rem; }
+.hero-meta { margin-top:34px; display:flex; justify-content:center; gap:10px; flex-wrap:wrap; }
+.meta-pill { padding:9px 14px; border:1px solid rgba(255,255,255,.12); border-radius:999px; background:rgba(255,255,255,.05); color:rgba(255,255,255,.75); font-family:Montserrat,Arial,sans-serif; font-size:.64rem; letter-spacing:1.6px; }
+.scroll-cue { position:absolute; bottom:28px; left:50%; transform:translateX(-50%); display:flex; flex-direction:column; align-items:center; gap:8px; color:rgba(255,255,255,.48); font-family:Montserrat,Arial,sans-serif; font-size:.58rem; letter-spacing:3px; }
+.scroll-cue i { width:26px;height:40px;border:1px solid rgba(255,255,255,.25);border-radius:20px;display:grid;place-items:center;position:relative; }
+.scroll-cue i::after { content:''; width:3px;height:7px;border-radius:3px;background:#fff; animation:wheel 1.8s ease-in-out infinite; }
+@keyframes wheel { 0%,100%{transform:translateY(-5px);opacity:.35} 50%{transform:translateY(5px);opacity:1} }
+.team-wrap { position:relative; padding:110px 0 0; }
+.team-wrap::before { content:''; position:absolute; top:0; left:50%; width:1px; height:100%; background:linear-gradient(to bottom,transparent,rgba(59,157,255,.16) 12%,rgba(255,255,255,.07) 50%,transparent 92%); pointer-events:none; }
+.team-block { position:relative; width:min(1180px,90%); margin:0 auto 140px; }
+.team-block-head { display:grid; grid-template-columns:auto 1fr auto; align-items:end; gap:18px; margin-bottom:30px; }
+.team-kicker,.note-label { font-family:Montserrat,Arial,sans-serif; color:#53d4e9; letter-spacing:3px; font-size:.62rem; font-weight:700; }
+.team-block-head h2 { font-size:clamp(2rem,4vw,4rem); font-weight:800; letter-spacing:-.03em; }
+.team-rule { height:1px; background:linear-gradient(90deg,rgba(255,255,255,.2),transparent); margin-bottom:11px; }
+.team-gallery { display:grid; grid-template-columns:repeat(5,1fr); gap:14px; perspective:1000px; }
+.team-photo { position:relative; height:clamp(190px,24vw,290px); overflow:hidden; border-radius:18px; border:1px solid rgba(255,255,255,.1); background:#0a2029; box-shadow:0 18px 50px rgba(0,0,0,.18); transform:translate3d(0,50px,0) scale(.97); opacity:0; transition:transform 1s var(--ease),opacity .8s ease,box-shadow .4s ease,border-color .4s ease; }
+.team-photo.from-left { transform:translate3d(-90px,55px,0) rotateY(4deg) scale(.96); }
+.team-photo.from-right { transform:translate3d(90px,55px,0) rotateY(-4deg) scale(.96); }
+.team-photo.in-view { transform:none; opacity:1; }
+.team-photo:hover { transform:translateY(-8px) scale(1.015); border-color:rgba(83,212,233,.45); box-shadow:0 25px 70px rgba(0,0,0,.3),0 0 40px rgba(59,157,255,.08); z-index:3; }
+.team-photo img { width:100%;height:100%;object-fit:cover;display:block;filter:saturate(.88) contrast(1.04); transition:transform 1s var(--ease),filter .5s ease; }
+.team-photo:hover img { transform:scale(1.07); filter:saturate(1) contrast(1.05); }
+.photo-shine { position:absolute; inset:-60%; z-index:2; background:linear-gradient(105deg,transparent 35%,rgba(255,255,255,.14) 48%,transparent 60%); transform:translateX(-55%) rotate(8deg); transition:transform 1.2s var(--ease); pointer-events:none; }
+.team-photo:hover .photo-shine { transform:translateX(55%) rotate(8deg); }
+.photo-index { position:absolute; bottom:10px; left:10px; z-index:3; width:28px;height:28px;border-radius:50%;display:grid;place-items:center; background:rgba(4,15,21,.68);border:1px solid rgba(255,255,255,.18);backdrop-filter:blur(8px);font:600 .58rem Montserrat,Arial,sans-serif;color:#fff; }
+.team-note { width:min(800px,90%); margin:30px auto 0; display:grid; grid-template-columns:54px 1fr; gap:18px; align-items:start; padding:25px 28px; border:1px solid rgba(255,255,255,.08); border-radius:20px; background:linear-gradient(135deg,rgba(255,255,255,.045),rgba(255,255,255,.018)); box-shadow:0 20px 60px rgba(0,0,0,.12); }
+.note-number { font:700 1.1rem Montserrat,Arial,sans-serif; color:#53d4e9; padding-top:2px; }
+.team-note p { margin-top:8px; color:rgba(255,255,255,.62); line-height:1.95; font-size:.94rem; }
+.reveal { opacity:0; transform:translateY(32px); transition:opacity .8s ease,transform .9s var(--ease); }
+.reveal.in-view { opacity:1; transform:none; }
+.team-photo.reveal.from-left,.team-photo.reveal.from-right { transition:transform 1s var(--ease),opacity .8s ease,box-shadow .4s ease,border-color .4s ease; }
+.team-photo.reveal.from-left.in-view,.team-photo.reveal.from-right.in-view { transform:none; }
+@media (max-width:1050px) { .team-gallery { grid-template-columns:repeat(3,1fr); } .nav-links a { padding-inline:9px; font-size:.76rem; } }
+@media (max-width:760px) {
+  #navbar { display:none; } .mobile-topbar { display:flex; } .hero-content { padding-top:60px; } .hero h1 { font-size:clamp(2.7rem,15vw,5rem); } .hero-sub { font-size:.88rem; }
+  .team-wrap { padding-top:75px; } .team-block { width:90%; margin-bottom:90px; } .team-block-head { grid-template-columns:1fr auto; gap:10px; align-items:center; } .team-rule { grid-column:1/-1; } .team-block-head h2 { grid-column:1/-1; order:2; } .team-kicker { order:1; }
+  .team-gallery { grid-template-columns:repeat(2,1fr); gap:10px; } .team-photo { height:58vw; min-height:155px; border-radius:14px; } .team-photo:nth-child(5) { grid-column:1/-1; height:48vw; }
+  .team-note { width:100%; grid-template-columns:38px 1fr; padding:19px; gap:12px; border-radius:16px; } .team-note p { font-size:.83rem; line-height:1.85; }
+  .team-photo.from-left { transform:translate3d(-55px,38px,0) scale(.96); } .team-photo.from-right { transform:translate3d(55px,38px,0) scale(.96); }
+}
+@media (prefers-reduced-motion:reduce) { *,*::before,*::after { scroll-behavior:auto !important; animation:none !important; transition:none !important; } }
+</style>
+<style id="nebras-development-footer">
+  .dev-footer {
+    position: relative !important;
+    overflow: hidden;
+    isolation: isolate;
+    min-height: 350px;
+    margin-top: 0;
+    padding: 70px 6% 24px;
+    color: #fff !important;
+    background:
+      radial-gradient(circle at 12% 20%, rgba(255,255,255,.17), transparent 27%),
+      radial-gradient(circle at 84% 78%, rgba(0,72,90,.18), transparent 32%),
+      linear-gradient(135deg, #04b9d5 0%, #08a9c8 48%, #078faa 100%) !important;
+    border-top: 1px solid rgba(255,255,255,.25);
+    box-shadow: 0 -22px 60px rgba(0, 163, 190, .12);
+    display: block !important;
+  }
+  .dev-footer * { box-sizing: border-box; }
+  .dev-footer__inner {
+    position: relative;
+    z-index: 3;
+    max-width: 1220px;
+    margin: 0 auto;
+    min-height: 230px;
+    display: grid;
+    grid-template-columns: minmax(220px, .72fr) minmax(320px, 1.28fr);
+    align-items: center;
+    gap: 60px;
+  }
+  .dev-footer__brand {
+    order: 2;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+  }
+  .dev-footer__logo {
+    display: block;
+    width: min(310px, 72vw);
+    max-height: 150px;
+    height: auto;
+    object-fit: contain;
+    object-position: right center;
+    filter: drop-shadow(0 16px 28px rgba(0,0,0,.14));
+  }
+  .dev-footer__content {
+    order: 1;
+    text-align: right;
+    max-width: 650px;
+  }
+  .dev-footer__eyebrow {
+    display: inline-block;
+    margin-bottom: 12px;
+    font-family: Montserrat, Arial, sans-serif;
+    font-size: .68rem;
+    font-weight: 800;
+    letter-spacing: 3px;
+    color: rgba(255,255,255,.78);
+  }
+  .dev-footer__content h2 {
+    margin: 0 0 13px !important;
+    color: #fff !important;
+    font-size: clamp(1.45rem, 3vw, 2.35rem) !important;
+    line-height: 1.25;
+    font-weight: 900;
+  }
+  .dev-footer__content p {
+    max-width: 590px;
+    margin: 0 0 20px !important;
+    color: rgba(255,255,255,.88) !important;
+    font-size: .96rem;
+    line-height: 1.9;
+  }
+  .dev-footer__meta {
+    display: flex;
+    align-items: baseline;
+    justify-content: flex-start;
+    gap: 10px;
+    margin-bottom: 22px;
+    color: rgba(255,255,255,.76);
+    font-size: .86rem;
+  }
+  .dev-footer__meta strong {
+    color: #fff;
+    font-family: Montserrat, Arial, sans-serif;
+    font-size: 1.02rem;
+    letter-spacing: 1.5px;
+  }
+  .dev-footer__contact {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    min-height: 46px;
+    padding: 0 20px;
+    border: 1px solid rgba(255,255,255,.95);
+    border-radius: 999px;
+    color: #fff !important;
+    background: rgba(255,255,255,.04);
+    text-decoration: none !important;
+    font-weight: 700;
+    transition: transform .3s ease, background .3s ease, box-shadow .3s ease;
+  }
+  .dev-footer__contact:hover {
+    transform: translateY(-3px);
+    background: rgba(255,255,255,.14);
+    box-shadow: 0 12px 30px rgba(0,0,0,.12);
+  }
+  .dev-footer__arrow {
+    font-family: Arial, sans-serif;
+    font-size: 1.15rem;
+    transition: transform .3s ease;
+  }
+  .dev-footer__contact:hover .dev-footer__arrow { transform: translateX(-4px); }
+  .dev-footer__bottom {
+    position: relative;
+    z-index: 3;
+    max-width: 1220px;
+    margin: 35px auto 0;
+    padding-top: 16px;
+    border-top: 1px solid rgba(255,255,255,.2);
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 12px;
+    color: rgba(255,255,255,.66);
+    font-family: Montserrat, Arial, sans-serif;
+    font-size: .62rem;
+    letter-spacing: 1.6px;
+    direction: ltr;
+  }
+  .dev-footer__dot {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: rgba(255,255,255,.8);
+  }
+  .dev-footer__fx { position: absolute; inset: 0; z-index: 1; pointer-events: none; }
+  .dev-grid {
+    position: absolute;
+    inset: 0;
+    opacity: .13;
+    background-image: linear-gradient(rgba(255,255,255,.32) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.32) 1px, transparent 1px);
+    background-size: 54px 54px;
+    mask-image: linear-gradient(to bottom, transparent, #000 25%, #000 72%, transparent);
+  }
+  .dev-orb {
+    position: absolute;
+    border-radius: 50%;
+    border: 1px solid rgba(255,255,255,.18);
+    background: rgba(255,255,255,.07);
+    filter: blur(.2px);
+    animation: nebrasOrb 9s ease-in-out infinite;
+  }
+  .dev-orb--1 { width: 180px; height: 180px; top: -80px; left: 9%; }
+  .dev-orb--2 { width: 100px; height: 100px; bottom: 30px; right: 19%; animation-delay: -3s; animation-duration: 11s; }
+  .dev-orb--3 { width: 54px; height: 54px; top: 35%; right: 7%; animation-delay: -6s; animation-duration: 7s; }
+  .dev-line {
+    position: absolute;
+    height: 1px;
+    width: 42%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,.45), transparent);
+    transform: rotate(-10deg);
+    animation: nebrasLine 8s linear infinite;
+  }
+  .dev-line--1 { top: 22%; left: -15%; }
+  .dev-line--2 { bottom: 17%; right: -15%; animation-delay: -4s; transform: rotate(10deg); }
+  .dev-spark {
+    position: absolute;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 0 14px rgba(255,255,255,.9);
+    animation: nebrasSpark 5s ease-in-out infinite;
+  }
+  .dev-spark--1 { left: 18%; top: 67%; }
+  .dev-spark--2 { left: 34%; top: 18%; animation-delay: -1.3s; }
+  .dev-spark--3 { right: 26%; top: 72%; animation-delay: -2.4s; }
+  .dev-spark--4 { right: 9%; top: 30%; animation-delay: -3.7s; }
+  @keyframes nebrasOrb {
+    0%,100% { transform: translate3d(0,0,0) scale(1); opacity: .55; }
+    50% { transform: translate3d(0,-18px,0) scale(1.08); opacity: .9; }
+  }
+  @keyframes nebrasLine {
+    0% { transform: translateX(-30%) rotate(-10deg); opacity: 0; }
+    15%,75% { opacity: .7; }
+    100% { transform: translateX(150%) rotate(-10deg); opacity: 0; }
+  }
+  @keyframes nebrasSpark {
+    0%,100% { transform: translateY(0) scale(.75); opacity: .35; }
+    50% { transform: translateY(-18px) scale(1.25); opacity: 1; }
+  }
+  @media (max-width: 760px) {
+    .dev-footer { padding: 54px 6% 22px; }
+    .dev-footer__inner { grid-template-columns: 1fr; gap: 28px; text-align: center; }
+    .dev-footer__brand { order: 1; justify-content: center; }
+    .dev-footer__content { order: 2; text-align: center; max-width: none; }
+    .dev-footer__logo { width: min(250px, 65vw); object-position: center; }
+    .dev-footer__content p { margin-left: auto !important; margin-right: auto !important; }
+    .dev-footer__meta { justify-content: center; }
+    .dev-footer__bottom { justify-content: center; flex-wrap: wrap; text-align: center; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .dev-footer .dev-orb, .dev-footer .dev-line, .dev-footer .dev-spark { animation: none; }
+  }
+</style>
+<style id="compact-development-footer">
+.dev-footer{min-height:175px!important;padding:34px 6% 12px!important}.dev-footer__inner{min-height:112px!important;gap:30px!important}.dev-footer__logo{width:min(160px,42vw)!important;max-height:78px!important}.dev-footer__eyebrow{margin-bottom:6px!important;font-size:.56rem!important;letter-spacing:2.2px!important}.dev-footer__content h2{margin-bottom:7px!important;font-size:clamp(1.05rem,2.2vw,1.55rem)!important}.dev-footer__content p{margin-bottom:8px!important;font-size:.72rem!important;line-height:1.65!important;max-width:500px!important}.dev-footer__meta{margin-bottom:8px!important;gap:7px!important;font-size:.68rem!important}.dev-footer__meta strong{font-size:.8rem!important}.dev-footer__bottom{margin-top:12px!important;padding-top:9px!important;gap:8px!important;font-size:.52rem!important;letter-spacing:1.1px!important}.dev-footer__dot{width:3px!important;height:3px!important}@media(max-width:760px){.dev-footer{min-height:230px!important;padding:28px 6% 12px!important}.dev-footer__inner{min-height:155px!important;gap:14px!important}.dev-footer__logo{width:min(135px,42vw)!important;max-height:66px!important}.dev-footer__content p{font-size:.69rem!important}.dev-footer__bottom{margin-top:8px!important}}
+</style>
+</head>
+<body>
+<div id="scroll-progress"></div>
+<div id="page-transition"><div class="pt-panel"><img src="https://i.postimg.cc/8PShHcVc/nebras-logo.png" alt="Nebras Solutions"><div class="pt-bar-wrap"><div class="pt-bar-fill"></div></div></div></div>
+<div class="mobile-topbar"><a class="mobile-topbar-logo" href="/"><img src="https://i.postimg.cc/8PShHcVc/nebras-logo.png" alt="Nebras Solutions"></a><button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="فتح القائمة"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button></div>
+<div class="mobile-menu-overlay" id="mobileMenuOverlay"><div class="mm-sheet"><div class="mm-header"><button class="mm-close" id="mobileMenuClose" aria-label="إغلاق"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button><a class="mm-header-logo" href="/"><img src="https://i.postimg.cc/8PShHcVc/nebras-logo.png" alt="Nebras Solutions"></a></div><nav class="mm-links">
+<a href="/" class="mm-link"><span>الرئيسية</span><span class="mm-link-icon"><svg viewBox="0 0 24 24"><path d="M3 12l9-9 9 9"/><path d="M5 10v10h14V10"/></svg></span></a>
+<a href="nabza.html" class="mm-link"><span>نبذة عن مشاريعنا</span><span class="mm-link-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></span></a>
+<a href="electro.html" class="mm-link"><span>إلكتروميكانيك</span><span class="mm-link-icon"><svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></span></a>
+<a href="projects.html" class="mm-link"><span>مشاريع</span><span class="mm-link-icon"><svg viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/></svg></span></a>
+<a href="decorations.html" class="mm-link"><span>ديكورات</span><span class="mm-link-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/></svg></span></a>
+<a href="/works" class="mm-link active"><span>فريق العمل</span><span class="mm-link-icon"><svg viewBox="0 0 24 24"><circle cx="9" cy="7" r="4"/><path d="M3 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/><path d="M21 21v-2a4 4 0 0 0-3-3.87"/></svg></span></a>
+<a href="contact.html" class="mm-link"><span>تواصل معنا</span><span class="mm-link-icon"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2"/><path d="M4 4h4l2 5-2 2a16 16 0 0 0 7 7l2-2 5 2v4"/></svg></span></a>
+</nav></div></div>
+<nav id="navbar"><a class="nav-logo" href="/"><img src="https://i.postimg.cc/8PShHcVc/nebras-logo.png" alt="Nebras Solutions"></a><ul class="nav-links"><li><a href="/">الرئيسية</a></li><li><a href="nabza.html">نبذة عن مشاريعنا</a></li><li><a href="electro.html">إلكتروميكانيك</a></li><li><a href="projects.html">مشاريع</a></li><li><a href="decorations.html">ديكورات</a></li><li><a href="/works" class="active">فريق العمل</a></li><li><a href="contact.html">تواصل معنا</a></li></ul></nav>
+<section class="hero"><video class="hero-video" autoplay muted loop playsinline preload="metadata"><source src="nebras-bg.mp4" type="video/mp4"></video><div class="hero-content"><span class="eyebrow">THE PEOPLE BEHIND THE WORK</span><h1>فريق <em>العمل</em></h1><p class="hero-sub">لمحة عن الأشخاص والتفاصيل واللحظات التي تقف خلف أعمال Nebras Solutions. صفحة واحدة تجمع الفريق بروح بسيطة، رسمية، وحركية أثناء التصفح.</p><div class="hero-meta"><span class="meta-pill">TEAM / 2026</span><span class="meta-pill">NEBRAS SOLUTIONS</span><span class="meta-pill">50 MOMENTS</span></div></div><div class="scroll-cue"><span>SCROLL</span><i></i></div></section>
+<main class="team-wrap"><section class="team-block" data-section="01"><div class="team-block-head reveal"><span class="team-kicker">TEAM / 01</span><h2>البداية</h2><span class="team-rule"></span></div><div class="team-gallery"><figure class="team-photo reveal from-right" data-depth="1"><div class="photo-shine"></div><img src="https://i.postimg.cc/d3DdtQFC/05d3afdb-8dad-43aa-8e6b-bec474a90795.jpg" alt="فريق العمل 1" loading="lazy" decoding="async"><span class="photo-index">01</span></figure><figure class="team-photo reveal from-left" data-depth="2"><div class="photo-shine"></div><img src="https://i.postimg.cc/W35gvFB2/09d99b85-a625-4d65-b2eb-b2881ae7d403.jpg" alt="فريق العمل 2" loading="lazy" decoding="async"><span class="photo-index">02</span></figure><figure class="team-photo reveal from-right" data-depth="3"><div class="photo-shine"></div><img src="https://i.postimg.cc/vTD9H8yV/0bff192d-68ca-4645-b7f4-0e0e4f5ab035.jpg" alt="فريق العمل 3" loading="lazy" decoding="async"><span class="photo-index">03</span></figure><figure class="team-photo reveal from-left" data-depth="1"><div class="photo-shine"></div><img src="https://i.postimg.cc/sf07HWP7/0f1dc77e-ce3a-4f1e-9d15-24ae35d54798.jpg" alt="فريق العمل 4" loading="lazy" decoding="async"><span class="photo-index">04</span></figure><figure class="team-photo reveal from-right" data-depth="2"><div class="photo-shine"></div><img src="https://i.postimg.cc/gJg8WXCw/104ab30a-ed31-4ede-8d0e-ac5ccdfd36f3.jpg" alt="فريق العمل 5" loading="lazy" decoding="async"><span class="photo-index">05</span></figure></div><div class="team-note reveal"><span class="note-number">01</span><div><span class="note-label">NEBRAS TEAM</span><p>وراء كل مشروع ناجح أشخاص يعرفون كيف يحوّلون الفكرة الأولى إلى اتجاه واضح. هنا تبدأ الحكاية: رؤية واحدة، وتفاصيل كثيرة، وفريق يعمل بهدوء حتى تكتمل الصورة.</p></div></div></section><section class="team-block" data-section="02"><div class="team-block-head reveal"><span class="team-kicker">TEAM / 02</span><h2>الفكرة</h2><span class="team-rule"></span></div><div class="team-gallery"><figure class="team-photo reveal from-right" data-depth="1"><div class="photo-shine"></div><img src="https://i.postimg.cc/0QVDsMTk/126c3ec2-a468-4c0e-bda7-aa8c1a1383d6.jpg" alt="فريق العمل 6" loading="lazy" decoding="async"><span class="photo-index">06</span></figure><figure class="team-photo reveal from-left" data-depth="2"><div class="photo-shine"></div><img src="https://i.postimg.cc/KcsBpT77/12d90869-ac5f-41ff-b4cd-8081bff6d87b.jpg" alt="فريق العمل 7" loading="lazy" decoding="async"><span class="photo-index">07</span></figure><figure class="team-photo reveal from-right" data-depth="3"><div class="photo-shine"></div><img src="https://i.postimg.cc/Vv5MLsw4/15ea8d3c-082c-43b1-81c2-d4a082ab969d.jpg" alt="فريق العمل 8" loading="lazy" decoding="async"><span class="photo-index">08</span></figure><figure class="team-photo reveal from-left" data-depth="1"><div class="photo-shine"></div><img src="https://i.postimg.cc/2y3v8jYV/1ca557a1-8ecd-427b-9ef5-ba0c588e9bf0.jpg" alt="فريق العمل 9" loading="lazy" decoding="async"><span class="photo-index">09</span></figure><figure class="team-photo reveal from-right" data-depth="2"><div class="photo-shine"></div><img src="https://i.postimg.cc/2y3v8jYB/20877813-235c-4e88-b81d-948ed4b61de4.jpg" alt="فريق العمل 10" loading="lazy" decoding="async"><span class="photo-index">10</span></figure></div><div class="team-note reveal"><span class="note-number">02</span><div><span class="note-label">NEBRAS TEAM</span><p>نبدأ من الفكرة قبل التنفيذ. نراجع التفاصيل، نرتّب الأولويات، ونبحث عن الحل الذي يخدم المشروع فعلاً بدل الحل الأسهل فقط.</p></div></div></section><section class="team-block" data-section="03"><div class="team-block-head reveal"><span class="team-kicker">TEAM / 03</span><h2>التخطيط</h2><span class="team-rule"></span></div><div class="team-gallery"><figure class="team-photo reveal from-right" data-depth="1"><div class="photo-shine"></div><img src="https://i.postimg.cc/nr5ms8VR/2738a925-7c64-4c6c-ac37-dc2bdbfeb268.jpg" alt="فريق العمل 11" loading="lazy" decoding="async"><span class="photo-index">11</span></figure><figure class="team-photo reveal from-left" data-depth="2"><div class="photo-shine"></div><img src="https://i.postimg.cc/WpfgYZmW/2b1d0e16-9fb8-4948-9dd6-b3d79043a3ce.jpg" alt="فريق العمل 12" loading="lazy" decoding="async"><span class="photo-index">12</span></figure><figure class="team-photo reveal from-right" data-depth="3"><div class="photo-shine"></div><img src="https://i.postimg.cc/Y9dYHG5m/2e5aa818-afed-48f7-88f4-9fbf7c2e2f63.jpg" alt="فريق العمل 13" loading="lazy" decoding="async"><span class="photo-index">13</span></figure><figure class="team-photo reveal from-left" data-depth="1"><div class="photo-shine"></div><img src="https://i.postimg.cc/sx8WBFf8/3a16f2a3-3af5-465a-95c4-2d7a81c102b0.jpg" alt="فريق العمل 14" loading="lazy" decoding="async"><span class="photo-index">14</span></figure><figure class="team-photo reveal from-right" data-depth="2"><div class="photo-shine"></div><img src="https://i.postimg.cc/qR1yThP7/3b60262b-4506-46a1-9a0a-c218e2ca945a.jpg" alt="فريق العمل 15" loading="lazy" decoding="async"><span class="photo-index">15</span></figure></div><div class="team-note reveal"><span class="note-number">03</span><div><span class="note-label">NEBRAS TEAM</span><p>التخطيط عندنا ليس خطوة شكلية. كل مرحلة لها هدف واضح، وكل قرار صغير ينعكس على جودة النتيجة النهائية.</p></div></div></section><section class="team-block" data-section="04"><div class="team-block-head reveal"><span class="team-kicker">TEAM / 04</span><h2>التنفيذ</h2><span class="team-rule"></span></div><div class="team-gallery"><figure class="team-photo reveal from-right" data-depth="1"><div class="photo-shine"></div><img src="https://i.postimg.cc/LXxLpYc2/3be46532-b77f-4561-835f-34d7850b2583.jpg" alt="فريق العمل 16" loading="lazy" decoding="async"><span class="photo-index">16</span></figure><figure class="team-photo reveal from-left" data-depth="2"><div class="photo-shine"></div><img src="https://i.postimg.cc/wvwLpyCT/423dc9a6-99ae-434c-bb90-3c3b9ff027eb.jpg" alt="فريق العمل 17" loading="lazy" decoding="async"><span class="photo-index">17</span></figure><figure class="team-photo reveal from-right" data-depth="3"><div class="photo-shine"></div><img src="https://i.postimg.cc/RhqfVCmT/4c072443-6be5-4b17-bcf9-96bdd07de423.jpg" alt="فريق العمل 18" loading="lazy" decoding="async"><span class="photo-index">18</span></figure><figure class="team-photo reveal from-left" data-depth="1"><div class="photo-shine"></div><img src="https://i.postimg.cc/90S943FV/5235bd39-dd86-41cf-bb19-b74303efc787.jpg" alt="فريق العمل 19" loading="lazy" decoding="async"><span class="photo-index">19</span></figure><figure class="team-photo reveal from-right" data-depth="2"><div class="photo-shine"></div><img src="https://i.postimg.cc/k4TKm602/56cb4c2e-378a-4577-9d41-25e90cdb7a7c.jpg" alt="فريق العمل 20" loading="lazy" decoding="async"><span class="photo-index">20</span></figure></div><div class="team-note reveal"><span class="note-number">04</span><div><span class="note-label">NEBRAS TEAM</span><p>من الموقع إلى المكتب، ومن التفاصيل الكبيرة إلى اللمسات الصغيرة؛ يعمل الفريق كمنظومة واحدة حتى يبقى مستوى العمل ثابتاً في كل مرحلة.</p></div></div></section><section class="team-block" data-section="05"><div class="team-block-head reveal"><span class="team-kicker">TEAM / 05</span><h2>الدقة</h2><span class="team-rule"></span></div><div class="team-gallery"><figure class="team-photo reveal from-right" data-depth="1"><div class="photo-shine"></div><img src="https://i.postimg.cc/D0msyfhJ/594d0636-5959-4284-b5c8-2fa3e9d28354.jpg" alt="فريق العمل 21" loading="lazy" decoding="async"><span class="photo-index">21</span></figure><figure class="team-photo reveal from-left" data-depth="2"><div class="photo-shine"></div><img src="https://i.postimg.cc/5yGzHcNJ/5a85de65-f23e-46d0-aed1-1ffee697a79c.jpg" alt="فريق العمل 22" loading="lazy" decoding="async"><span class="photo-index">22</span></figure><figure class="team-photo reveal from-right" data-depth="3"><div class="photo-shine"></div><img src="https://i.postimg.cc/DZxLTJ9X/5ba90f5d-cef1-4aef-bbdd-b4171ef120e0.jpg" alt="فريق العمل 23" loading="lazy" decoding="async"><span class="photo-index">23</span></figure><figure class="team-photo reveal from-left" data-depth="1"><div class="photo-shine"></div><img src="https://i.postimg.cc/KjVTKXcH/5e651083-d6bb-4907-9732-6953e4f74056.jpg" alt="فريق العمل 24" loading="lazy" decoding="async"><span class="photo-index">24</span></figure><figure class="team-photo reveal from-right" data-depth="2"><div class="photo-shine"></div><img src="https://i.postimg.cc/GtNDB03f/60e78b73-3009-426a-aaf1-319003401d8e.jpg" alt="فريق العمل 25" loading="lazy" decoding="async"><span class="photo-index">25</span></figure></div><div class="team-note reveal"><span class="note-number">05</span><div><span class="note-label">NEBRAS TEAM</span><p>الدقة تظهر في الأشياء التي قد لا يلاحظها الجميع، لكنها تصنع الفرق. لهذا نراجع، نعدّل، ونعيد ترتيب التفاصيل قبل أن نعتبر العمل مكتملًا.</p></div></div></section><section class="team-block" data-section="06"><div class="team-block-head reveal"><span class="team-kicker">TEAM / 06</span><h2>التعاون</h2><span class="team-rule"></span></div><div class="team-gallery"><figure class="team-photo reveal from-right" data-depth="1"><div class="photo-shine"></div><img src="https://i.postimg.cc/8csWPkGY/63262a6a-cc59-426a-b9fb-e242f70491fb.jpg" alt="فريق العمل 26" loading="lazy" decoding="async"><span class="photo-index">26</span></figure><figure class="team-photo reveal from-left" data-depth="2"><div class="photo-shine"></div><img src="https://i.postimg.cc/SQtC19L1/6ed08c16-46bd-4c00-9a1e-6f6680920c0c.jpg" alt="فريق العمل 27" loading="lazy" decoding="async"><span class="photo-index">27</span></figure><figure class="team-photo reveal from-right" data-depth="3"><div class="photo-shine"></div><img src="https://i.postimg.cc/J0gXyw4L/731c9355-bb9c-4136-94d9-26c2a2559531.jpg" alt="فريق العمل 28" loading="lazy" decoding="async"><span class="photo-index">28</span></figure><figure class="team-photo reveal from-left" data-depth="1"><div class="photo-shine"></div><img src="https://i.postimg.cc/6qSZ7s61/78ff3fcb-7088-445a-aa1b-9c806080d0fa.jpg" alt="فريق العمل 29" loading="lazy" decoding="async"><span class="photo-index">29</span></figure><figure class="team-photo reveal from-right" data-depth="2"><div class="photo-shine"></div><img src="https://i.postimg.cc/1X465RSp/794274eb-7266-4c05-aae0-0e7b1fa6bb3e.jpg" alt="فريق العمل 30" loading="lazy" decoding="async"><span class="photo-index">30</span></figure></div><div class="team-note reveal"><span class="note-number">06</span><div><span class="note-label">NEBRAS TEAM</span><p>أفضل النتائج لا تأتي من شخص واحد. التعاون بين أعضاء الفريق يجعل كل تخصص يضيف قيمة حقيقية للنتيجة بدل أن يعمل كل جزء بمعزل عن الآخر.</p></div></div></section><section class="team-block" data-section="07"><div class="team-block-head reveal"><span class="team-kicker">TEAM / 07</span><h2>الجودة</h2><span class="team-rule"></span></div><div class="team-gallery"><figure class="team-photo reveal from-right" data-depth="1"><div class="photo-shine"></div><img src="https://i.postimg.cc/BbtDQZ3V/7ee8d74f-d96d-40af-943f-f9bcda168ced.jpg" alt="فريق العمل 31" loading="lazy" decoding="async"><span class="photo-index">31</span></figure><figure class="team-photo reveal from-left" data-depth="2"><div class="photo-shine"></div><img src="https://i.postimg.cc/6qTR56K0/8b4cd379-d81d-4503-b4e1-2fe59d31750a.jpg" alt="فريق العمل 32" loading="lazy" decoding="async"><span class="photo-index">32</span></figure><figure class="team-photo reveal from-right" data-depth="3"><div class="photo-shine"></div><img src="https://i.postimg.cc/Kj4Lvcbt/8fa67e12-b010-4e35-b35a-5739365a974a.jpg" alt="فريق العمل 33" loading="lazy" decoding="async"><span class="photo-index">33</span></figure><figure class="team-photo reveal from-left" data-depth="1"><div class="photo-shine"></div><img src="https://i.postimg.cc/vTjn1R8h/9241a2cd-f509-4c86-9a17-40fde0a7b6be.jpg" alt="فريق العمل 34" loading="lazy" decoding="async"><span class="photo-index">34</span></figure><figure class="team-photo reveal from-right" data-depth="2"><div class="photo-shine"></div><img src="https://i.postimg.cc/bJmkhD7P/93189f57-ea2f-43af-9fc9-7e5f601b47e9.jpg" alt="فريق العمل 35" loading="lazy" decoding="async"><span class="photo-index">35</span></figure></div><div class="team-note reveal"><span class="note-number">07</span><div><span class="note-label">NEBRAS TEAM</span><p>نقيس نجاحنا بما يبقى بعد انتهاء التنفيذ: جودة، ترتيب، وضوح، وتجربة تليق بالعميل وباسم Nebras Solutions.</p></div></div></section><section class="team-block" data-section="08"><div class="team-block-head reveal"><span class="team-kicker">TEAM / 08</span><h2>التطوير</h2><span class="team-rule"></span></div><div class="team-gallery"><figure class="team-photo reveal from-right" data-depth="1"><div class="photo-shine"></div><img src="https://i.postimg.cc/G3SGgDPj/9fdb8c3c-c1ca-4f80-aae3-c7ec3cb83ee9.jpg" alt="فريق العمل 36" loading="lazy" decoding="async"><span class="photo-index">36</span></figure><figure class="team-photo reveal from-left" data-depth="2"><div class="photo-shine"></div><img src="https://i.postimg.cc/sf07HWPS/a8d55b88-fe49-44e6-9281-2ed5c73e3006.jpg" alt="فريق العمل 37" loading="lazy" decoding="async"><span class="photo-index">37</span></figure><figure class="team-photo reveal from-right" data-depth="3"><div class="photo-shine"></div><img src="https://i.postimg.cc/hj2TBzkT/abf8bc17-f1ab-474b-896b-cb10803cba25.jpg" alt="فريق العمل 38" loading="lazy" decoding="async"><span class="photo-index">38</span></figure><figure class="team-photo reveal from-left" data-depth="1"><div class="photo-shine"></div><img src="https://i.postimg.cc/Kj4LvcbP/ada32126-5510-4727-b8ec-ab191ff9cdf9.jpg" alt="فريق العمل 39" loading="lazy" decoding="async"><span class="photo-index">39</span></figure><figure class="team-photo reveal from-right" data-depth="2"><div class="photo-shine"></div><img src="https://i.postimg.cc/PfFYVDbK/ae2093e9-2089-4e5d-99c6-a1ab0c5e8d3d.jpg" alt="فريق العمل 40" loading="lazy" decoding="async"><span class="photo-index">40</span></figure></div><div class="team-note reveal"><span class="note-number">08</span><div><span class="note-label">NEBRAS TEAM</span><p>نطوّر طريقة عملنا باستمرار. الأدوات تتغير، المشاريع تختلف، لكن الهدف ثابت: تنفيذ أفضل وأسرع وأكثر دقة.</p></div></div></section><section class="team-block" data-section="09"><div class="team-block-head reveal"><span class="team-kicker">TEAM / 09</span><h2>الناس</h2><span class="team-rule"></span></div><div class="team-gallery"><figure class="team-photo reveal from-right" data-depth="1"><div class="photo-shine"></div><img src="https://i.postimg.cc/6qSZ7s5W/b275c102-2ca7-43f3-a7c8-66815f1ce1d2.jpg" alt="فريق العمل 41" loading="lazy" decoding="async"><span class="photo-index">41</span></figure><figure class="team-photo reveal from-left" data-depth="2"><div class="photo-shine"></div><img src="https://i.postimg.cc/hj2TBzkx/b48950a7-a248-4b18-aaa1-32bb20c2fc46.jpg" alt="فريق العمل 42" loading="lazy" decoding="async"><span class="photo-index">42</span></figure><figure class="team-photo reveal from-right" data-depth="3"><div class="photo-shine"></div><img src="https://i.postimg.cc/mkhM2Z4h/c66d5cce-9934-409f-b201-d67b521734f2.jpg" alt="فريق العمل 43" loading="lazy" decoding="async"><span class="photo-index">43</span></figure><figure class="team-photo reveal from-left" data-depth="1"><div class="photo-shine"></div><img src="https://i.postimg.cc/JnpZLDft/cb46c91f-0a81-4ed1-8bc4-1256280497ae.jpg" alt="فريق العمل 44" loading="lazy" decoding="async"><span class="photo-index">44</span></figure><figure class="team-photo reveal from-right" data-depth="2"><div class="photo-shine"></div><img src="https://i.postimg.cc/Fz1csFvn/cbcddfc6-df88-4e52-b258-d4cfe2243b3e.jpg" alt="فريق العمل 45" loading="lazy" decoding="async"><span class="photo-index">45</span></figure></div><div class="team-note reveal"><span class="note-number">09</span><div><span class="note-label">NEBRAS TEAM</span><p>الفريق هو الجزء الأهم في أي مشروع. خلف كل صورة هنا شخص له دور، وخبرة، ومسؤولية تجعل النتيجة النهائية ممكنة.</p></div></div></section><section class="team-block" data-section="10"><div class="team-block-head reveal"><span class="team-kicker">TEAM / 10</span><h2>معاً</h2><span class="team-rule"></span></div><div class="team-gallery"><figure class="team-photo reveal from-right" data-depth="1"><div class="photo-shine"></div><img src="https://i.postimg.cc/tJf610Rr/d3efe839-114b-4cd8-8f39-21a8dc70cd7e.jpg" alt="فريق العمل 46" loading="lazy" decoding="async"><span class="photo-index">46</span></figure><figure class="team-photo reveal from-left" data-depth="2"><div class="photo-shine"></div><img src="https://i.postimg.cc/sXT7rQk3/d7699204-2aac-4b93-bd06-62239e65ac7c.jpg" alt="فريق العمل 47" loading="lazy" decoding="async"><span class="photo-index">47</span></figure><figure class="team-photo reveal from-right" data-depth="3"><div class="photo-shine"></div><img src="https://i.postimg.cc/brMnGXYT/da7af02d-61ab-4062-88d1-b85077170670.jpg" alt="فريق العمل 48" loading="lazy" decoding="async"><span class="photo-index">48</span></figure><figure class="team-photo reveal from-left" data-depth="1"><div class="photo-shine"></div><img src="https://i.postimg.cc/QCV5xND6/db6d5ae2-b093-4c9d-bc61-ad6a6eac59fb.jpg" alt="فريق العمل 49" loading="lazy" decoding="async"><span class="photo-index">49</span></figure><figure class="team-photo reveal from-right" data-depth="2"><div class="photo-shine"></div><img src="https://i.postimg.cc/d3DdtQFX/df948b41-da4e-4695-9c0b-fc7741d0acb7.jpg" alt="فريق العمل 50" loading="lazy" decoding="async"><span class="photo-index">50</span></figure></div><div class="team-note reveal"><span class="note-number">10</span><div><span class="note-label">NEBRAS TEAM</span><p>هذه ليست مجرد صور لأعمال أو لحظات. إنها لمحة عن الأشخاص الذين يصنعون التفاصيل يومياً، ويواصلون العمل حتى تصبح الرؤية واقعاً.</p></div></div></section><section class="team-block" data-section="11"><div class="team-block-head reveal"><span class="team-kicker">TEAM / 11</span><h2>الاستمرار</h2><span class="team-rule"></span></div><div class="team-gallery"><figure class="team-photo reveal from-right" data-depth="1"><div class="photo-shine"></div><img src="https://i.postimg.cc/yx5RJq6p/e6d2f995-a7c8-4d82-bf03-4516a9a45570.jpg" alt="فريق العمل 51" loading="lazy" decoding="async"><span class="photo-index">51</span></figure><figure class="team-photo reveal from-left" data-depth="2"><div class="photo-shine"></div><img src="https://i.postimg.cc/XqXF7NWv/f26ad159-3d88-49fa-ae1d-4b664acf360a.jpg" alt="فريق العمل 52" loading="lazy" decoding="async"><span class="photo-index">52</span></figure><figure class="team-photo reveal from-right" data-depth="3"><div class="photo-shine"></div><img src="https://i.postimg.cc/NMdmc93F/fb7503d1-0638-4311-ac98-1b7b3e781808.jpg" alt="فريق العمل 53" loading="lazy" decoding="async"><span class="photo-index">53</span></figure><figure class="team-photo reveal from-left" data-depth="1"><div class="photo-shine"></div><img src="https://i.postimg.cc/JnpZLDfX/fc7bb7a3-6ee5-486c-b7f8-89268ccfaea8.jpg" alt="فريق العمل 54" loading="lazy" decoding="async"><span class="photo-index">54</span></figure><figure class="team-photo reveal from-right" data-depth="2"><div class="photo-shine"></div><img src="https://i.postimg.cc/BZwH7F5K/fce2fc06-0ced-4b3a-a8ef-d11a4952f6ec.jpg" alt="فريق العمل 55" loading="lazy" decoding="async"><span class="photo-index">55</span></figure></div><div class="team-note reveal"><span class="note-number">11</span><div><span class="note-label">NEBRAS TEAM</span><p>المشاريع تنتهي، لكن روح الفريق تستمر. كل تجربة تضيف معرفة جديدة، وكل يوم يفتح مساحة لعمل أفضل وتفاصيل أدق.</p></div></div></section></main>
+
+<footer class="dev-footer" dir="rtl">
+  <div class="dev-footer__fx" aria-hidden="true">
+    <span class="dev-orb dev-orb--1"></span><span class="dev-orb dev-orb--2"></span><span class="dev-orb dev-orb--3"></span>
+    <span class="dev-grid"></span><span class="dev-line dev-line--1"></span><span class="dev-line dev-line--2"></span>
+    <span class="dev-spark dev-spark--1"></span><span class="dev-spark dev-spark--2"></span><span class="dev-spark dev-spark--3"></span><span class="dev-spark dev-spark--4"></span>
+  </div>
+  <div class="dev-footer__inner">
+    <div class="dev-footer__brand"><img src="Asset 6@2x.png" alt="Nebras Solutions" class="dev-footer__logo"></div>
+    <div class="dev-footer__content">
+      <span class="dev-footer__eyebrow">NEBRAS SOLUTIONS</span>
+      <h2>تفاصيل تصنع الفرق.</h2>
+      <p>نطوّر حلولنا بعناية لنقدّم تجربة رقمية واضحة، سريعة، ومناسبة لاحتياجات العمل.</p>
+      <div class="dev-footer__meta"><span>مسؤول التطوير</span><strong>EYAD</strong></div>
+    </div>
+  </div>
+  <div class="dev-footer__bottom"><span>NEBRAS SOLUTIONS</span><span class="dev-footer__dot"></span><span>EST. 2019</span><span class="dev-footer__dot"></span><span>PROJECT@NEBRAS.COM.SA</span></div>
+</footer>
+
+<script>
+const progress=document.getElementById('scroll-progress');
+const transition=document.getElementById('page-transition');
+window.addEventListener('load',()=>setTimeout(()=>transition.classList.add('hide'),450));
+window.addEventListener('scroll',()=>{ const h=document.documentElement.scrollHeight-window.innerHeight; progress.style.width=(h>0?(window.scrollY/h)*100:0)+'%'; },{passive:true});
+const menu=document.getElementById('mobileMenuOverlay');
+document.getElementById('mobileMenuBtn').addEventListener('click',()=>menu.classList.add('open'));
+document.getElementById('mobileMenuClose').addEventListener('click',()=>menu.classList.remove('open'));
+menu.addEventListener('click',e=>{if(e.target===menu) menu.classList.remove('open')});
+document.querySelectorAll('a[href]').forEach(a=>{a.addEventListener('click',e=>{const href=a.getAttribute('href'); if(!href || href.startsWith('#') || href.startsWith('http') || a.target==='_blank') return; e.preventDefault(); transition.classList.remove('hide'); setTimeout(()=>location.href=href,360);})});
+const io=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('in-view'); io.unobserve(entry.target);}}),{threshold:.14,rootMargin:'0px 0px -60px 0px'});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+// Gentle depth movement while scrolling, kept subtle so the page stays professional.
+const photos=[...document.querySelectorAll('.team-photo')];
+let ticking=false;
+function depth(){ if(ticking)return; ticking=true; requestAnimationFrame(()=>{photos.forEach((el,i)=>{const r=el.getBoundingClientRect(); if(r.bottom>0&&r.top<innerHeight){const shift=(innerHeight/2-(r.top+r.height/2))*0.025*((i%3)+1); el.style.setProperty('--depth',shift.toFixed(1)+'px');}}); ticking=false;});}
+window.addEventListener('scroll',depth,{passive:true}); depth();
+</script>
+</body></html>

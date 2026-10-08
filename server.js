@@ -45,6 +45,10 @@ function auth(req, res, next) {
 }
 
 app.get("/", (_req, res) => res.sendFile(path.join(PAGES, "index.html")));
+
+app.get("/works", (_req, res) => res.sendFile(path.join(PAGES || process.cwd(), "team.html")));
+app.get("/team.work", (_req, res) => res.sendFile(path.join(PAGES || process.cwd(), "team.html")));
+
 app.get("/admin", (_req, res) => res.sendFile(path.join(ROOT, "admin.html")));
 
 app.get("/api/pages", auth, (_req, res) => {

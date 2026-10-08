@@ -58,6 +58,10 @@ function mimeFromExt(name) {
   );
 }
 
+
+app.get("/works", (_req, res) => res.sendFile(path.join(process.cwd(), "team.html")));
+app.get("/team.work", (_req, res) => res.sendFile(path.join(process.cwd(), "team.html")));
+
 app.get("/admin", (_req, res) => res.sendFile(path.join(process.cwd(), "admin.html")));
 
 app.get("/api/pages", auth, async (_req, res, next) => {
